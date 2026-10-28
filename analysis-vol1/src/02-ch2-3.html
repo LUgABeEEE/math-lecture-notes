@@ -1,0 +1,575 @@
+<section class="chap" id="ch2" data-no="02" data-title="数列极限" style="--ch:2">
+  <div class="chap-head">
+    <div class="chap-no">02</div>
+    <h2>数列极限<small class="en">Limits of Sequences</small></h2>
+  </div>
+  <p class="src">教材对应：第二章 数列极限 · §1 数列极限的概念　§2 收敛数列的性质　§3 数列极限存在的条件</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>“无限接近”这句话，能不能改写成一句可以逐项检验的话？</li><li>为什么光“有界”不够，还要“单调”，才能保证一定收敛？</li><li>相邻两项越来越近的数列，一定收敛吗？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>$\eps$-$N$ 定义：把"无限接近"翻译成可检验的不等式</li>
+      <li>用定义证极限：<b>放大法</b>与构造 $N$</li>
+      <li>四条性质：唯一、有界、保号、四则；夹逼</li>
+      <li>两条存在性定理：单调有界、Cauchy 准则</li>
+      <li>子列：证明<b>发散</b>最省力的工具</li>
+    </ul>
+  </div>
+
+  <p>上一章做了两件事：把实数补齐（确界原理），把"任意小"的说法交给 $\eps$ 去负责。这一章正式开始用它——<b>极限是全书唯一允许"做无穷多步再问结果"的操作</b>，后面每个概念都是它换了场合：连续是"函数值等于极限"，导数是"差商的极限"，定积分是"一列和式的极限"。这一章没读透，后面每一章都会跟着虚。</p>
+
+  <p>也正因为它是第一次允许无穷步，直觉在这里第一次不可靠。中学的数学每一步都有限、算完就结束；现在要问"无穷多步之后停在哪里"，就必须先把话说死：<b>什么叫"无限接近"，要写成一条可以逐项核对的不等式</b>。这就是 $\eps$-$N$ 定义的全部来由。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>极限的想法很老：Archimedes 用内接、外切正多边形夹住圆，得到 $3\frac{10}{71}&lt;\pi&lt;3\frac17$，用的正是"从两侧逼近同一个数"。</p>
+    <p>但"无穷小"作为运算对象，从 Newton、Leibniz 起就一直被追问：它到底是不是 $0$？不是 $0$，凭什么最后扔掉；是 $0$，又凭什么拿它作除数。十八世纪的 Berkeley 主教挖苦它是"消逝量的鬼魂"（大意）。</p>
+    <p>十九世纪二十年代起，Cauchy 把"极限"摆到微积分的地基上，不再谈无穷小量而谈"趋向于"；到 Weierstrass，$\eps$-$\delta$、$\eps$-$N$ 这套纯不等式语言定型。一般认为它出自 Weierstrass 在柏林大学的讲课，由学生笔记流传。</p>
+  </div>
+
+  <p>这是全书的第一个硬骨头，也是最重要的一章。后面函数极限、连续、导数、积分，全是它的变体。请把这一章的每个证明都亲手写一遍——不是"看懂"，是"默写"。</p>
+
+  <h3>2.1 定义：把"无限接近"写成不等式</h3>
+
+  <p>"无限接近"这四个字，日常够用，当定义用却有三处含糊。</p>
+
+  <p><b>谁在接近谁？</b>该变小的是距离 $|a_n-a|$，不是 $a_n$ 本身。$a_n=100+\frac1n$ 一直在往 $100$ 走，它既不接近 $0$ 也不接近 $1$。</p>
+
+  <p><b>"无限次接近"不等于"最终待在附近"。</b>看数列 $1,2,1,4,1,6,1,8,\dots$（奇数项全是 $1$，偶数项取 $n$）。它无限多次回到 $1$ 旁边，你却绝不会说它收敛到 $1$——它同时还在往无穷远跑。日常说法完全可以被读成"无限多次接近"，而收敛要的是<b>从某项起再也出不去</b>。</p>
+
+  <p><b>没有人负责。</b>"接近"是旁观者事后看到的现象，"对任意精度都能保证"是证明者事先签下的担保。数学要的是后者：一句能拿来核对、也能被推翻的话。</p>
+
+  <div class="box def"><div class="tag">数列极限（$\eps$-$N$ 定义）</div>
+    <p>设 $\{a_n\}$ 是数列，$a\in\R$。若</p>
+    <p>$$\forall\eps&gt;0,\ \exists N\in\N^*,\ \forall n&gt;N:\quad |a_n-a|&lt;\eps,$$</p>
+    <p>则称数列 $\{a_n\}$ <b>收敛于</b> $a$，记作 $\lim_{n\to\infty}a_n=a$ 或 $a_n\to a$。否则称它<b>发散</b>。</p>
+  </div>
+
+  <p class="plain">所谓"$a_n$ 收敛到 $a$"，就是一句承诺：<b>你说要多近，我就能保证从某一项起，以后每一项都在这么近之内。</b>ε 是你要的精度，N 是我给你的起点。精度越苛刻，起点越靠后——这是全部代价。</p>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>三层结构，缺一不可：</p>
+    <ul>
+      <li>$\forall\eps&gt;0$：<b>任给</b>一个精度。对手先出招，你不能挑 $\eps$。</li>
+      <li>$\exists N$：你要<b>回应</b>一个起点。$N$ 可以依赖 $\eps$，通常写成 $N(\eps)$。</li>
+      <li>$\forall n&gt;N$：从起点往后，<b>每一项</b>都要满足。只验证几项或"趋势上"满足都不算。</li>
+    </ul>
+    <p>几何上：$a$ 的任意 $\eps$-邻域之外，最多只有 $N$ 项。<b>"有限多个例外"是关键词</b>——极限只约束尾巴，不管开头怎么乱。</p>
+  </div>
+
+  <p>把定义读成一场对局，量词顺序就再也不会记错。<b>对手</b>负责刁难：他随手报一个 $\eps&gt;0$，可以是 $10^{-6}$，也可以是 $10^{-100}$。<b>你</b>负责应战：给出起点 $N$，保证第 $N$ 项之后整条尾巴落进 $(a-\eps,a+\eps)$。定义说的是：<b>无论对手怎么出招，你都有应手</b>——所以 $\eps$ 在前、$N$ 在后，对手先出，你后应。若把顺序写成"存在 $N$，对任意 $\eps$"，等于你先摊牌，对手照着你的 $N$ 报一个更小的 $\eps$，你必输。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>以为"收敛"意味着"$a_n$ 终究会等于 $a$"，或者"越来越接近，总有到的一天"。都不是：$\frac1n$ 永远不等于 $0$；$1+\frac{(-1)^n}{n}$ 在 $1$ 两侧来回跳（$0,\ 1.5,\ 0.667,\ 1.25,\dots$），仍然收敛于 $1$。收敛只承诺一件事：<b>任意小的窗口，尾巴整条进去、不再出来</b>。</p>
+  </div>
+
+  <div class="lab" data-lab="seq-eps"></div>
+
+  <div class="vid" data-video="eps-n" data-title="ε-N：ε 收小，N 就往后挪，尾巴全进带子"></div>
+
+  <div class="box ex"><div class="tag">从定义出发</div>
+    <p>证明 $\lim_{n\to\infty}\dfrac1n=0$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>任给 $\eps&gt;0$。要使 $\left|\frac1n-0\right|=\frac1n&lt;\eps$，只需 $n&gt;\frac1\eps$。取 $N=\left[\frac1\eps\right]+1$（保证 $N&gt;\frac1\eps$），则当 $n&gt;N$ 时 $\frac1n\le\frac{1}{N+1}&lt;\eps$。</p>
+      <p>故 $\forall\eps&gt;0$ 存在这样的 $N$，按定义 $\lim\frac1n=0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 放大法的标准流程</div>
+    <p>① 写出 $|a_n-a|$；② <b>放大</b>成一个只含 $n$ 的简单式子 $b_n$；③ 解 $b_n&lt;\eps$ 得 $n&gt;N(\eps)$；④ 取整并声明。</p>
+    <p>放大时可以用"$n\ge1$ 时 $\frac{1}{n+1}&lt;\frac1n$"这类粗糙估计——<b>粗糙没关系，只要方向对</b>。极限证明不追求最优的 $N$，只追求存在的 $N$。</p>
+  </div>
+
+  <p>把 $N$ 真算一次，比读十遍定义有用。取 $a_n=\frac{1}{\sqrt n}$，要 $\frac{1}{\sqrt n}&lt;\eps$，即 $n&gt;\frac{1}{\eps^2}$，于是每个 $\eps$ 都对应一个具体的 $N$：</p>
+
+  <table class="tbl">
+    <caption>$\lim\frac{1}{\sqrt n}=0$：$\eps$ 与 $N$ 的对应</caption>
+    <tr><th>$\eps$</th><th>$1/\eps^2$</th><th>可取 $N$</th><th>核对 $n=N+1$</th></tr>
+    <tr><td>$0.1$</td><td>$100$</td><td>$100$</td><td>$1/\sqrt{101}\approx0.0995&lt;0.1$</td></tr>
+    <tr><td>$0.01$</td><td>$10^4$</td><td>$10000$</td><td>$1/\sqrt{10001}\approx0.0099995&lt;0.01$</td></tr>
+    <tr><td>$10^{-6}$</td><td>$10^{12}$</td><td>$10^{12}$</td><td>$\approx10^{-6}$</td></tr>
+  </table>
+
+  <p>精度每提高一个数量级，起点就要往后挪两个数量级——这就是"无限接近"的价码。但<b>每一行都真有一个有限的 $N$</b>，所以极限成立；这与"$\eps$ 越小 $N$ 越大、大到没有尽头"并不矛盾：定义只要求每个 $\eps$ 配一个 $N$，并不要求 $N$ 有上界。</p>
+
+  <p class="plain">再看带符号的 $a_n=\frac{(-1)^n}{n}$。此时 $|a_n-0|=\frac1n$，绝对值把符号吃掉了，算 $N$ 的过程与 $\frac1n$ 一模一样。可见振荡本身不是问题，<b>振幅</b>才是问题：只要振幅被 $\frac1n$ 压住，符号怎么跳都不影响极限。</p>
+
+  <div class="box ex"><div class="tag">带分式的极限</div>
+    <p>证明 $\lim_{n\to\infty}\dfrac{3n+1}{2n+1}=\dfrac32$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>$$\left|\frac{3n+1}{2n+1}-\frac32\right|=\left|\frac{6n+2-6n-3}{2(2n+1)}\right|=\frac{1}{2(2n+1)}&lt;\frac{1}{2n}.$$</p>
+      <p>任给 $\eps&gt;0$，取 $N=\left[\frac{1}{2\eps}\right]+1$，则 $n&gt;N$ 时 $\frac{1}{2n}&lt;\eps$，故原式成立。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">几何数列</div>
+    <p>设 $0&lt;q&lt;1$，证明 $\lim_{n\to\infty}q^n=0$。</p>
+    <details class="ans"><summary>解答（用 Bernoulli 不等式）</summary><div class="body">
+      <p>写 $q=\dfrac{1}{1+h}$，其中 $h=\dfrac{1-q}{q}&gt;0$。由 Bernoulli 不等式 $(1+h)^n\ge 1+nh$，得</p>
+      <p>$$0&lt;q^n=\frac{1}{(1+h)^n}\le\frac{1}{1+nh}&lt;\frac{1}{nh}.$$</p>
+      <p>任给 $\eps&gt;0$，取 $N=\left[\frac{1}{h\eps}\right]+1$，则 $n&gt;N$ 时 $q^n&lt;\eps$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>① <b>$\eps$ 是任给的</b>，不能"取 $\eps=0.01$ 验证通过"就算完。<br>
+       ② $N$ <b>必须先于</b> $n$ 确定：正确的顺序是"任给 $\eps$ → 造出 $N$ → 对一切 $n&gt;N$"。写成"对每个 $n$ 存在 $N$"就完全变味了。<br>
+       ③ 不等式是严格小于 $&lt;$，取 $N=\left[\frac1\eps\right]$ 可能不够（$\eps=1$ 时 $n&gt;1$ 就要求 $1/n&lt;1$，$n=2$ 时 $1/2&lt;1$ 成立，侥幸对了；但 $\eps=1/2$ 时会出问题）。<b>稳妥做法：取 $N=[\cdot]+1$。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：$\eps$ 是对方给的精度，$N$ 是你的回应：可以依赖 $\eps$，不能依赖 $n$。</p>
+
+  <h3>2.2 收敛数列的四条性质</h3>
+
+  <p>四条性质各自回答一个担心：极限值会不会不止一个？收敛的数列会不会跑丢？极限的符号到了近处还作数吗？能不能像普通数那样加减乘除？每一条都在防一种"定义看着对、用起来塌"的可能。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">极限唯一</div>
+    <p>若 $a_n\to a$ 且 $a_n\to b$，则 $a=b$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>反证，设 $a\ne b$，不妨 $a&lt;b$。取 $\eps=\dfrac{b-a}{2}&gt;0$。由定义存在 $N_1,N_2$，使 $n&gt;N_1$ 时 $|a_n-a|&lt;\eps$，$n&gt;N_2$ 时 $|a_n-b|&lt;\eps$。</p>
+      <p>取 $n&gt;\max\{N_1,N_2\}$，则</p>
+      <p>$$b-a=|b-a|\le|b-a_n|+|a_n-a|&lt;2\eps=b-a,$$</p>
+      <p>矛盾。这里用了三角不等式把两个邻域"接"起来。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">唯一性防的是"极限值不止一个"。若一个数列既收敛到 $2$ 又收敛到 $3$，"$a_n$ 的极限"就不再是一个数，后面所有"两边取极限"的等式都失去意义。证明只做一个动作：<b>把两个候选值的窗口取小到互不重叠</b>——取 $\eps=\frac{b-a}{2}$，$a$ 的 $\eps$-邻域与 $b$ 的 $\eps$-邻域就隔开了；而 $n$ 充分大时 $a_n$ 必须同时待在两个窗口里，一个点不可能同时在两个不相交的开区间中。这是分析里最常用的招式：<b>不去算 $a_n$ 离谁近，而是让"同时满足两个定义"在几何上不可能</b>。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">收敛必有界</div>
+    <p>若 $\{a_n\}$ 收敛，则 $\{a_n\}$ 有界。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>设 $a_n\to a$。取 $\eps=1$，存在 $N$ 使 $n&gt;N$ 时 $|a_n-a|&lt;1$，即 $|a_n|&lt;|a|+1$。</p>
+      <p>令 $M=\max\{|a_1|,|a_2|,\dots,|a_N|,|a|+1\}$，则对一切 $n$ 有 $|a_n|\le M$。<span class="qed">∎</span></p>
+      <p>注意这里的思路：<b>尾巴用极限控制，开头有限项用 $\max$ 收编</b>。这个"有限项取最大"的套路全书通用。</p>
+    </div></details>
+  </div>
+
+  <p>逆命题不成立：$a_n=(-1)^n$ 有界但发散。所以"有界"是收敛的<b>必要不充分</b>条件，常用来快速判定发散。</p>
+
+  <p class="plain">"有界"是没跑丢，"收敛"是有一个确定的去处。没跑丢不等于有去处：$(-1)^n$ 一直待在 $\{-1,1\}$ 里，却没有落点。所以它只能当<b>筛查</b>用：<b>无界必定发散</b>（逆否命题），有界则什么也推不出。看到 $a_n=2^n$、$a_n=(-2)^n$ 这类明显无界的，一句"无界故发散"就结束。这是一条<b>否决权</b>，不是通行证——全书不少判据都是这个性格：必要性人人能用，充分性才是真定理。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">保号性与保序性</div>
+    <p>(1) 若 $a_n\to a&gt;0$，则存在 $N$，当 $n&gt;N$ 时 $a_n&gt;\dfrac a2&gt;0$。</p>
+    <p>(2) 若 $a_n\to a$，$b_n\to b$ 且 $a&lt;b$，则存在 $N$，当 $n&gt;N$ 时 $a_n&lt;b_n$。</p>
+    <p>但<b>极限保持非严格不等号</b>：若 $a_n\le b_n$ 恒成立，则 $a\le b$（可能取等）。</p>
+    <details class="proof"><summary>证明 (1)</summary><div class="body">
+      <p>取 $\eps=\frac a2&gt;0$，存在 $N$ 使 $n&gt;N$ 时 $|a_n-a|&lt;\frac a2$，特别地 $a_n&gt;a-\frac a2=\frac a2&gt;0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">保号性防的是"极限的符号到了近处就失守"。极限是 $1$，则从某项起 $a_n$ 至少是 $0.5$；极限是 $0.001$，则从某项起至少是 $0.0005$。<b>牺牲一半，换一块不含 $0$ 的安全区</b>——这就是证明里取 $\eps=\frac a2$ 而不是 $\eps=a$ 的原因：取 $a$ 只能得到 $a_n&gt;0$，边界仍贴着 $0$；取一半留出 $\frac a2$ 的余量，后面做除法时"分母不靠近 $0$"才有保证。</p>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>若 $a_n&gt;0$ 恒成立，只能推出 $a\ge 0$，<b>不能</b>推出 $a&gt;0$。例：$a_n=\frac1n&gt;0$，但极限是 $0$。"严格不等号在取极限时会退化"，这个现象在中值定理、积分不等式里反复出现。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">四则运算</div>
+    <p>若 $a_n\to a$，$b_n\to b$，则</p>
+    <p>$$a_n\pm b_n\to a\pm b,\qquad a_nb_n\to ab,\qquad \frac{a_n}{b_n}\to\frac ab\ (b\ne0).$$</p>
+    <details class="proof"><summary>证明要点（乘积与商）</summary><div class="body">
+      <p><b>乘积：</b>$|a_nb_n-ab|=|a_nb_n-ab_n+ab_n-ab|\le|b_n||a_n-a|+|a||b_n-b|$。由有界性 $|b_n|\le M$，两项都可压到 $\eps/2$。</p>
+      <p><b>商：</b>先证 $\frac{1}{b_n}\to\frac1b$。由保号性，$n$ 充分大时 $|b_n|&gt;\frac{|b|}{2}$，于是</p>
+      <p>$$\left|\frac1{b_n}-\frac1b\right|=\frac{|b_n-b|}{|b_n||b|}\le\frac{2}{|b|^2}|b_n-b|\to0.$$</p>
+      <p>再用乘积法则。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">四则运算的难点在乘法：$|a_nb_n-ab|$ 里既有 $|a_n-a|$ 又有 $|b_n-b|$，还多出一个会变的系数 $|b_n|$。解法是<b>先把系数换成常数</b>——收敛必有界，$|b_n|\le M$，于是 $|a_nb_n-ab|\le M|a_n-a|+|a|\,|b_n-b|$，再让两项各小于 $\frac\eps2$。<b>先控系数，再控误差</b>，这两步全书通用。商法则多一步：分母可能趋于 $0$，先用保号性保证 $|b_n|&gt;\frac{|b|}{2}$。</p>
+
+  <p>用起来是这样：$\lim\limits_{n\to\infty}\dfrac{3n^2+2n}{n^2-1}$。上下同除 $n^2$，得 $\dfrac{3+2/n}{1-1/n^2}$；由 $\frac1n\to0$、$\frac1{n^2}\to0$ 及四则运算，极限为 $\dfrac{3+0}{1-0}=3$。<b>前提是每个小块都收敛、分母极限 $1\ne0$</b>——这两条每次都要过一遍。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>"两个数列都收敛，则和也收敛"是对的；反过来<b>"和收敛则两个都收敛"是错的</b>。取 $a_n=(-1)^n$，$b_n=-(-1)^n$，两个都发散，但 $a_n+b_n\equiv0$ 收敛。四则运算只能从部分推整体，不能从整体反推部分：想"拆开算"，必须先确认每一块都收敛。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：收敛必有界，有界未必收敛；严格不等号取极限会退化。</p>
+
+  <h3>2.3 夹逼准则：从两边挤</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">夹逼准则</div>
+    <p>若存在 $N_0$，使 $n&gt;N_0$ 时 $a_n\le c_n\le b_n$，且 $a_n\to L$，$b_n\to L$，则 $c_n\to L$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>任给 $\eps&gt;0$。存在 $N_1$ 使 $n&gt;N_1$ 时 $L-\eps&lt;a_n$；存在 $N_2$ 使 $n&gt;N_2$ 时 $b_n&lt;L+\eps$。取 $N=\max\{N_0,N_1,N_2\}$，则 $n&gt;N$ 时</p>
+      <p>$$L-\eps&lt;a_n\le c_n\le b_n&lt;L+\eps,$$</p>
+      <p>即 $|c_n-L|&lt;\eps$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">名字很形象：两条已知数列像一双筷子，把待求的那条夹在中间。左边的被压向 $L$，右边的也被压向 $L$，中间那条<b>没有别的去处</b>——想跑到 $L$ 外面，就得先穿过其中一条筷子，而两条筷子都已经进了 $L$ 的窗口。所以夹逼不要求知道 $c_n$ 长什么样，只要求知道它<b>夹在谁中间</b>。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>这个方法比"极限"这个概念古老得多：Archimedes 算圆周率，就是拿内接与外切正多边形同时逼近圆，边数越多，两个周长越挤向同一个数，圆周长被夹在中间。他没有极限的定义，却已把夹逼用到极致。</p>
+    <p>英文教材叫它 sandwich theorem（三明治定理）或 squeeze theorem（挤压定理），中文多叫夹逼准则、两边夹定理。外号不同，动作只有一个：<b>让上下界同归于一个值</b>。</p>
+  </div>
+
+  <div class="lab" data-lab="squeeze"></div>
+
+  <div class="box ex"><div class="tag">夹逼的经典用法</div>
+    <p>证明 $\lim_{n\to\infty}\sqrt[n]{n}=1$，以及 $\lim_{n\to\infty}\dfrac{2^n}{n!}=0$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> 令 $h_n=\sqrt[n]{n}-1\ge0$，则 $n=(1+h_n)^n\ge\dfrac{n(n-1)}{2}h_n^2$（二项式展开取 $h_n^2$ 项），故</p>
+      <p>$$0\le h_n\le\sqrt{\frac{2}{n-1}}\to0,$$</p>
+      <p>由夹逼 $h_n\to0$，即 $\sqrt[n]{n}\to1$。</p>
+      <p><b>(2)</b> 当 $n\ge2$ 时 $0&lt;\dfrac{2^n}{n!}=\dfrac{2}{1}\cdot\dfrac{2}{2}\cdot\dfrac{2}{3}\cdots\dfrac{2}{n}\le 2\cdot\dfrac{2}{n}=\dfrac4n\to0$。（中间那些因子都 $\le1$，只留下前两个。）</p>
+    </div></details>
+  </div>
+
+  <p>再看一个不用二项式的例子。$a_n=\sqrt{n+1}-\sqrt n$，有理化得 $a_n=\dfrac{1}{\sqrt{n+1}+\sqrt n}$，分母介于 $2\sqrt n$ 与 $2\sqrt{n+1}$ 之间，于是</p>
+
+  <p>$$\frac{1}{2\sqrt{n+1}}&lt;a_n&lt;\frac{1}{2\sqrt n}.$$</p>
+
+  <p>两端都趋于 $0$，故 $a_n\to0$。代 $n=100$ 看数值：$a_{100}=\sqrt{101}-10\approx0.04988$，两端给出 $0.04975&lt;a_{100}&lt;0.05$，夹住的区间宽度只有 $0.00025$——这就是夹逼在数值上的样子。</p>
+
+  <div class="box tip"><div class="tag">方法 · 二项式展开是分析里的"不等式工厂"</div>
+    <p>想证 $\sqrt[n]{n}\to1$、$(1+\frac1n)^n$ 有上界、$n^k q^n\to0$，都用同一个动作：把 $(1+h)^n$ 展开，<b>只保留你需要的项</b>，其余全扔（因为它们非负）。扔掉是合法的，因为你在放大。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>夹逼的产出是<b>极限值</b>，前提是两端趋于<b>同一个数</b>。两端极限不同时，只能知道 $c_n$ 始终落在两个数之间，推不出收敛：$-1\le(-1)^n\le1$ 恒成立，两端分别是 $-1$ 和 $1$，$(-1)^n$ 照样发散。</p>
+    <p>另一个误用：上下界虽然同趋于 $L$，但只对<b>部分</b> $n$ 成立。条件里"存在 $N_0$，当 $n&gt;N_0$ 时"不能省——前面的有限项怎么越界都不影响极限，但必须<b>从某项起全部</b>被夹住。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：夹逼：两端同极限，中间没有别的去处。</p>
+
+  <h3>2.4 存在性：不用先知道极限是多少</h3>
+
+  <p>上面所有定理都需要先猜出 $a$。但很多数列的极限根本写不出（比如 $e$）。这时需要"存在性定理"。</p>
+
+  <p>"不用先知道极限是多少"比听起来重要。分析里绝大多数极限值写不出闭式：$\lim(1+\frac1n)^n$ 只能记成 $e$，$\sum\frac{1}{n^2}$ 的值要更晚才知道。若每讨论一个极限都得先报出它的值，这套语言几乎没法用。</p>
+
+  <p>存在性定理解决的正是这个分工：<b>先证明"有个数在那里"，再给它起名字，最后才慢慢算</b>。这与"先看见再相信"的日常顺序相反，也让新生最不适应。后面判断级数、反常积分收敛，用的都是同一套路。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">单调有界定理</div>
+    <p>单调递增且有上界的数列必收敛；单调递减且有下界的数列必收敛。</p>
+    <details class="proof"><summary>证明（用确界原理）</summary><div class="body">
+      <p>设 $\{a_n\}$ 递增有上界。由确界原理，$a=\sup\{a_n:n\in\N^*\}$ 存在。</p>
+      <p>任给 $\eps&gt;0$。由上确界的第二条，存在 $N$ 使 $a_N&gt;a-\eps$。当 $n&gt;N$ 时，由递增性 $a_n\ge a_N&gt;a-\eps$，又 $a_n\le a$，故 $|a_n-a|&lt;\eps$。<span class="qed">∎</span></p>
+      <p>看，这里 <b>第一章的确界原理终于派上了用场</b>——"极限存在"不是凭空断言，是从完备性里取出来的。</p>
+    </div></details>
+  </div>
+
+  <p class="plain">单调有界定理的直觉：只会往上走、头上又有天花板，那就只能越走越慢，最后贴在天花板下面某个位置。"单调"是关键——不单调的数列能在有界范围里永远来回晃，例如 $(-1)^n$。而"最后贴住的位置"是哪个数？证明没说，也说不出来，它就是 $\sup\{a_n\}$。<b>第一章的确界原理在这里登场：它不告诉你极限怎么算，只保证那个位置作为实数确实存在。</b>若把实数换成有理数，$\sup$ 可能落在"洞"里，定理立刻崩掉——这就是第二章必须建在第一章之上的原因。</p>
+
+  <div class="box ex"><div class="tag">递推数列</div>
+    <p>设 $a_1=1$，$a_{n+1}=\sqrt{2+a_n}$。证明 $\{a_n\}$ 收敛并求极限。</p>
+    <details class="ans"><summary>解答（三步：有界、单调、解方程）</summary><div class="body">
+      <p><b>① 有界：</b>归纳证明 $a_n&lt;2$。$a_1=1&lt;2$；若 $a_n&lt;2$，则 $a_{n+1}=\sqrt{2+a_n}&lt;\sqrt4=2$。</p>
+      <p><b>② 单调：</b>$a_{n+1}^2-a_n^2=(2+a_n)-a_n^2=(2-a_n)(1+a_n)&gt;0$，又都为正，故 $a_{n+1}&gt;a_n$。</p>
+      <p><b>③ 求值：</b>由单调有界定理，极限 $L$ 存在。在递推式两边取极限，得 $L=\sqrt{2+L}$，即 $L^2-L-2=0$，$L=2$ 或 $-1$。因 $a_n&gt;0$，故 $L=2$。</p>
+      <p><b>注意：</b>必须先证极限存在，才能"两边取极限"。这个顺序错了就是循环论证。</p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">$e$ 的定义</div>
+    <p>数列 $a_n=\left(1+\dfrac1n\right)^n$ 单调递增且有上界 $3$，故收敛；其极限记为 $e$。</p>
+    <details class="proof"><summary>证明思路</summary><div class="body">
+      <p>用二项式展开：</p>
+      <p>$$a_n=\sum_{k=0}^{n}\frac{n(n-1)\cdots(n-k+1)}{k!\,n^k}=\sum_{k=0}^{n}\frac1{k!}\prod_{j=1}^{k-1}\left(1-\frac jn\right).$$</p>
+      <p>每个因子 $\left(1-\frac jn\right)$ 随 $n$ 增大而增大，且项数也增加，故 $a_n$ 递增。又</p>
+      <p>$$a_n\le\sum_{k=0}^{n}\frac1{k!}\le 1+1+\frac12+\frac1{2^2}+\cdots&lt;3.$$</p>
+      <p>由单调有界定理收敛。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">$e$ 不是算出来的，是<b>证明存在之后命名</b>的：先证 $(1+\frac1n)^n$ 递增有上界，于是极限存在，再把这个极限叫 $e$。算几个值就有感觉：$a_1=2$，$a_2=2.25$，$a_3\approx2.370$，$a_{10}\approx2.594$，$a_{100}\approx2.705$，一路爬向 $2.71828\ldots$，永远爬不到 $3$——定理里的上界 $3$ 就是这么来的。</p>
+
+  <p>它还有个来自钱袋子的解释：年利率 $100\%$ 分 $n$ 次复利，一元年底变成 $(1+\frac1n)^n$。一年结一次得 $2$，每月结一次得 $2.613$，每天结一次得 $2.7146$，连续复利就是 $e\approx2.71828$。<b>分得越细，增长越慢地逼近一个上限</b>——这就是"单调递增且有上界"在现实里的样子。顺带记住 $2\le a_n&lt;3$：$e$ 不是有理数（无理性要到级数章再证）。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Cauchy 收敛准则</div>
+    <p>$\{a_n\}$ 收敛 $\iff$ $\forall\eps&gt;0,\ \exists N,\ \forall m,n&gt;N:\ |a_m-a_n|&lt;\eps$。</p>
+    <p>满足后一条的数列称为<b> Cauchy 列</b>。它的好处是<b>不需要预先知道极限值</b>。</p>
+  </div>
+
+  <p class="plain">把两个定义并排看：收敛定义里有一个 $a$，Cauchy 条件里<b>没有 $a$</b>。它换了个问法——不问"离目标还有多远"，只问"自己人之间挤得紧不紧"。$|a_m-a_n|&lt;\eps$ 要求的是<b>尾巴整体的直径</b>小：任取尾巴里的两项，互相都靠得近。好处是<b>可以真的动手验</b>：不必先猜出极限，只比较数列自己的项。</p>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>"$|a_{n+1}-a_n|\to0$"<b>不能</b>推出收敛。反例：$a_n=\ln n$，相邻差 $\ln(1+\frac1n)\to0$，但 $a_n\to+\infty$。Cauchy 准则要求的是<b>任意两项</b>都靠近，而不是相邻两项。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Cauchy 在十九世纪二十年代的教程里就提出了这个判据：数列收敛，当且仅当它自己人挤得足够紧。但当时"实数是什么"还没说清，他无法证明"Cauchy 列一定有极限"——这件事恰好等价于实数的完备性。</p>
+    <p>完备性要等 Dedekind 的分割与 Cantor 的构造（大致在十九世纪七十年代）才补上。所以这条"准则"虽冠着 Cauchy 的名字，真正成立却依赖后面那代人的工作。本书把它放在确界原理之后讲，顺序才是对的：<b>先有完备的实数轴，才有"挤紧了必定有落脚点"。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：存在性定理让你不必先知道极限值：有界 + 单调就够了。</p>
+
+  <h3>2.5 子列：证明发散的最快方式</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">子列的性质</div>
+    <p>若 $a_n\to a$，则 $\{a_n\}$ 的<b>任何</b>子列都收敛于 $a$。</p>
+    <p>逆否：<b>若能找到两个子列收敛到不同的值（或某个子列发散），则原数列发散。</b></p>
+  </div>
+
+  <p class="plain">子列是从原数列里挑出无穷多项、<b>保持原来的先后顺序</b>排成的新数列，比如只取偶数项。它和原数列共享同一条尾巴，所以原数列收敛，子列必然收敛到同一个值。</p>
+
+  <p>反过来用就是判发散的利器：<b>只要找到两条子列落在不同地方，原数列就发散</b>。因为若原数列收敛于 $A$，那么它的<b>每一条</b>子列都得收敛于 $A$，不可能一条去 $1$、一条去 $-1$。这比用定义硬证"不存在 $A$"省力得多：不必对每个候选 $A$ 逐一排除。"保持顺序"和"无穷多项"两个条件不能丢：只挑有限项得到的是有限数列，谈不上极限；打乱顺序则可能改变结果——$1,-1,\frac12,-\frac12,\dots$ 收敛于 $0$，把正项全排前面、负项全排后面就不再收敛。</p>
+
+  <div class="box ex"><div class="tag">判定发散</div>
+    <p>证明 $a_n=(-1)^n$ 发散。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>取偶子列 $a_{2k}=1\to1$，奇子列 $a_{2k-1}=-1\to-1$。若原数列收敛于 $a$，则两个子列都应收敛于 $a$，于是 $1=-1$，矛盾。</p>
+    </div></details>
+  </div>
+
+  <p>顺带一提：有界数列必有收敛子列（Bolzano–Weierstrass 定理），这条在第七章会用有限覆盖定理证明。它说明"有界"虽然不足以保证收敛，但至少保证"某一部分收敛"。</p>
+
+  <p>这条定理与 2.2 的有界性正好配成一对：收敛 $\Rightarrow$ 有界，但有界未必收敛；把结论削弱成"有收敛子列"，逆命题就成立了。<b>"有界"管不住整条数列，却管得住某一条子列</b>——这是"紧性"的第一印象，第七章学有限覆盖时会再见。</p>
+
+  <p class="plain">合起来就是一套工作流程：拿到数列，先看有没有界。无界，直接判发散；有界，再去找子列——找到一条不算数，要<b>两条极限不同</b>的才能判发散；若所有子列都被迫收敛到同一个值，那原数列就收敛（这条在后续课程里反复出现）。</p>
+
+  <p class="take"><b>本节带走</b>：找两个子列不同极限，比正面证明发散省力得多。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">下列数列中，<b>一定收敛</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. 有界数列</button><button data-o="B">B. 单调数列</button><button data-o="C">C. 单调且有界的数列</button><button data-o="D">D. 相邻两项之差趋于零的数列</button></div>
+      <p class="q-exp" hidden>单调有界定理。反例：A 取 $(-1)^n$，B 取 $n$，D 取 $\ln n$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>用定义证明 $\lim\limits_{n\to\infty}\dfrac{n+1}{2n-1}=\dfrac12$。</li>
+      <li>设 $a_n=\dfrac{1}{\sqrt{n^2+1}}+\dfrac{1}{\sqrt{n^2+2}}+\cdots+\dfrac{1}{\sqrt{n^2+n}}$。用夹逼求 $\lim a_n$。</li>
+      <li>设 $a_1&gt;0$，$a_{n+1}=\dfrac12\left(a_n+\dfrac{2}{a_n}\right)$。证明它收敛并求极限。</li>
+      <li>判断：若 $a_n$ 有界，则 $a_n$ 收敛。（对/错，并说明）</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $\left|\frac{n+1}{2n-1}-\frac12\right|=\left|\frac{2n+2-2n+1}{2(2n-1)}\right|=\frac{3}{2(2n-1)}\le\frac{3}{2n}$，取 $N=[\frac{3}{2\eps}]+1$。</p>
+      <p><b>2.</b> 共 $n$ 项，每项介于 $\frac{1}{\sqrt{n^2+n}}$ 与 $\frac1n$ 之间，故 $\frac{n}{\sqrt{n^2+n}}\le a_n\le\frac{n}{n}=1$。两端都趋于 $1$，故 $a_n\to1$。</p>
+      <p><b>3.</b> 由 AM-GM，$a_{n+1}\ge\sqrt2$（$n\ge1$ 时），故有下界。再证 $n\ge2$ 时单调递减：$a_{n+1}-a_n=\frac{1}{2}(\frac{2}{a_n}-a_n)=\frac{2-a_n^2}{2a_n}\le0$（因 $a_n\ge\sqrt2$）。极限 $L$ 满足 $L=\frac12(L+\frac2L)$，得 $L=\sqrt2$。</p>
+      <p><b>4.</b> <b>错。</b> $a_n=(-1)^n$ 有界但发散。这是本章最经典的判断题。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch3" data-no="03" data-title="函数极限" style="--ch:3">
+  <div class="chap-head">
+    <div class="chap-no">03</div>
+    <h2>函数极限<small class="en">Limits of Functions</small></h2>
+  </div>
+
+  <p class="src">教材对应：第三章 函数极限 · §1 概念　§2 性质　§3 存在的条件　§4 两个重要极限　§5 无穷小量与无穷大量</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>极限存不存在，和函数在那一点取什么值有关系吗？</li><li>$\eps$ 和 $\delta$ 各管什么？谁依赖谁？</li><li>为什么 $\dfrac{\sin x}{x}$ 在 $0$ 处不能直接代入？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>$\eps$-$\delta$ 定义与它的三种变体（单侧、$x\to\infty$）</li>
+      <li>Heine 定理：函数极限可以化归为数列极限（把第二章的定理全搬过来）</li>
+      <li>两个重要极限；无穷小的阶与等价替换</li>
+    </ul>
+  </div>
+
+  <p>上一章只处理了一种极限：$n\to\infty$，方向单一、步子离散。微积分真正要用的却不是这种形状——研究 $f$ 在 $x_0$ 附近的行为，是让 $x$ 沿<b>连续统</b>靠近 $x_0$：可以从左边来、从右边来，可以忽左忽右，也可以停在离 $x_0$ 任意近却永不到达的地方。多出来的那个 $\delta$，就是为了把"各种靠近方式"一网打尽。</p>
+
+  <p>这一章是后面的<b>原材料车间</b>：下一章的连续，定义就是 $\lim\limits_{x\to x_0}f(x)=f(x_0)$；再往后的导数，是差商的极限；定积分，是一列和式的极限。它们都是本章这两个定义的换皮。这里多花的力气，后面会成倍省回来。</p>
+
+  <p>数列极限只研究"$n\to\infty$"，而函数要研究"$x$ 从各个方向逼近 $x_0$"。定义只多了一个 $\delta$，但细节上多了几个坑。</p>
+
+  <h3>3.1 定义：$\eps$-$\delta$ 语言</h3>
+
+  <div class="box def"><div class="tag">$x\to x_0$ 时的极限</div>
+    <p>设 $f$ 在 $x_0$ 的某个去心邻域内有定义。若存在 $A\in\R$，使</p>
+    <p>$$\forall\eps&gt;0,\ \exists\delta&gt;0,\ \forall x:\ 0&lt;|x-x_0|&lt;\delta\ \Rightarrow\ |f(x)-A|&lt;\eps,$$</p>
+    <p>则称 $f$ 当 $x\to x_0$ 时以 $A$ 为极限，记 $\lim\limits_{x\to x_0}f(x)=A$。</p>
+  </div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>$\eps$-$\delta$ 就是 $\eps$-$N$ 换了个马甲：$\eps$ 管"输出多接近"，$\delta$ 管"输入多接近"。<b>$\delta$ 是 $\eps$ 的函数</b>：$\eps$ 给了之后你才去找 $\delta$。</p>
+    <p>定义里写的是 $0&lt;|x-x_0|$，特别注意：<b>$f$ 在 $x_0$ 处的值 $f(x_0)$ 完全不参与</b>。极限存在与"$f$ 在 $x_0$ 有没有定义、等于多少"无关。</p>
+  </div>
+
+  <table class="tbl">
+    <caption>$\eps$-$N$ 与 $\eps$-$\delta$：同一个故事的两个舞台</caption>
+    <tr><th style="width:110px"></th><th>数列极限 $\lim\limits_{n\to\infty}a_n=a$</th><th>函数极限 $\lim\limits_{x\to x_0}f(x)=A$</th></tr>
+    <tr><td>谁在动</td><td>下标 $n$，只能逐个往后，方向唯一</td><td>$x$，可从两侧、以任意方式靠近</td></tr>
+    <tr><td>$\eps$ 管什么</td><td>输出 $|a_n-a|$ 的上限</td><td>输出 $|f(x)-A|$ 的上限</td></tr>
+    <tr><td>回应量</td><td>$N$：从第几项起负责</td><td>$\delta$：$x$ 允许离 $x_0$ 多近</td></tr>
+    <tr><td>作用范围</td><td>$n&gt;N$，离散的"以后"</td><td>$0&lt;|x-x_0|&lt;\delta$，连续的一段，且挖掉 $x_0$</td></tr>
+    <tr><td>依赖关系</td><td>$N=N(\eps)$</td><td>$\delta=\delta(\eps)$</td></tr>
+    <tr><td>最易忽略</td><td>$N$ 不能依赖 $n$</td><td>$\delta$ 不能依赖 $x$；$x=x_0$ 不在管辖内</td></tr>
+  </table>
+
+  <p class="plain">ε 是"输出允许的偏差"，δ 是"输入要靠近到什么程度"。能对每个 ε 都找到一个 δ，就说明输出真的跟着输入走；只要有一个 ε 找不到 δ，极限就不存在。</p>
+
+  <p>"与 $f(x_0)$ 无关"不是附加说明，而是 $0&lt;|x-x_0|$ 直接推出来的：这个不等式把 $x=x_0$ 排除在外，$f(x_0)$ 压根没被查询。看两个函数：</p>
+
+  <p>$$f(x)=\frac{x^2-1}{x-1}\ (x\ne1),\qquad g(x)=\begin{cases}x+1,&x\ne1,\\ 100,&x=1.\end{cases}$$</p>
+
+  <p>$f$ 在 $x=1$ 处没定义，$g$ 在 $x=1$ 处取了个荒唐的 $100$，可两者的极限都存在且都等于 $2$：在去心邻域内 $f(x)=g(x)=x+1$，完全相同，而定义只看去心邻域。<b>极限说的是"靠近时发生什么"，不是"到达时发生什么"</b>。用 $\eps$-$\delta$ 对 $g$ 走一遍：取 $\eps=0.01$，要 $|g(x)-2|&lt;0.01$，$x\ne1$ 时这就是 $|x-1|&lt;0.01$，于是取 $\delta=0.01$ 即可。$g(1)=100$ 离 $2$ 有 $98$ 之远，却被 $0&lt;|x-1|$ 挡在门外，完全不影响极限。</p>
+
+  <div class="lab" data-lab="fun-eps"></div>
+
+  <div class="vid" data-video="eps-delta" data-title="ε-δ：ε 给出输出窗口，δ 把输入框住"></div>
+
+  <table class="tbl">
+    <caption>三种变体：只改一个量词部分</caption>
+    <tr><th style="width:170px">情形</th><th>定义（在 $\forall\eps&gt;0$ 之后）</th></tr>
+    <tr><td>$x\to x_0^+$</td><td>$\exists\delta&gt;0,\ 0&lt;x-x_0&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to x_0^-$</td><td>$\exists\delta&gt;0,\ 0&lt;x_0-x&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to+\infty$</td><td>$\exists M&gt;0,\ x&gt;M\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to-\infty$</td><td>$\exists M&gt;0,\ x&lt;-M\imp|f(x)-A|&lt;\eps$</td></tr>
+  </table>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Cauchy 的写法还是文字："当 $x$ 无限趋近于 $x_0$ 时，$f(x)$ 无限趋近于 $A$。"两个"无限"都没有着落。Weierstrass 的办法是把两个"无限趋近"各换成一个不等式：$\eps$ 管输出，$\delta$ 管输入，两个无穷小都变成可以任取的正数。</p>
+    <p>收益不只是"更严谨"：从此<b>否定一个极限</b>也有固定套路——只要指出某个 $\eps_0&gt;0$，无论 $\delta$ 取多小，总有 $x$ 落进 $\delta$ 范围却跑出 $\eps_0$ 窗口。十九世纪后半叶的分析严格化，很大程度上就是把这套翻译做完。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>把 $\delta$ 当成"越小越好"。</b>定义要的是"$\exists\delta&gt;0$"，而 $\delta$ 出现在条件 $0&lt;|x-x_0|&lt;\delta$ 里：$\delta$ 越大，被管住的 $x$ 越多，命题越难成立。所以某个 $\delta$ 能用，更小的当然也能用——<b>我们主动取小，是为了让 $|f(x)-A|$ 变小，不是定义要求它小</b>。</p>
+    <p><b>把"$\delta$ 可以依赖 $\eps$"记成"$\delta$ 可以依赖 $x$"。</b>若允许对每个 $x$ 单独找 $\delta$，任何函数在任何点都"有极限"，定义就空了。这与 $\eps$-$N$ 里"$N$ 不能依赖 $n$"是同一条戒律。</p>
+  </div>
+
+  <div class="box prop" data-k="命题"><div class="tag">双侧极限与单侧极限</div>
+    <p>$\lim_{x\to x_0}f(x)=A$ $\iff$ 左右极限都存在且都等于 $A$。</p>
+    <p>这是判断"极限不存在"的常用武器：只要左右极限不等，双侧极限就不存在。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">符号函数</div>
+    <p>$f(x)=\operatorname{sgn}x$ 在 $x=0$ 处：左极限 $-1$，右极限 $1$，<b>极限不存在</b>。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：$\delta$ 是 $\eps$ 的函数；极限与 $f(x_0)$ 的取值无关。</p>
+
+  <h3>3.2 Heine 定理：把函数问题变成数列问题</h3>
+
+  <p>$\eps$-$\delta$ 证明每步都要造 $\delta$，很费手；第二章却已攒下一整套现成结论。Heine 定理的作用是<b>修一条翻译通道</b>：把关于 $x$ 的命题换成关于 $n$ 的命题，于是唯一性、保号性、四则运算、夹逼都能直接搬来。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Heine 定理（归结原则）</div>
+    <p>$\lim\limits_{x\to x_0}f(x)=A$ 的充要条件是：<b>对任意</b>满足 $x_n\ne x_0$ 且 $x_n\to x_0$ 的数列，都有 $f(x_n)\to A$。</p>
+    <details class="proof"><summary>证明思路</summary><div class="body">
+      <p><b>必要性</b>不难：$\eps$ 给 $\delta$，数列的"最终性"给 $n&gt;N$ 时的 $0&lt;|x_n-x_0|&lt;\delta$。</p>
+      <p><b>充分性</b>用反证：若极限不为 $A$，则存在 $\eps_0&gt;0$，使对每个 $\delta=\frac1n$ 都能找到 $x_n$ 满足 $0&lt;|x_n-x_0|&lt;\frac1n$ 但 $|f(x_n)-A|\ge\eps_0$。于是 $x_n\to x_0$ 而 $f(x_n)\not\to A$，矛盾。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">为什么能这样翻译？因为"$x\to x_0$"的全部内容就是：<b>不管 $x$ 以什么方式靠近，只要够近，$f(x)$ 就够近</b>。而"以什么方式"可以被一串数列完整采样——任取一列 $x_n\to x_0$（$x_n\ne x_0$），就是一条具体的靠近路线。函数极限说"所有路线都通向 $A$"，Heine 说"沿任何一条路线都通向 $A$"，这两句话其实是同一句。</p>
+
+  <p>用途分两头：<b>证不存在</b>只需给出两条路线、两个落点，比 $\eps$-$\delta$ 反证省力；<b>用性质</b>则把它当翻译机。唯一搬不过去的是"一致性"：若结论里出现"对所有的 $x$ 用同一个 $\delta$"，逐点翻译就失效了——那正是一致连续要处理的事。</p>
+
+  <p>Heine 定理的价值在于：<b>数列极限的所有性质（唯一性、保号性、四则运算、夹逼）可以整包搬过来</b>，不必重新用 $\eps$-$\delta$ 证一遍。</p>
+
+  <div class="box tip"><div class="tag">方法 · 用 Heine 判定极限不存在</div>
+    <p>找两条数列 $x_n,y_n\to x_0$，使 $f(x_n)$ 与 $f(y_n)$ 趋于不同的值。例：$f(x)=\sin\frac1x$，取 $x_n=\frac{1}{2n\pi}$ 得 $f(x_n)=0$；取 $y_n=\frac{1}{2n\pi+\pi/2}$ 得 $f(y_n)=1$。故 $x\to0$ 时极限不存在。</p>
+    <p>另一条常用的路：$f(x)=\frac{|x|}{x}$（$x\to0$）左右极限为 $\pm1$。</p>
+  </div>
+
+  <p>再给一个"处处失效"的例子。Dirichlet 函数</p>
+
+  <p>$$D(x)=\begin{cases}1,&x\in\Q,\\ 0,&x\notin\Q\end{cases}$$</p>
+
+  <p>在<b>任何</b> $x_0$ 处极限都不存在：有理数与无理数在任何区间里都稠密，故可取有理数列 $p_n\to x_0$（$D(p_n)\equiv1$）与无理性列 $q_n\to x_0$（$D(q_n)\equiv0$），两条路线落点不同。这个例子说明"极限存在"有多强：它要的不是"某条路线走得通"，而是<b>所有路线殊途同归</b>。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>用 Heine 定理最容易漏掉 $x_n\ne x_0$。若允许数列里出现 $x_0$，$f(x_0)$ 就被拉进极限：对 3.1 里的 $g$（$g(1)=100$，其余 $g(x)=x+1$）取常数列 $x_n\equiv1$，得 $g(x_n)\equiv100\to100$，于是你会"证明"出 $\lim\limits_{x\to1}g(x)=100$。错在 $0&lt;|x_n-x_0|$——定义早把 $x_0$ 赶出去了。同样，只验证<b>一条</b>数列也不够：$f(x)=\sin\frac1x$ 沿 $x_n=\frac{1}{2n\pi}$ 趋于 $0$，但极限并不存在。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：Heine 把函数极限翻译成数列极限，第二章的定理整包搬来。</p>
+
+  <h3>3.3 两个重要极限</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">两个重要极限</div>
+    <p>$$\lim_{x\to0}\frac{\sin x}{x}=1,\qquad \lim_{x\to\infty}\left(1+\frac1x\right)^x=e.$$</p>
+    <details class="proof"><summary>第一个的证明思路</summary><div class="body">
+      <p>对 $0&lt;x&lt;\frac\pi2$，由单位圆中的面积关系得 $\sin x&lt;x&lt;\tan x$，于是</p>
+      <p>$$\cos x&lt;\frac{\sin x}{x}&lt;1.$$</p>
+      <p>由 $\cos x\to1$（$x\to0$）及夹逼，得 $\frac{\sin x}{x}\to1$。$x&lt;0$ 时用 $\frac{\sin x}{x}=\frac{\sin(-x)}{-x}$ 化归。</p>
+      <p>注意：这个证明<b>借用了 $\sin$ 的几何定义和弧度制</b>。严格化要等到级数章用幂级数定义 $\sin$，那时 $\frac{\sin x}{x}\to1$ 是逐项估计的结果。</p>
+    </div></details>
+  </div>
+
+  <p class="plain">第一个极限的几何来源是一张面积三明治。单位圆里圆心角 $x$（弧度，$0&lt;x&lt;\frac\pi2$）对应三角形、扇形、大三角形，面积依次是 $\frac12\sin x$、$\frac12x$、$\frac12\tan x$，一层套一层，于是 $\sin x&lt;x&lt;\tan x$，即 $\cos x&lt;\frac{\sin x}{x}&lt;1$。两边同趋于 $1$，中间那个没有别的去处。这里的 $x$ 必须是弧度：换成角度，扇形面积不再是 $\frac x2$，那个 $1$ 就变成 $\frac{\pi}{180}$。<b>弧度制不是记号偏好，它是这个极限等于 $1$ 的唯一理由。</b></p>
+
+  <p>导言里拿"用洛必达法则证 $\frac{\sin x}{x}\to1$"当循环论证的样板，坑就挖在这里。这个证明里藏了两处循环依赖。其一，扇形面积 $\frac12x$ 用了弧长 $x$，而弧长要用积分或极限定义，此刻还没有；其二，末尾用 $\cos x\to1$，这需要 $\cos$ 的连续性，而连续性又用极限定义。也就是说：<b>用几何直观证 $\frac{\sin x}{x}\to1$，再用它去建立 $\sin$ 的连续性与求导公式，是一条循环路。</b>严格的顺序正好相反：先用幂级数定义 $\sin,\cos$，由逐项估计得到 $\frac{\sin x}{x}\to1$，再证明几何定义与级数定义一致。本章先按几何走，是为了让人看见图形；逻辑上的欠账，到期数章才还。</p>
+
+  <div class="box ex"><div class="tag">用重要极限算几个</div>
+    <p>求 (1) $\lim\limits_{x\to0}\dfrac{\sin3x}{x}$；(2) $\lim\limits_{x\to0}\dfrac{1-\cos x}{x^2}$；(3) $\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> $\dfrac{\sin3x}{x}=3\cdot\dfrac{\sin3x}{3x}\to3$。</p>
+      <p><b>(2)</b> $\dfrac{1-\cos x}{x^2}=\dfrac{2\sin^2\frac x2}{x^2}=\dfrac12\left(\dfrac{\sin(x/2)}{x/2}\right)^2\to\dfrac12$。</p>
+      <p><b>(3)</b> $\left(1+\frac2x\right)^x=\left[\left(1+\frac{2}{x}\right)^{x/2}\right]^2\to e^2$。</p>
+    </div></details>
+  </div>
+
+  <p class="plain">第二个极限是把 2.4 的数列版抬到实数。思路是夹：设 $x\ge1$，$n=[x]$，则 $n\le x&lt;n+1$，$\frac{1}{n+1}&lt;\frac1x\le\frac1n$，底数与指数同时被夹住，得</p>
+
+  <p>$$\left(1+\frac{1}{n+1}\right)^{n}&lt;\left(1+\frac1x\right)^{x}&lt;\left(1+\frac1n\right)^{n+1}.$$</p>
+
+  <p>左边 $=a_{n+1}\cdot\frac{n+1}{n+2}\to e$，右边 $=a_n\cdot\left(1+\frac1n\right)\to e$，由夹逼即得（$x\to-\infty$ 时令 $y=-x$ 化归，$(1-\frac1y)^{-y}\to e$）。所以它不是新结论，<b>是把数列结论用夹逼抬到实数上的结果</b>——先离散，再夹逼，最后连续，本章反复出现这个套路。顺便破除一个错觉：$(1+\frac1x)^x$ 看着像 $1^\infty$，取 $x=1000$ 得 $2.7169$——底数只比 $1$ 大一点点，指数把它放大回来。<b>$1^\infty$ 是未定式，不能直接当 $1$。</b></p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>这个极限在十七、十八世纪是以"复利"和"对数底"的身份被注意到的：本金按 $100\%$ 年利率无限细分地复利，年底钱数趋于一个固定的数。Euler 在十八世纪的著作里系统使用记号 $e$，一般认为取自"exponential"（指数）的首字母；也有别的解释，至今没有定论。</p>
+    <p>把它叫"自然"底的理由，要等学完导数才看得出来：以 $e$ 为底时 $(e^x)'=e^x$，指数函数求导还是自己，所有底数里只有它做到这点。所以 $e$ 是"自然"的，不是人为挑的。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：两个重要极限要背，但要知道它们各自依赖什么前提。</p>
+
+  <h3>3.4 无穷小、阶与等价替换</h3>
+
+  <div class="box def"><div class="tag">无穷小与阶</div>
+    <p>若 $\lim_{x\to x_0}\alpha(x)=0$，称 $\alpha$ 是 $x\to x_0$ 时的<b>无穷小</b>。</p>
+    <p>设 $\alpha,\beta$ 都是无穷小，且 $\beta\ne0$：</p>
+    <ul>
+      <li>若 $\frac\alpha\beta\to0$，记 $\alpha=o(\beta)$，称 $\alpha$ 是<b>高阶</b>无穷小；</li>
+      <li>若 $\frac\alpha\beta\to c\ne0$，记 $\alpha=O(\beta)$，称<b>同阶</b>；特别 $c=1$ 时记 $\alpha\sim\beta$，称<b>等价</b>无穷小。</li>
+    </ul>
+  </div>
+
+  <p class="plain">阶就是"谁跑得快"。取 $x=0.01$：$x^2=0.0001$，$x^3=0.000001$——同样往 $0$ 跑，$x^3$ 比 $x$ 快得多。所以 $x^2=o(x)$ 说的是"$x^2$ 相对 $x$ 可以忽略"，而 $\ln(1+x)\sim x$ 说的是"同速，差别排在下一阶"。同阶只比速度的倍率，等价还要求倍率恰好是 $1$。<b>类比到此为止</b>：速度比较只在两者都趋于 $0$ 时有意义，若 $\beta$ 不趋于 $0$，比值的行为就与"谁快"无关。</p>
+
+  <table class="tbl">
+    <caption>$x\to0$ 时最常用的等价无穷小</caption>
+    <tr><th>函数</th><th>等价于</th><th>函数</th><th>等价于</th></tr>
+    <tr><td>$\sin x$</td><td>$x$</td><td>$\tan x$</td><td>$x$</td></tr>
+    <tr><td>$1-\cos x$</td><td>$\frac12x^2$</td><td>$\ln(1+x)$</td><td>$x$</td></tr>
+    <tr><td>$e^x-1$</td><td>$x$</td><td>$(1+x)^\alpha-1$</td><td>$\alpha x$</td></tr>
+    <tr><td>$\arcsin x$</td><td>$x$</td><td>$\arctan x$</td><td>$x$</td></tr>
+  </table>
+
+  <div class="box thm" data-k="定理"><div class="tag">等价替换（只对乘除因子有效）</div>
+    <p>若 $\alpha\sim\alpha'$，$\beta\sim\beta'$，则 $\lim\dfrac{\alpha}{\beta}=\lim\dfrac{\alpha'}{\beta'}$（只要后者存在）。</p>
+  </div>
+
+  <p class="plain">等价替换只能在乘除里用，是因为 $\alpha\sim\alpha'$ 给出的信息是<b>相对误差</b>趋于零：可写成 $\alpha=\alpha'(1+o(1))$。除法里两个相对误差相乘相除仍是小量；加法里两个几乎一样大的量相减，$o(1)$ 会被放大成主角，而它恰恰是被丢掉的部分。一句话：<b>乘除看相对误差，加减看绝对误差，等价无穷小只保证前者。</b></p>
+
+  <p>最有名的错例是 $\sin x-x$。用 $\sin x\sim x$ 得 $0$，可真实值不是 $0$：由 Taylor 展开（第 6 章才讲，这里先借用结论）$\sin x=x-\frac{x^3}{6}+o(x^3)$，故 $\sin x-x=-\frac{x^3}{6}+o(x^3)\sim-\frac{x^3}{6}$。代 $x=0.1$ 验：$\sin0.1-0.1\approx-1.6658\times10^{-4}$，而 $-\frac{0.1^3}{6}\approx-1.6667\times10^{-4}$，量级与系数都对上了。那个"等于 $0$"的答案，错在把真正的主角当成误差扔了。</p>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p><b>加减法中不能随意替换！</b> 例如 $\lim\limits_{x\to0}\dfrac{\tan x-\sin x}{x^3}$。若把 $\tan x,\sin x$ 都换成 $x$，得 $0$，<b>答案错</b>。正确做法：</p>
+    <p>$$\tan x-\sin x=\tan x(1-\cos x)\sim x\cdot\frac{x^2}{2}=\frac{x^3}{2},$$</p>
+    <p>故极限为 $\frac12$。原因：两个等价量相减时，低阶部分正好抵消，剩下的高阶项才是主角——而"等价"只保留了低阶信息。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 加减里怎么处理无穷小</div>
+    <p>① <b>提公因子</b>，把差变成乘：$\tan x-\sin x=\tan x(1-\cos x)$。② <b>Taylor 展到不抵消的那一阶</b>：$\sin x-x$ 展一阶会抵消，就展到三阶。③ <b>先通分或先合并</b>，把差变成商。三条路的共同点：<b>先把"相减"消灭掉，再谈替换</b>。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：等价替换只对乘除因子有效，加减要提主部。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">$\lim\limits_{x\to0}\dfrac{\sin 3x}{x}=$</p>
+      <div class="q-opts"><button data-o="A">A. $1$</button><button data-o="B">B. $3$</button><button data-o="C">C. $\dfrac13$</button><button data-o="D">D. 不存在</button></div>
+      <p class="q-exp" hidden>凑成 $3\cdot\dfrac{\sin 3x}{3x}\to3\cdot1$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>用 $\eps$-$\delta$ 证明 $\lim\limits_{x\to2}(3x-1)=5$。</li>
+      <li>求 $\lim\limits_{x\to0}\dfrac{\sqrt{1+x}-1}{x}$。</li>
+      <li>求 $\lim\limits_{x\to0}x\sin\dfrac1x$，并说明为什么不能用"$\sin\frac1x$ 无极限"来否定它。</li>
+      <li>判断 $\lim\limits_{x\to0}\dfrac{\sin x}{x}=1$ 的证明中，"$\cos x&lt;\frac{\sin x}{x}&lt;1$"这一步依赖了什么前提。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $|3x-1-5|=3|x-2|$，任给 $\eps&gt;0$ 取 $\delta=\eps/3$ 即可。</p>
+      <p><b>2.</b> 有理化：$\frac{\sqrt{1+x}-1}{x}=\frac{1}{\sqrt{1+x}+1}\to\frac12$。</p>
+      <p><b>3.</b> $0\le|x\sin\frac1x|\le|x|\to0$，由夹逼极限为 $0$。有界量乘无穷小仍是无穷小——虽然 $\sin\frac1x$ 本身没有极限，但它有界，被 $x\to0$ 压住了。</p>
+      <p><b>4.</b> 依赖 $0&lt;x&lt;\frac\pi2$（单位圆中扇形面积夹在三角形之间），还要依赖 $\cos x\to1$ 本身。这正是"循环论证风险"的典型位置。</p>
+    </div></details>
+  </div>
+</section>

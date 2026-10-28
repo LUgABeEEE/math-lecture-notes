@@ -1,0 +1,410 @@
+<section class="chap" id="ch6" data-no="06" data-title="微分中值定理" style="--ch:6">
+  <div class="chap-head">
+    <div class="chap-no">06</div>
+    <h2>微分中值定理<small class="en">Mean Value Theorems</small></h2>
+  </div>
+  <p class="src">教材对应：第六章 微分中值定理及其应用 · §1 拉格朗日定理与单调性　§2 柯西中值定理与不定式　§3 泰勒公式　§4 极值·最值·凹凸性</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>一段路上的平均速度，为什么一定等于某一瞬间的瞬时速度？</li><li>罗尔定理的三个条件，去掉哪一个会让结论失效？</li><li>泰勒公式在用多项式“模仿”函数，模仿到什么程度算成功？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>一条链：Fermat 引理 → Rolle → Lagrange → Cauchy</li>
+      <li>Taylor 公式：两种余项，两种用途</li>
+      <li>L'Hospital 法则：条件比公式重要</li>
+      <li>单调、极值、凹凸、渐近线：把导数当"形状探测器"</li>
+    </ul>
+  </div>
+
+  <p>上一章把导数算了出来，回答的只是"某一点的瞬时变化率是多少"。实际问题问的却常是整段路：从 $a$ 到 $b$，函数一共变了多少？这个总量能不能由局部速率倒推？这一章的回答是：能，但要靠一条存在性定理当中间人。它也是后面"证不等式、数方程根的个数、估误差"的总入口；第九章的定积分还会回来取货。不过中值定理自己也是一条"存在性"结论——那个 $\xi$ 凭什么一定存在？这要等下一章把实数系的地基挖开，才说得清。</p>
+
+  <p>这一章是整个微分学的核心。它的价值在于：<b>把"函数在一个区间上的整体信息"和"某一点的导数"连起来</b>。所有"证明不等式""证明方程有根""估计误差"的题，入口都在这里。</p>
+
+  <h3>6.1 一条定理链</h3>
+
+  <p>这一节四个结论不是四座并排的碑，而是一条流水线：后一个把前一个当机器，自己只多做一件事。看清"多做的那件事"，比记住四个结论的措辞有用得多。</p>
+
+  <p class="plain">逐个数<b>多做的那件事</b>。Fermat 引理只用了极限的保号性——极值点左侧差商非负、右侧差商非正，两边取极限只好都是 $0$。Rolle 加的是最值定理：先保证"最大值真的存在"，才轮得到 Fermat 去说"那点的导数为零"。Lagrange 加的是一次构造：减去割线，把斜弦压成水平弦，问题退回 Rolle。Cauchy 加的是换视角：把 $(g(t),f(t))$ 看成平面上一条曲线，结论就是"某点的切向量与弦平行"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Fermat 引理</div>
+    <p>若 $f$ 在 $x_0$ 的某邻域内定义，在 $x_0$ 取<b>局部极值</b>，且 $f'(x_0)$ 存在，则 $f'(x_0)=0$。</p>
+    <details class="proof"><summary>证明（只证极大）</summary><div class="body">
+      <p>存在 $\delta&gt;0$ 使 $|x-x_0|&lt;\delta$ 时 $f(x)\le f(x_0)$。于是</p>
+      <p>$$\frac{f(x)-f(x_0)}{x-x_0}\begin{cases}\ge0,&x&lt;x_0,\\[2pt]\le0,&x&gt;x_0.\end{cases}$$</p>
+      <p>令 $x\to x_0^-$ 得 $f'(x_0)\ge0$，令 $x\to x_0^+$ 得 $f'(x_0)\le0$，故 $f'(x_0)=0$。<span class="qed">∎</span></p>
+      <p>注意两个方向的不等号方向相反，这是本证明的关键。</p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Rolle 中值定理</div>
+    <p>若 $f\in C[a,b]$，在 $(a,b)$ 内可导，且 $f(a)=f(b)$，则存在 $\xi\in(a,b)$ 使 $f'(\xi)=0$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>由最值定理，$f$ 在 $[a,b]$ 上取到最大 $M$ 与最小 $m$。</p>
+      <p>若 $M=m$，则 $f$ 为常数，任取 $\xi$ 都有 $f'(\xi)=0$。若 $M&gt;m$，由于 $f(a)=f(b)$，$M$ 与 $m$ 中至少有一个在<b>内部</b>某点 $\xi$ 取到，由 Fermat 引理 $f'(\xi)=0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">Rolle 定理最容易被背成"两端相等就有导数为零的点"，其实它有一句大白话：<b>开车出去又开回原地，路上总有一刻速度表指零。</b>想跑出去速度为正，想回来就得掉头、速度为负，从正变负必然经过零。前提是位置连续变化（不能瞬移）、速度表一直有读数（处处可导）。三个条件因此各管一件事：闭区间连续管"没跳过去"，开区间可导管"一直有读数"，两端相等管"回到原地"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Lagrange 中值定理</div>
+    <p>若 $f\in C[a,b]$，在 $(a,b)$ 内可导，则存在 $\xi\in(a,b)$ 使</p>
+    <p>$$f(b)-f(a)=f'(\xi)(b-a).$$</p>
+    <details class="proof"><summary>证明（构造辅助函数）</summary><div class="body">
+      <p>令 $k=\dfrac{f(b)-f(a)}{b-a}$，$F(x)=f(x)-f(a)-k(x-a)$。则 $F(a)=F(b)=0$，$F$ 满足 Rolle 定理的条件，存在 $\xi$ 使 $0=F'(\xi)=f'(\xi)-k$，即得。<span class="qed">∎</span></p>
+      <p>"减去割线"是构造辅助函数的标准套路，请记住这个动作。</p>
+    </div></details>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Rolle 本人（十七世纪末）讨论的是多项式方程能有多少个根，结论形态与今天不同；把它改写成 $f(b)-f(a)=f'(\xi)(b-a)$ 这一步，一般认为属于 Lagrange（十八世纪末）。Cauchy 在十九世纪二十年代前后又推广到两个函数的情形，并第一次认真追究"导数"本身该怎么定义。这条链<b>花了一百多年才接起来</b>：不是谁一次想通，而是每代人补上一个原来说不清的地方。</p>
+  </div>
+
+  <p class="plain">中值定理说的是：<b>一段路上的"平均变化率"，必然等于路上某一点的"瞬时变化率"。</b>开车两小时走了 120 公里，平均时速 60，那么这两小时里至少有一瞬间，速度表正好指着 60。就这么朴素。</p>
+
+  <p>中值定理被叫"桥梁"，是因为它把两类信息焊进一个等式：$f(b)-f(a)$ 是<b>函数</b>在整段上的信息（量两端高度即可），$f'(\xi)(b-a)$ 是<b>导数</b>在某一点的信息（知道斜率即可）。等式成立，你就能单方面使用某一边：想估函数差就去估导数，想研究函数就去看导数。</p>
+
+  <p class="plain">它的形状很怪：<b>只保证 $\xi$ 存在，绝不告诉你 $\xi$ 在哪。</b>可证不等式时，你要的从来不是 $\xi$ 的地址，而是它的取值范围。取 $f(t)=\sqrt t$，在 $[100,101]$ 上用它：</p>
+  <p>$$\sqrt{101}-10=\frac{1}{2\sqrt{\xi}},\qquad \xi\in(100,101).$$</p>
+  <p>由 $10&lt;\sqrt\xi&lt;11$ 得 $\dfrac1{22}&lt;\dfrac1{2\sqrt\xi}&lt;\dfrac1{20}$，故 $0.04545\ldots&lt;\sqrt{101}-10&lt;0.05$，即 $10.045&lt;\sqrt{101}&lt;10.05$——不用计算器就夹住了它（真值 $10.04988$）。一步代数换三位有效数字，这就是桥梁的汇率。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>① 以为 $\xi$ 是中点、而且唯一。</b>$f(x)=x^3$ 在 $[-1,1]$ 上：割线斜率 $\dfrac{1-(-1)}{1-(-1)}=1$，而 $f'(\xi)=3\xi^2$，解得 $\xi=\pm\dfrac1{\sqrt3}\approx\pm0.577$。两个都合格，还都不是中点 $0$。定理只承诺"至少一个"。</p>
+    <p><b>② 以为条件能省。</b>取 $f(x)=x$（$0\le x&lt;1$）、$f(1)=0$。端点相等，可 $f'\equiv1$，没有导数为零的点——$x=1$ 处那个跳跃把桥拆了。</p>
+  </div>
+
+  <div class="vid" data-video="mvt" data-title="拉格朗日中值定理：把弦平移上去，总有一点相切"></div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Cauchy 中值定理</div>
+    <p>若 $f,g\in C[a,b]$，在 $(a,b)$ 内可导，$g'(x)\ne0$，则存在 $\xi\in(a,b)$ 使</p>
+    <p>$$\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(\xi)}{g'(\xi)}.$$</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>令 $F(x)=f(x)-f(a)-\dfrac{f(b)-f(a)}{g(b)-g(a)}\big(g(x)-g(a)\big)$，验证 $F(a)=F(b)=0$ 后用 Rolle 定理。<span class="qed">∎</span></p>
+      <p><b>它不是 Lagrange 的推广，而是 L'Hospital 法则的发动机。</b></p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 中值定理的三个用法</div>
+    <p><b>① 证明不等式：</b>把 $f(b)-f(a)$ 换成 $f'(\xi)(b-a)$，再估计 $f'(\xi)$ 的范围。<br>
+       <b>② 证明导数为零/存在性：</b>构造辅助函数，凑出 $F(a)=F(b)$。<br>
+       <b>③ 证明恒等式：</b>若 $f'\equiv0$ 则 $f$ 为常数（由 Lagrange 定理）。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">用中值定理证不等式</div>
+    <p>证明：当 $x&gt;0$ 时，$\dfrac{x}{1+x}&lt;\ln(1+x)&lt;x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>令 $f(t)=\ln(1+t)$，在 $[0,x]$ 上用 Lagrange 中值定理：存在 $\xi\in(0,x)$ 使</p>
+      <p>$$\ln(1+x)-\ln1=\frac{1}{1+\xi}\cdot x.$$</p>
+      <p>由 $0&lt;\xi&lt;x$ 得 $\dfrac{1}{1+x}&lt;\dfrac{1}{1+\xi}&lt;1$，两边乘 $x&gt;0$ 即得。</p>
+      <p>这个不等式在估计对数、证明调和级数发散时天天用。</p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：中值定理：平均变化率必在某一点被瞬时变化率取到。</p>
+
+  <h3>6.2 Taylor 公式</h3>
+
+  <p class="plain">Taylor 公式的本质是<b>用多项式冒充函数</b>。多项式最好算：四则运算就能出值，求导还是多项式。于是算盘是：在 $x_0$ 附近找一个多项式，让它在 $x_0$ 处的值、一阶导、二阶导……直到 $n$ 阶导都与原函数相同——两条曲线贴合到 $n$ 阶，贴得越狠，分开得越晚。</p>
+
+  <p>但"附近像"不等于"像"。$\sin x$ 与 $x-\dfrac{x^3}{6}$：在 $x=0.5$ 处，$\sin0.5\approx0.47943$，多项式给 $0.47917$，只差 $0.00026$——恰好是被丢掉的第一项 $\dfrac{0.5^5}{5!}$ 的量级，误差有了确定的量级；换到 $x=3$，$\sin3\approx0.1411$，多项式给出 $3-4.5=-1.5$——差了一个量级，连符号都错。<b>多项式只在展开点附近冒充，越远越露馅。</b></p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Taylor 公式（带 Peano 余项）</div>
+    <p>若 $f$ 在 $x_0$ 处有 $n$ 阶导数，则当 $x\to x_0$ 时</p>
+    <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+o\big((x-x_0)^n\big).$$</p>
+    <p>它描述的是<b>局部</b>行为，用于求极限、判断极值。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Taylor 公式（带 Lagrange 余项）</div>
+    <p>若 $f$ 在 $[a,b]$ 上有 $n+1$ 阶导数，则对任意 $x,x_0\in[a,b]$，存在 $\xi$ 介于 $x$ 与 $x_0$ 之间，使</p>
+    <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}.$$</p>
+    <p>它给出<b>误差的定量估计</b>，用于近似计算与证明不等式。</p>
+  </div>
+
+  <p class="plain">两种余项分工明确。Peano 余项 $o\big((x-x_0)^n\big)$ 不告诉你误差<b>多大</b>，只告诉你误差<b>消失得多快</b>——它的地盘是极限：求 $\lim\frac{\cdots}{x^n}$ 时 $o(x^n)$ 一除就归零，但你要它担保小数点后四位，它一个字都不担保。</p>
+
+  <p class="plain">Lagrange 余项反过来，直接给出能算的式子 $\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$。$\xi$ 仍不知道在哪，可只要 $f^{(n+1)}$ 有上界 $M$，误差就被 $M\dfrac{|x-x_0|^{n+1}}{(n+1)!}$ 卡死。这是"能报数"的余项。一句话：<b>要极限用 Peano，要误差用 Lagrange；前者管多快，后者管多少。</b></p>
+
+  <div class="lab" data-lab="taylor"></div>
+
+  <div class="vid" data-video="taylor" data-title="Taylor 多项式逼近 sin x：阶数越高，贴合越宽"></div>
+
+  <div class="box ex"><div class="tag">两种余项各用一次</div>
+    <p>(1) 求 $\lim\limits_{x\to0}\dfrac{e^x-1-x}{x^2}$；(2) 估计 $e\approx 1+1+\frac1{2!}+\cdots+\frac1{n!}$ 的误差。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> 用 Peano：$e^x=1+x+\frac{x^2}{2}+o(x^2)$，故原式 $=\frac{x^2/2+o(x^2)}{x^2}\to\frac12$。</p>
+      <p><b>(2)</b> 用 Lagrange：$e=e^1$ 在 $x_0=0$ 处展开 $n$ 阶，余项 $\dfrac{e^{\xi}}{(n+1)!}$，$\xi\in(0,1)$，故误差 $&lt;\dfrac{3}{(n+1)!}$。</p>
+      <p>同一函数、两个公式，<b>要极限用 Peano，要误差用 Lagrange</b>。</p>
+    </div></details>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>公式得名于 Brook Taylor（十八世纪初），但他写下的是一条级数，并没有处理收敛与余项——那个年代对级数还很乐观。把余项写成可估计的形式，一般认为要算到 Lagrange 与 Cauchy（十八世纪末到十九世纪）；只用 $o$ 记号的 Peano 余项出现得更晚。<b>公式和"公式能用到哪"是两件事</b>，中间隔了几十年。</p>
+  </div>
+
+  <p>把数代进去，看误差到底多大。$e^{0.1}=1+0.1+\dfrac{0.01}{2}+R_2$，前三项给 $1.105$；余项 $|R_2|\le\dfrac{e^{0.1}}{6}(0.1)^3&lt;\dfrac{3}{6}\cdot10^{-3}=5\times10^{-4}$（用了 $e^{0.1}&lt;3$）。真值 $1.1051709\ldots$，实际误差约 $1.7\times10^{-4}$，确实落在界内。</p>
+
+  <p>同一个式子估 $e$ 本身：$|R_n|&lt;\dfrac{3}{(n+1)!}$。取 $n=6$ 得界约 $6.0\times10^{-4}$，取 $n=10$ 得约 $7.5\times10^{-8}$——想多要三位小数，把 $n$ 从 $6$ 抬到 $10$ 就行。<b>误差界像价目表，一眼看出要付多少项。</b></p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>① 把 "$\approx$" 当结论。</b>写 $e^x\approx1+x+\frac{x^2}{2}$ 就宣布 $e^x&gt;1+x+\frac{x^2}{2}$，推理不成立——方向由<b>余项符号</b>决定。这里 $x&gt;0$ 时余项 $\frac{e^\xi}{6}x^3&gt;0$，结论才恰好成立；换成 $e^{-x}\approx1-x+\frac{x^2}{2}$，同一个动作得到的余项是 $-\frac{e^{-\xi}}{6}x^3&lt;0$，不等号立刻掉头。用 Taylor 证不等式，余项必须留下来判号。</p>
+    <p><b>② 以为阶数越高越准。</b>只在展开点附近成立。$\sin x$ 的 $15$ 阶 Taylor 多项式在 $x=0.5$ 处已精确到 $10^{-14}$，在 $x=20$ 处却算出 $10^7$ 量级的数。选阶数之前先看 $|x-x_0|$ 有多大。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：要极限用 Peano 余项，要误差用 Lagrange 余项。</p>
+
+  <h3>6.3 L'Hospital 法则</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">L'Hospital 法则（$\frac00$ 型）</div>
+    <p>设 $f,g$ 在 $x_0$ 的某去心邻域内可导，$g'(x)\ne0$，且</p>
+    <p>$$\lim_{x\to x_0}f(x)=\lim_{x\to x_0}g(x)=0,\qquad \lim_{x\to x_0}\frac{f'(x)}{g'(x)}=A\ (\text{或}\ \infty),$$</p>
+    <p>则 $\lim\limits_{x\to x_0}\dfrac{f(x)}{g(x)}=A$。</p>
+    <p>$\frac{\infty}{\infty}$ 型有对应的版本。$0\cdot\infty$、$\infty-\infty$、$1^\infty$ 等要<b>先化成</b>这两种型。</p>
+  </div>
+
+  <p class="plain">这条法则不是新定理，它是 6.1 那台机器换个壳：对 $x$ 与 $x_0$ 用 Cauchy 中值定理，$\dfrac{f(x)}{g(x)}=\dfrac{f(x)-f(x_0)}{g(x)-g(x_0)}=\dfrac{f'(\xi)}{g'(\xi)}$，$\xi$ 夹在 $x$ 与 $x_0$ 之间；$x\to x_0$ 时 $\xi\to x_0$，右边趋于 $\lim\dfrac{f'}{g'}$。所以<b>法则的全部内容是把难点搬到 $\xi$ 那里</b>，而这要求 $f(x_0)=g(x_0)=0$——先验型不是形式主义。</p>
+
+  <div class="box warn"><div class="tag">易错 · 三个典型陷阱</div>
+    <p><b>① 不是 $\frac00$ 或 $\frac\infty\infty$ 就乱用：</b>$\lim_{x\to0}\frac{x+1}{x+2}=\frac12$，若上下求导得 $\frac11=1$，大错。</p>
+    <p><b>② 求导后极限不存在，不等于原极限不存在：</b>$f(x)=x^2\sin\frac1x$，$g(x)=x$，$x\to0$ 时 $\frac{f}{g}=x\sin\frac1x\to0$，但 $\frac{f'}{g'}=2x\sin\frac1x-\cos\frac1x$ <b>没有极限</b>。此时法则失效，要用别的方法。</p>
+    <p><b>③ 别循环：</b>用 L'Hospital 证 $\lim\frac{\sin x}{x}=1$ 会用到 $(\sin x)'=\cos x$，而这个导数公式本身就要用 $\lim\frac{\sin x}{x}=1$ 才能推出——循环论证。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>法则挂着 L'Hospital 侯爵的名字，但一般认为发现者是 Johann Bernoulli：两人有通信与雇佣关系，法则最早公开出现在 L'Hospital 十七世纪末出版的一部微积分教科书里，算是一桩"买来的定理"。正经教训是：<b>命名与发现者常常对不上</b>，定理名不能当归属证明。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：L'Hospital 三查：是不是 $\frac00$ 或 $\frac\infty\infty$、条件够不够、有没有循环。</p>
+
+  <h3>6.4 导数的形状信息</h3>
+
+  <table class="tbl">
+    <caption>把导数当"探测器"</caption>
+    <tr><th style="width:150px">看什么</th><th>结论</th></tr>
+    <tr><td>$f'&gt;0$ 于 $(a,b)$</td><td>$f$ 在 $[a,b]$ 上严格递增</td></tr>
+    <tr><td>$f''&gt;0$ 于 $(a,b)$</td><td>$f$ 是<b>凸函数</b>（下凸，图形在切线上方）</td></tr>
+    <tr><td>$f'(x_0)=0$ 且 $f''(x_0)&lt;0$</td><td>$x_0$ 是极大值点</td></tr>
+    <tr><td>$f'(x_0)=0$ 且 $f''(x_0)&gt;0$</td><td>$x_0$ 是极小值点</td></tr>
+    <tr><td>$f''$ 在 $x_0$ 两侧变号</td><td>$x_0$ 是拐点</td></tr>
+  </table>
+
+  <p class="plain">表格要分两层读。第一层是必要条件：$f'(x_0)=0$ 只说明切线水平，可能在峰顶、谷底，也可能只是上坡路上短暂歇脚（$x^3$ 在 $0$ 处）。第二层才是判别：决定极值的是 $f'$ 在 $x_0$ 两侧<b>是否变号</b>——正变负为极大，负变正为极小，不变号就不是极值。二阶导判据只是它的偷懒版：$f''(x_0)\ne0$ 时，由 $f'(x_0)=0$ 可知 $\dfrac{f'(x)}{x-x_0}$ 在 $x_0$ 附近保持 $f''(x_0)$ 的符号，$f'$ 两侧必然异号，于是只看一个数就够。</p>
+
+  <p class="plain">拐点同样要看变号：$f''(x_0)=0$ 不算拐点，要 $f''$ 两侧异号。<b>两个反例正好把两件事拆开：</b>$f(x)=x^4$ 在 $0$ 处 $f'(0)=f''(0)=0$，而 $f''=12x^2\ge0$ 两侧同号，故 $0$ 是极小值点而非拐点；$f(x)=x^3$ 的 $f''=6x$ 两侧异号，故 $0$ 是拐点而非极值点。</p>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>凸函数的定义不依赖导数：$f(\lambda x_1+(1-\lambda)x_2)\le\lambda f(x_1)+(1-\lambda)f(x_2)$，$\lambda\in[0,1]$。它说的是"<b>两点连线在图形上方</b>"。$f''&gt;0$ 只是它的一个充分条件（要求二阶导存在）。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>$f'(x_0)=0$ 只是极值的<b>必要</b>条件。$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但 $0$ 不是极值点（是拐点）。<b>"驻点"≠"极值点"。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：导数当探测器：单调看一阶，凹凸看二阶。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">若 $f'(x_0)=0$，则</p>
+      <div class="q-opts"><button data-o="A">A. $x_0$ 必为极大值点</button><button data-o="B">B. $x_0$ 必为极小值点</button><button data-o="C">C. $x_0$ 不一定是极值点</button><button data-o="D">D. $f$ 在 $x_0$ 处不连续</button></div>
+      <p class="q-exp" hidden>$f(x)=x^3$ 在 0 处 $f'(0)=0$，但 0 是拐点不是极值点。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>验证 $f(x)=x^3-3x$ 在 $[-\sqrt3,\sqrt3]$ 上满足 Rolle 定理，并求出定理中的 $\xi$。</li>
+      <li>证明：若 $f$ 在 $(a,b)$ 内可导且 $f'\equiv0$，则 $f$ 在 $(a,b)$ 内为常数。</li>
+      <li>求 $\lim\limits_{x\to0}\left(\dfrac{1}{x}-\dfrac{1}{e^x-1}\right)$。</li>
+      <li>用 Taylor 公式证明 $e^x&gt;1+x+\frac{x^2}{2}$（$x&gt;0$）。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $f(\pm\sqrt3)=(\pm\sqrt3)^3-3(\pm\sqrt3)=\pm3\sqrt3\mp3\sqrt3=0$，端点值相等，满足条件。$f'(x)=3x^2-3=0$ 得 $x=\pm1$，两个都在 $(-\sqrt3,\sqrt3)$ 内，故 $\xi=\pm1$ 都可以。<br><b>提醒：</b>若误取 $[-1,1]$，则 $f(-1)=2$，$f(1)=-2$，条件并不满足——做题先<b>验证条件</b>。</p>
+      <p><b>2.</b> 任取 $x_1&lt;x_2$，由 Lagrange 定理 $f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)=0$。</p>
+      <p><b>3.</b> 通分得 $\frac{e^x-1-x}{x(e^x-1)}$。分子 $\sim\frac{x^2}{2}$，分母 $\sim x^2$，极限 $\frac12$。（也可直接用 Taylor。）</p>
+      <p><b>4.</b> $e^x=1+x+\frac{x^2}{2}+\frac{e^\xi}{6}x^3$，$\xi\in(0,x)$，末项 $&gt;0$，故不等式成立。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch7" data-no="07" data-title="实数的完备性" style="--ch:7">
+  <div class="chap-head">
+    <div class="chap-no">07</div>
+    <h2>实数的完备性<small class="en">Completeness of $\R$</small></h2>
+  </div>
+
+  <p class="src">教材对应：第七章 实数的完备性 · §1 完备性的基本定理　§2 上极限和下极限</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>实数比有理数多出来的，到底是什么东西？</li><li>六条看起来完全不同的定理，为什么会是同一件事？</li><li>“数轴没有洞”这句大白话，能写成一条可证明的命题吗？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>六条命题，其实是同一件事的六种说法</li>
+      <li>看它们如何互相推出（循环证明图）</li>
+      <li>用途：给"存在性"提供地基</li>
+    </ul>
+  </div>
+
+  <p>这一章的处境有点怪：它一直被使用，却从没正式露过面。前面那些"该有的极值真的存在""该有的极限真的存在"的结论，都是向它领的许可证，只是当时没人报出它的名字。这一章不引入新工具，只把这张许可证的底细翻出来，从六个角度各看一遍，再说明这六个角度是同一件事。</p>
+
+  <p>它的特殊之处在于：内容几乎就是证明本身。读时别问"这条能算什么"，要问"<b>它保证什么存在</b>"——完备性不产出数值，它产出存在的资格。第九章的定积分存在性、可积性，都要回来向它要资格。</p>
+
+  <p>前六章用到的很多结论——最值定理、一致连续、收敛子列——背后站着同一个东西：<b>实数系是完备的</b>。这一章把它拆成六种等价表述，让你看清"地基"长什么样。</p>
+
+  <p class="plain">完备性翻译成人话就是"<b>数轴上没有洞</b>"：任何看起来该有个极限的东西，确实有一个实数当它的极限。这条性质不能从加减乘除推出来，它是实数的"出厂设置"。</p>
+
+  <h3>7.1 完备性的六种表述</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">完备性的六种等价表述</div>
+    <p>下列命题两两等价：</p>
+    <ol>
+      <li><b>确界原理</b>：非空有上界的数集必有上确界。</li>
+      <li><b>单调有界定理</b>：单调有界数列必收敛。</li>
+      <li><b>区间套定理</b>：若 $[a_n,b_n]$ 满足 $[a_{n+1},b_{n+1}]\subseteq[a_n,b_n]$ 且 $b_n-a_n\to0$，则存在唯一的 $\xi$ 属于所有区间。</li>
+      <li><b>Bolzano–Weierstrass 定理</b>：有界数列必有收敛子列。</li>
+      <li><b>Cauchy 收敛准则</b>：Cauchy 列必收敛。</li>
+      <li><b>Heine–Borel 有限覆盖定理</b>：闭区间的任何开覆盖都有有限子覆盖。</li>
+    </ol>
+  </div>
+
+  <p class="plain">六条是同一句话——<b>数轴没有洞</b>——的六个方向。逐条翻成人话：① 确界原理：一堆数只要被某个数压住，就有一个"最贴的盖子"；② 单调有界：一直往上爬却爬不出笼子，总得有个落脚点；③ 区间套：一层层往里套，最后恰好剩一个点；④ Bolzano–Weierstrass：无穷多个点挤在有限长的一段里，总有一处越挤越密；⑤ Cauchy 准则：项与项自己越靠越近，就必然真有个极限在等它；⑥ 有限覆盖：每点都有局部保障，就能挑出有限条管住整段。</p>
+
+  <p>它们不能各自独立，是因为"有洞"会让它们<b>同时</b>漏水。拿有理数 $\Q$ 试：$1,\,1.4,\,1.41,\,1.414,\dots$ 是 Cauchy 列，在 $\Q$ 里却没有极限，⑤ 崩；$\{x\in\Q:x^2&lt;2\}$ 有上界而无上确界，① 崩；用有理端点的小区间去盖 $\Q\cap[0,2]$ 时，可以让区间从两侧逼近 $\sqrt2$，于是任何有限个都会漏掉一段，⑥ 也崩。<b>一处有洞，六处一起漏</b>——这比任何证明都更能说明它们是一件事。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>十九世纪之前，"实数"是直观对象，没人觉得需要定义。Cauchy 用"项与项越来越近"来刻画收敛；但这套刻画只描述了"在靠近"，并不保证"有东西可靠近"——在有理数里它就失效（$1.4,1.41,1.414,\dots$ 越来越近，却没有有理数极限）。所以必须说明极限究竟落在哪个数系里。Dedekind 用"分割"、Cantor 用"基本列"在十九世纪七十年代前后各自造出实数系，<b>"没有洞"才第一次从直觉变成可证明的命题</b>。这一章列的六条，就是那次建设留下的六份验收报告。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：六条定理是同一件事的六种说法，记住一条就能推出其余。</p>
+
+  <h3>7.2 循环证明图</h3>
+
+  <div class="box note"><div class="tag">读法 · 循环图</div>
+    <p>一个常用的证明回路（顺着箭头就能串起全部）：</p>
+    <p style="text-align:center;font-family:var(--mono);font-size:14px;line-height:2">确界原理 → 单调有界 → 区间套 → 聚点/列紧 → 有限覆盖 → Cauchy</p>
+    <p>考试若要求"用 A 证 B"，只要沿图上找一条路即可。真正需要记住的细节只有两三个（比如区间套如何由单调有界造出来），其余都是"取端点/取子列"的机械操作。</p>
+  </div>
+
+  <p class="plain">图上每个箭头是<b>一条定理的证明</b>，不是抽象的蕴含。课本写"确界原理 ⇒ 单调有界定理"，意思就是有一页纸从"非空有上界集有上确界"推到"单调有界数列收敛"。考"用 A 证 B"，就在图上找一条从 A 到 B 的路，把沿途证明串起来。</p>
+
+  <p>给个最小样本——确界原理如何推出单调有界。设 $\{a_n\}$ 递增有上界，$A=\{a_n\}$，由确界原理 $\xi=\sup A$ 存在。任给 $\varepsilon&gt;0$，$\xi-\varepsilon$ 不是 $A$ 的上界，故有 $N$ 使 $a_N&gt;\xi-\varepsilon$；又 $\xi$ 是上界。由递增性，$n\ge N$ 时 $\xi-\varepsilon&lt;a_n\le\xi$，即 $|a_n-\xi|&lt;\varepsilon$，故 $a_n\to\xi$。</p>
+
+  <p>其余箭头是同一路数的变奏：造区间（二分）、抓子列（留含无穷多项的那一半）、取 $\min$（有限覆盖）。每处都只用"确界存在"或"某点取到最值"这类保证，所以真正要背的细节只有两三个。<b>这也是教材敢把六条并排说"等价"的底气。</b></p>
+
+  <div class="lab" data-lab="bisect"></div>
+
+  <div class="box tip"><div class="tag">方法 · 有限覆盖怎么用</div>
+    <p>典型场景：要证一个"整体"性质（如一致连续），先对每点证"局部"性质，得到一个开覆盖，再用有限覆盖把无穷多个局部条件压成<b>有限个</b>，取 $\min$ 就得到统一的 $\delta$。这正是 Cantor 定理的证明骨架。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>有限覆盖定理要求区间<b>闭</b>、覆盖是<b>开</b>的。$(0,1)$ 被 $\{(0,1-\frac1n)\}$ 覆盖却没有有限子覆盖——开区间会"漏掉端点"。这两个条件都在承重。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：循环图里找一条路，就能“用 A 证 B”。</p>
+
+  
+  <h3>7.3 区间套：怎么造，怎么用</h3>
+
+  <p>区间套定理本身只有一句话，真正要练的是<b>怎么把一个"想要的数"套出来</b>：先造一列不断缩小的区间，让目标数始终被夹在中间，再让长度趋于零。</p>
+
+  <p class="plain">区间套就是<b>套娃</b>：一个比一个小，每个都装在前一个里面，而且越套越小、小到趋于零。定理说，这时总有<b>恰好一个</b>点被所有套娃包着。全靠两件事承重：套娃是<b>闭</b>的（端点不许丢，否则点会从缝里漏走），尺寸<b>趋于零</b>（否则剩下的是一整段）。类比到此为止：真套娃最薄也有厚度，数学区间可以无限薄，所以"剩一个点"是极限意义下的结论，不是第几步能看到的景象。</p>
+
+  <div class="box ex"><div class="tag">用区间套造出 $\sqrt2$</div>
+    <p>取 $a_1=1,b_1=2$。每一步取中点 $c$：若 $c^2&lt;2$ 则令 $a_{n+1}=c,\ b_{n+1}=b_n$，否则令 $a_{n+1}=a_n,\ b_{n+1}=c$。</p>
+    <p>于是 $[a_n,b_n]$ 是区间套，$b_n-a_n=2^{1-n}\to0$，设公共点为 $\xi$。由 $a_n^2&lt;2&lt;b_n^2$ 两边取极限得 $\xi^2=2$。</p>
+    <p>这同时说明：<b>$\sqrt2$ 的存在性不是"算"出来的，是从完备性里取出来的。</b></p>
+  </div>
+
+  <p>把二分法走四步，看得见地缩小（目标是 $\sqrt2$）：</p>
+
+  <table class="tbl">
+    <caption>二分法求 $\sqrt2$：每步丢掉"平方超界"的那一半</caption>
+    <tr><th style="width:150px">区间</th><th>中点 $c$</th><th>$c^2$ 与 $2$ 比</th><th>保留</th></tr>
+    <tr><td>$[1,2]$</td><td>$1.5$</td><td>$2.25&gt;2$</td><td>$[1,1.5]$</td></tr>
+    <tr><td>$[1,1.5]$</td><td>$1.25$</td><td>$1.5625&lt;2$</td><td>$[1.25,1.5]$</td></tr>
+    <tr><td>$[1.25,1.5]$</td><td>$1.375$</td><td>$1.890625&lt;2$</td><td>$[1.375,1.5]$</td></tr>
+    <tr><td>$[1.375,1.5]$</td><td>$1.4375$</td><td>$2.06640625&gt;2$</td><td>$[1.375,1.4375]$</td></tr>
+  </table>
+
+  <p>四步之后 $\sqrt2\in[1.375,\,1.4375]$，长度 $0.0625=2^{-4}$。每步长度减半，走 $n$ 步误差不超过 $2^{-n}$：想要六位小数，约走 $20$ 步。<b>这就是区间套在生产一线的样子</b>——它不只证明存在，还附送算法和误差。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>"只要套起来就只剩一个点"。</b>三条件缺一不可。缺"长度趋零"：$[0,\,1+\frac1n]$ 层层嵌套，交集是整段 $[0,1]$。缺"闭"：$\{(0,\frac1n)\}$ 也嵌套、长度也趋零，交集却是空集——点从开的那头漏掉了。<b>闭区间加长度趋零，才保证"恰好一个"。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：区间套负责造数：$\sqrt2$ 的存在性就是套出来的。</p>
+
+  <h3>7.4 有限覆盖：把无穷多个局部条件压成有限个</h3>
+
+  <p class="plain">有限覆盖定理最不像"定理"，因为它就是一句大白话：<b>无限多个局部条件，居然能用有限个管住全部。</b>想象一段路上每一点都站着一个人，各拿一张小网罩住脚下。无限多张网当然盖得住整条路——真问题是：能不能只留<b>有限几张</b>，仍然盖住全程？定理说：路是闭区间、网是开区间，答案就是能。</p>
+
+  <p>为什么"开"这个字不能改？开区间意味着每张网盖住一点时还留了一圈余量，相邻的网才能咬合着接力。若允许闭网，就会出现像 $\{1\}$ 这种"只盖一个点、没有厚度"的网：盖是盖住了，却接不上旁边，接力一断，有限张就盖不全。例如 $[0,1]$ 被 $\{[0,1-\frac1n]\}_{n\ge2}\cup\{[1,1]\}$ 覆盖（全是闭集），但任何有限个的并都碰不到靠近 $1$ 的那一小段：设这些集合里下标最大的是 $N$，它们的并只是 $[0,1-\frac1N]\cup\{1\}$，漏掉 $(1-\frac1N,\,1)$——<b>闭覆盖确实可以没有有限子覆盖</b>。类比到此为止：网的大小不是你现场能调的，定理说的是"从已经发下去的无限多张里挑出有限张"，不是"允许重新设计网"。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>这条定理的源头不是几何，而是一个具体麻烦：Heine 在证"闭区间上连续函数一致连续"时，对每一点取了一个 $\delta_x$，然后必须从无穷多份里<b>取出有限份</b>才能取 $\min$——否则拿不到统一常数。他为此需要一条"能压成有限"的引理。一般认为 Borel 后来把它改写、推广成今天的覆盖语言。<b>它是被一个证明"逼"出来的工具</b>，不是先有概念再找用途。</p>
+  </div>
+
+  <p>典型套路：先对<b>每一点</b>证一个局部性质，得到开覆盖；再用有限覆盖把无穷多条并成有限条；最后取 $\min$（或 $\max$）得到统一常数。</p>
+
+  <div class="box ex"><div class="tag">用有限覆盖证有界性</div>
+    <p>设 $f\in C[a,b]$。对每个 $x$，由连续存在 $\delta_x&gt;0$ 使 $t\in U(x,\delta_x)$ 时 $|f(t)|&lt;|f(x)|+1$。</p>
+    <p>$\{U(x,\delta_x)\}$ 覆盖 $[a,b]$，取出有限个 $x_1,\dots,x_m$ 仍覆盖。令 $M=\max_i\big(|f(x_i)|+1\big)$，则 $[a,b]$ 上 $|f|\le M$。</p>
+    <p>注意最后一步：有限个 $M_i$ 才取得到 $\max$；无穷多个是取不到的——这就是有限覆盖的价值。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有限覆盖把无穷个局部条件压成有限个，才能取 $\max/\min$。</p>
+
+  <h3>7.5 上极限与下极限</h3>
+
+  <p class="plain">上下极限解决什么问题？极限问"最后收敛到哪"；数列到处乱跳时，答案只有一个词——"不存在"，信息量为零。上下极限退一步：<b>不问你最后停在哪，只问你最终被夹在哪两条线之间。</b>上限是"最终的天花板"，下限是"最终的地板"；两者相等，乱跳就变成收敛。</p>
+
+  <p>"最终"两字很要紧：$M_n=\sup_{k\ge n}a_k$ 只扫第 $n$ 项以后的尾巴，前面的项一概不算，所以 $M_n$ 随 $n$ 增大而单调不增——尾巴越短，天花板只会越低。上极限就是这列天花板的极限。</p>
+
+  <div class="box def"><div class="tag">上、下极限</div>
+    <p>令 $M_n=\sup\limits_{k\ge n}a_k$，$m_n=\inf\limits_{k\ge n}a_k$（都是单调数列），定义</p>
+    <p>$$\limsup_{n\to\infty}a_n=\lim_{n\to\infty}M_n,\qquad \liminf_{n\to\infty}a_n=\lim_{n\to\infty}m_n.$$</p>
+    <p>无上界时记 $\limsup=+\infty$，无下界时记 $\liminf=-\infty$。</p>
+  </div>
+
+  <p>三条性质：$\liminf\le\limsup$；<b>数列收敛 $\iff$ 两者相等</b>（此时等于极限）；有界时 $\limsup$ 恰是全体子列极限中的最大者，$\liminf$ 是最小者。</p>
+
+  <p class="plain">拿 $a_n=\sin\dfrac{n\pi}{2}$ 练手：它是 $1,0,-1,0,1,0,-1,\dots$ 的循环。扫尾巴：从第 $n$ 项起，$1$ 与 $-1$ 都还无限次出现，故 $M_n\equiv1$、$m_n\equiv-1$，于是 $\limsup=1$、$\liminf=-1$，而 $\lim$ 不存在。再看 $a_n=\dfrac1n$：$M_n=\dfrac1n$、$m_n=0$，两者都趋于 $0$，等于极限——收敛时上下极限自动合并。最后 $a_n=(-1)^nn$：$M_n=+\infty$、$m_n=-\infty$，故 $\limsup=+\infty$、$\liminf=-\infty$。三种情形一套定义全包。</p>
+
+  <div class="box ex"><div class="tag">两个例子</div>
+    <p>$a_n=(-1)^n\left(1+\dfrac1n\right)$：偶子列 $\to1$，奇子列 $\to-1$，故 $\limsup=1$，$\liminf=-1$。</p>
+    <p>$a_n=\sin n$：$\limsup=1$，$\liminf=-1$（需要 $\{n\bmod 2\pi\}$ 在 $[0,2\pi)$ 中稠密，这里只记结论）。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>把上极限当成上确界。</b>$a_n=\dfrac1n$：$\sup\{a_n\}=1$（第一项），但 $\limsup\limits_{n\to\infty}a_n=0$——尾巴上的项全贴着 $0$。上确界看<b>全集</b>，上极限看<b>尾巴</b>；前者一定能取到，后者未必。判断前先问一句：我关心的是整个数列，还是它最终的样子？</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：上下极限是不收敛数列的替身：两者相等 $\iff$ 收敛。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 六条定理是同一件事的六种说法；考试要"用 A 证 B"，沿循环图找一条路。</p>
+    <p>② 区间套负责<b>造数</b>，有限覆盖负责<b>把局部性质变成整体性质</b>。</p>
+    <p>③ 上下极限是不收敛数列的"极限替身"：收敛 $\iff$ 两者相等。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="D">
+      <p class="q-text">下列哪一条<b>不属于</b>完备性的等价表述？</p>
+      <div class="q-opts"><button data-o="A">A. 确界原理</button><button data-o="B">B. 单调有界定理</button><button data-o="C">C. 闭区间有限覆盖定理</button><button data-o="D">D. 阿基米德性</button></div>
+      <p class="q-exp" hidden>阿基米德性可以由确界原理推出，但<b>弱于</b>完备性：有序域里阿基米德性成立仍可能不完备（如 $\Q$）。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>用区间套定理证明：有界数列必有收敛子列。</li>
+      <li>举一个反例说明"开区间的开覆盖不一定有有限子覆盖"。</li>
+      <li>为什么说"连续函数在闭区间上一致连续"本质上用的是完备性？</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> 设 $\{x_n\}\subseteq[a_1,b_1]$。二分 $[a_1,b_1]$，必有一半含无穷多项，记为 $[a_2,b_2]$，取其中一项 $x_{n_1}$。如此得区间套与子列 $\{x_{n_k}\}$，$|x_{n_k}-\xi|\le b_k-a_k\to0$。</p>
+      <p><b>2.</b> $(0,1)$ 被 $\left\{\left(0,1-\frac1n\right)\right\}_{n\ge2}$ 覆盖，任何有限个的并都是 $(0,1-\frac1{N})$，盖不住靠近 $1$ 的点。</p>
+      <p><b>3.</b> 因为证明的关键是"有限覆盖定理"，而它等价于确界原理——即实数没有洞。</p>
+    </div></details>
+  </div>
+</section>

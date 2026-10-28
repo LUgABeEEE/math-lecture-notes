@@ -1,0 +1,806 @@
+<section class="chap" id="ch8" data-no="08" data-title="不定积分" style="--ch:8">
+  <div class="chap-head">
+    <div class="chap-no">08</div>
+    <h2>不定积分<small class="en">Indefinite Integrals</small></h2>
+  </div>
+  <p class="src">教材对应：第八章 不定积分 · §1 概念与基本积分公式　§2 换元积分法　§3 分部积分法　§4 有理函数积分</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>求导的逆运算，为什么答案不唯一？</li><li>“凑微分”到底在凑什么？</li><li>分部积分公式是从哪条求导法则倒推出来的？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>原函数与不定积分：求导的逆运算，差一个常数</li>
+      <li>第一类换元（凑微分）、第二类换元（三角代换）</li>
+      <li>分部积分：<b>选 $u$ 的顺序</b></li>
+      <li>有理函数的通用解法（有算法，不必靠灵感）</li>
+    </ul>
+  </div>
+
+  <p>这一章在故事里的位置：前面七章从实数、极限、连续一路搭到导数与中值定理，再补上实数完备性这块地基，最后落脚在<b>“已知函数，求它的导数”</b>。这一章把箭头反过来：已知导数，问原函数是谁。这不是出于好奇心。第九章要算"曲线下的面积"，而面积最后会归结为找原函数，所以不会求原函数，后面三章一步也走不动。</p>
+
+  <p>反过来的方向为什么难？因为求导是一套<b>机械的算法</b>：幂函数、乘积、商、复合，各有公式，照着做就行，做完还能立刻验算。求积分没有这种通用算法，只能把被积式<b>改写成某个已知导数的样子</b>。改写的三招——凑、换、分部——就是本章的全部内容。还有一个更坏的消息：有些函数的原函数根本不是初等函数，再怎么凑也凑不出来，本章末尾会说到。</p>
+
+  <p class="plain">求导像"照着菜谱做菜"：材料给进去，步骤固定，出锅还能尝一口验算。求积分像"给你一盘菜，倒推菜谱"——可能有好几份菜谱（差一个常数），也可能根本没有家常菜谱（原函数不是初等函数）。所以这一章真正要学的不是公式，是<b>认路的本事</b>：先看这盘菜像哪条路子的。类比到此为止：倒推菜谱至少还有有限种可能，而积分连"通用倒推法"都不存在，这才是它比求导难的地方。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 那个拉长的 S</div>
+    <p>$\int$ 是一个拉长的字母 S，取的是拉丁文 <i>summa</i>（和）的首字母。Leibniz 在十七世纪七十年代把它用作"无穷多个无穷小之和"的记号；同一时期 Newton 在英国用"流数"的语言做同一件事。两套记号各流传了一阵，最后欧洲大陆的 $\dd x$ 写法胜出——因为它把"对谁积分"写在了明处，换元、分部时不容易乱。</p>
+    <p>记号里藏着一个提醒：积分本来就和<b>求和</b>是一回事。第九章会把这句话变成定义，这一章只是先用着。</p>
+  </div>
+
+  <p>不定积分是"技术活"，但技术背后只有三条路：<b>凑、换、分部</b>。这一章要多动手，光看不练等于没学。预习的要求不高：把基本积分表和两条换元法则搞清楚，剩下的交给课堂和习题。</p>
+
+  <div class="box def"><div class="tag">原函数与不定积分</div>
+    <p>若在区间 $I$ 上 $F'(x)=f(x)$，则称 $F$ 是 $f$ 在 $I$ 上的一个<b>原函数</b>，并记</p>
+    <p>$$\int f(x)\,\dd x=F(x)+C.$$</p>
+    <p>若 $F$ 是 $f$ 的一个原函数，则 $f$ 的全体原函数恰为 $F(x)+C$（由"导数为零则函数为常数"）。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>$+C$ 不是装饰。少了它，在后续定积分计算里会出错；在微分方程里会丢掉整个解族。另外，<b>原函数存在不显然</b>：连续函数一定有原函数（第九章用变上限积分构造），但不连续的函数也可能有。</p>
+  </div>
+
+  <p class="plain">不定积分就是"<b>求导反过来</b>"：我问"谁求导之后得到 $f$"。答案不唯一——所有答案之间只差一个常数，所以写 $+C$。至于怎么找，全章只有三招：凑微分、换元、分部。</p>
+
+  <table class="tbl">
+    <caption>基本积分表（必须熟到条件反射，$C$ 省略）</caption>
+    <tr><th>$\int x^\alpha\,\dd x$</th><td>$\dfrac{x^{\alpha+1}}{\alpha+1}$（$\alpha\ne-1$）</td><th>$\int\dfrac{\dd x}{x}$</th><td>$\ln|x|$</td></tr>
+    <tr><th>$\int e^x\dd x$</th><td>$e^x$</td><th>$\int a^x\dd x$</th><td>$\dfrac{a^x}{\ln a}$</td></tr>
+    <tr><th>$\int\sin x\,\dd x$</th><td>$-\cos x$</td><th>$\int\cos x\,\dd x$</th><td>$\sin x$</td></tr>
+    <tr><th>$\int\dfrac{\dd x}{1+x^2}$</th><td>$\arctan x$</td><th>$\int\dfrac{\dd x}{\sqrt{1-x^2}}$</th><td>$\arcsin x$</td></tr>
+    <tr><th>$\int\sec^2x\,\dd x$</th><td>$\tan x$</td><th>$\int\dfrac{\dd x}{a^2+x^2}$</th><td>$\dfrac1a\arctan\dfrac xa$</td></tr>
+  </table>
+
+  <div class="box note"><div class="tag">读法 · 积分表该怎么用</div>
+    <p>这张表不是"背完就结束"的清单，而是<b>目标形态清单</b>：做任何一道积分题，都是在想办法把被积式改写成表中某一行的样子。所以顺序永远是「先变形，再查表」，而不是「一眼看不出来就换方法」。</p>
+    <p>具体动作只有三个：能凑成 $\varphi'(x)\dd x$ 的凑；含 $\sqrt{a^2-x^2}$、$a^2+x^2$ 这类根号的换元；剩下乘积形式的试分部。三招都试完仍然不行，才考虑"它可能根本积不出来"。</p>
+  </div>
+
+  <h3>8.1 换元：把陌生的凑成熟人</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">第一类换元法（凑微分）</div>
+    <p>若 $\int f(u)\,\dd u=F(u)+C$，且 $\varphi$ 可导，则</p>
+    <p>$$\int f(\varphi(x))\,\varphi'(x)\,\dd x=F(\varphi(x))+C.$$</p>
+    <details class="proof"><summary>为什么对</summary><div class="body">
+      <p>对右边求导，由链式法则得 $F'(\varphi(x))\varphi'(x)=f(\varphi(x))\varphi'(x)$，正是被积函数。<span class="qed">∎</span></p>
+      <p>它其实就是链式法则反过来写。所以做这类题的关键是：<b>能不能在被积式里认出一个 $\varphi'$</b>。</p>
+    </div></details>
+  </div>
+
+  <p class="plain">把这条定理翻译成动作：第一类换元就是<b>链式法则倒着放</b>。正着看，$(\sin(x^2))'=\cos(x^2)\cdot 2x$——外面一层求导，再乘里面那层的导数。倒着看，如果被积式里同时出现了"里面那层"和"它的导数"，那它就是某个复合函数求导的产物，直接还回去即可。</p>
+
+  <p>拿 $\displaystyle\int 2x\cos(x^2)\dd x$ 走一遍：先认出里面那层是 $u=x^2$，它的导数 $2x$ 恰好作为一个因子躺在被积式里；于是把 $2x\dd x$ 整体读成 $\dd u$，式子变成 $\int\cos u\,\dd u=\sin u+C$；再换回 $x$，得 $\sin(x^2)+C$。验算：$(\sin(x^2))'=2x\cos(x^2)$，正是原来的被积函数。整个过程没有"灵感"，只有一次辨认：<b>被积式里有没有某个因子，恰好是另一部分的导数？</b>有就换元，没有才想别的。</p>
+
+  <div class="box ex"><div class="tag">凑微分</div>
+    <p>求 $\displaystyle\int x e^{x^2}\dd x$ 与 $\displaystyle\int\frac{\ln x}{x}\dd x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>(1) 注意 $x\dd x=\frac12\dd(x^2)$，故 $\int xe^{x^2}\dd x=\frac12\int e^{x^2}\dd(x^2)=\frac12e^{x^2}+C$。</p>
+      <p>(2) $\frac{\dd x}{x}=\dd(\ln x)$，故 $\int\frac{\ln x}{x}\dd x=\int\ln x\,\dd(\ln x)=\frac12(\ln x)^2+C$。</p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 常见的几种"凑"</div>
+    <p>$x\dd x=\frac12\dd(x^2)$；$\dfrac{\dd x}{x}=\dd(\ln|x|)$；$e^x\dd x=\dd(e^x)$；$\cos x\,\dd x=\dd(\sin x)$；$\sec^2x\,\dd x=\dd(\tan x)$；$\dfrac{\dd x}{\sqrt{1-x^2}}=\dd(\arcsin x)$。</p>
+    <p>这些不是要额外背的新公式，而是把基本积分表<b>从右往左</b>读一遍的结果。表里有几行，就有几种凑法；表背得越熟，凑得越快。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">第二类换元法</div>
+    <p>设 $x=\psi(t)$ 单调可导，$\psi'(t)\ne0$，则</p>
+    <p>$$\int f(x)\,\dd x=\left[\int f(\psi(t))\psi'(t)\,\dd t\right]_{t=\psi^{-1}(x)}.$$</p>
+    <p>常用代换：$\sqrt{a^2-x^2}\to x=a\sin t$；$\sqrt{a^2+x^2}\to x=a\tan t$；$\sqrt{x^2-a^2}\to x=a\sec t$。</p>
+  </div>
+
+  <p class="plain">第二类换元的方向是反的：不是"从被积式里认出导数"，而是<b>主动把 $x$ 换成一个三角函数</b>，目的只有一个——用 $\sin^2t+\cos^2t=1$ 把根号整体拿掉。根号一去，剩下的就是三角有理式，回到熟悉的路上。代价是要回代：答案里的 $t$ 得换回 $x$，通常靠画一个直角三角形把三边读出来。</p>
+
+  <p>走一个具体的：$\displaystyle\int\frac{\dd x}{x^2\sqrt{1-x^2}}$。令 $x=\sin t$（$t\in(0,\frac\pi2)$），则 $\dd x=\cos t\,\dd t$，$\sqrt{1-x^2}=\cos t$，被积式变成 $\displaystyle\int\frac{\cos t\,\dd t}{\sin^2t\cos t}=\int\frac{\dd t}{\sin^2t}=-\cot t+C$。回代：画一个斜边 $1$、对边 $x$ 的直角三角形，邻边是 $\sqrt{1-x^2}$，于是 $\cot t=\frac{\sqrt{1-x^2}}{x}$，答案为 $-\dfrac{\sqrt{1-x^2}}{x}+C$。</p>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>第二类换元做完必须<b>回代</b>（把 $t$ 换回 $x$），或者改成定积分并换上下限。<b>漏回代是这类题最常见的失分点</b>，而且从答案形态上一眼能看出来。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：凑微分就是认出一个 $\varphi'(x)$，把陌生的凑成熟人。</p>
+
+  <h3>8.2 分部积分</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">分部积分公式</div>
+    <p>$$\int u\,\dd v=uv-\int v\,\dd u,\qquad\text{即}\quad\int u(x)v'(x)\dd x=u(x)v(x)-\int u'(x)v(x)\dd x.$$</p>
+    <p>它来自乘积求导法则 $(uv)'=u'v+uv'$ 的移项积分。</p>
+  </div>
+
+  <p class="plain">分部积分就是<b>乘积法则倒着放</b>，和换元之于链式法则是一回事。正着看：$(uv)'=u'v+uv'$。两边同时积分，得 $uv=\int u'v+\int uv'$，把其中一项移过去就是 $\int u\dd v=uv-\int v\dd u$。所以这个公式里没有新东西，它只是一笔交易：$u$ 求一次导会变简单，$\dd v$ 积一次分会变简单，手续费是先算出乘积项 $uv$。做不动的题，往往是这笔交易划不来。</p>
+
+  <p>拿 $\displaystyle\int\ln x\,\dd x$ 走一遍。它光秃秃一个 $\ln x$，看着无从下手；但只要肯把 $\dd v=\dd x$ 补上就活了：取 $u=\ln x$、$\dd v=\dd x$，则 $\dd u=\dfrac{\dd x}{x}$、$v=x$，于是</p>
+
+  <p>$$\int\ln x\,\dd x=x\ln x-\int x\cdot\frac{\dd x}{x}=x\ln x-x+C.$$</p>
+
+  <p>顺手验算一个点：$F(x)=x\ln x-x$ 在 $x=2$ 处的导数是 $\ln2+1-1=\ln2\approx0.693$，正是被积函数 $\ln x$ 在 $x=2$ 处的值。分部积分算完，代一个点回去对一下，比重新推一遍省时间。</p>
+
+  <p>为什么这次交易划算？因为 $\ln x$ 求导之后掉进了有理式 $\dfrac1x$，随便积。所以选 $u$ 只有一条标准：<b>谁的导数比它自己简单，就选谁当 $u$。</b>"反对幂指三"只是这条标准的经验总结——反三角与对数求导后都变成有理式，所以排在最前面。</p>
+
+  <div class="box tip"><div class="tag">方法 · 选 $u$ 的口诀</div>
+    <p><b>反对幂指三</b>：反三角、对数、幂函数、指数、三角。排在<b>前</b>的取作 $u$（因为它求导会变简单），排在后的凑进 $\dd v$。</p>
+    <p>例：$\int x e^x\dd x$ 取 $u=x$（幂），$\dd v=e^x\dd x$；$\int x\ln x\,\dd x$ 取 $u=\ln x$。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 分部积分的三种结局</div>
+    <p>① <b>降次</b>：$\int x^ne^x\dd x$ 每分部一次，$x$ 的幂降一次，做 $n$ 次收工。<br>
+       ② <b>循环</b>：$\int e^x\sin x\,\dd x$ 分部两次回到原积分，把它当未知数解一次方程。<br>
+       ③ <b>递推</b>：$\int\sin^nx\,\dd x$ 得到 $I_n$ 与 $I_{n-1}$ 的关系，逐层降到会算的为止。</p>
+    <p>见到这三种形态，就知道该一直分部下去，而不是另找门路。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 分部的方向也会选反</div>
+    <p>若 $\dd v$ 选成"现在还积不出来"的东西，式子会越滚越大。例如 $\int x\ln x\,\dd x$ 若取 $u=x$、$\dd v=\ln x\,\dd x$，为了算 $v=\int\ln x\,\dd x$ 就得先做一次分部，然后 $\int v\,\dd u$ 里又长出 $x\ln x$——原地打转。</p>
+    <p>判断标准只有一句话：<b>$\dd v$ 必须是你现在立刻能积出来的</b>。积不出来，就说明这个方向错了。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">两次分部</div>
+    <p>求 $\displaystyle\int x^2e^x\dd x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>$$\int x^2e^x\dd x=x^2e^x-2\int xe^x\dd x=x^2e^x-2\left(xe^x-e^x\right)+C=e^x(x^2-2x+2)+C.$$</p>
+      <p>验算：求导得 $e^x(x^2-2x+2)+e^x(2x-2)=e^x x^2$。✓ <b>算完一定要验算</b>，这是最省时间的自检。</p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：分部积分的口诀：反对幂指三。</p>
+
+  <h3>8.3 有理函数：有算法，不靠灵感</h3>
+
+  <p>对 $\dfrac{P(x)}{Q(x)}$（$P,Q$ 为多项式，$P$ 次数低于 $Q$）：</p>
+
+  <div class="cards">
+    <div class="card"><b>第一步 · 假分式</b>若 $P$ 的次数 $\ge Q$，先做多项式长除法，拆成"多项式 + 真分式"。</div>
+    <div class="card"><b>第二步 · 因式分解</b>把 $Q$ 分解成一次与二次不可约因式的乘积。</div>
+    <div class="card"><b>第三步 · 部分分式</b>按因式写待定系数，解方程组。</div>
+    <div class="card"><b>第四步 · 逐项积分</b>每项都归到 $\ln$、$\arctan$ 或幂函数。</div>
+  </div>
+
+  <p class="plain">这套算法为什么值得学？因为它是本章唯一一条"<b>一定能走完</b>"的路。别的技巧都靠眼力，有理函数不用：只要分母能分解，就一定能拆；拆完每一项都积得出来。换句话说，有理函数的积分不是"会不会"的问题，是"愿不愿意算"的问题——代价是最后一步的计算量可能很大。</p>
+
+  <div class="box note"><div class="tag">读法 · 为什么拆成这几类项就够了</div>
+    <p>部分分式定理说：任何真分式都能<b>唯一</b>地拆成四类项之和——$\dfrac{A}{(x-a)^k}$ 与 $\dfrac{Bx+C}{(x^2+px+q)^k}$（其中 $x^2+px+q$ 不可约，即 $\Delta&lt;0$）。这四类恰好是一份"积得出来"的最小清单：前一类积成 $\ln$ 或幂函数；后一类配方后归到 $\ln$ 与 $\arctan$，遇到重根时再加有理项（用递推降次）。</p>
+    <p>所以算法能走完，靠的不是技巧，而是两条代数事实：分母总能分解成一次与不可约二次因式之积，真分式总能这样拆。这两条都由代数基本定理保证——这也是为什么"有理函数积分"在整章里地位特殊：它把分析问题彻底交给了代数。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">部分分式</div>
+    <p>求 $\displaystyle\int\frac{\dd x}{x^2-1}$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>$\dfrac{1}{x^2-1}=\dfrac{1}{(x-1)(x+1)}=\dfrac12\left(\dfrac{1}{x-1}-\dfrac{1}{x+1}\right)$，故</p>
+      <p>$$\int\frac{\dd x}{x^2-1}=\frac12\ln\left|\frac{x-1}{x+1}\right|+C.$$</p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有理函数有固定算法，不靠灵感。</p>
+
+  
+  <h3>8.4 有理函数：把算法走完</h3>
+
+  <p>真分式 $\dfrac{P(x)}{Q(x)}$ 的积分一定有初等解，步骤固定：长除法（假分式）→ 因式分解 → 部分分式 → 逐项积分。真正花时间的只有第三步的系数。</p>
+
+  <div class="box ex"><div class="tag">不可约二次：配方</div>
+    <p>$$\int\frac{\dd x}{x^2+2x+2}=\int\frac{\dd(x+1)}{(x+1)^2+1}=\arctan(x+1)+C.$$</p>
+    <p>遇到二次式先看判别式：$\Delta&lt;0$ 配方成 $\arctan$，$\Delta&gt;0$ 拆成两个一次因式。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">两个不同的一次因式</div>
+    <p>$$\frac{2x+3}{x^2+3x+2}=\frac{2x+3}{(x+1)(x+2)}=\frac{1}{x+1}+\frac{1}{x+2},$$</p>
+    <p>故原积分为 $\ln|x+1|+\ln|x+2|+C$。系数由 $A(x+2)+B(x+1)=2x+3$ 比较两端得到 $A=B=1$。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 系数怎么求快</div>
+    <p>部分分式的系数，除了解方程组，还可以<b>代入特殊值</b>：例如求 $\frac{1}{(x-1)(x+1)}$ 的分解，令 $x=1$ 直接得 $A=\frac12$，令 $x=-1$ 得 $B=-\frac12$，比解方程快得多。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 不可约二次因式的分子是一次式</div>
+    <p>分母含 $x^2+1$ 这样的不可约二次因式时，那一项的分子必须写成 $Bx+C$，不能只写一个常数。例如</p>
+    <p>$$\frac{1}{x(x^2+1)}=\frac1x-\frac{x}{x^2+1},$$</p>
+    <p>右边第二项的分子是 $x$，不是常数。若硬写成 $\dfrac{A}{x}+\dfrac{B}{x^2+1}$，通分后分子是 $Ax^2+(A+B)$，无论 $A,B$ 怎么取都凑不出 $1$——方程无解，正说明写法就错了。<b>分母是几次，分子就留到比它低一次。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：二次式先看判别式：配方得 $\arctan$，拆解得 $\ln$。</p>
+
+  <h3>8.5 三角有理式：万能代换</h3>
+
+  <p>遇到 $R(\sin x,\cos x)$ 的有理式，令 $t=\tan\dfrac x2$，则</p>
+
+  <p>$$\sin x=\frac{2t}{1+t^2},\qquad \cos x=\frac{1-t^2}{1+t^2},\qquad \dd x=\frac{2\,\dd t}{1+t^2},$$</p>
+
+  <p>三角函数就被翻译成了普通有理式，接下来走 8.4 的流程。</p>
+
+  <p class="plain">万能代换为什么一定成功？因为 $\sin x$、$\cos x$ 都是 $t=\tan\frac x2$ 的<b>有理函数</b>。这件事来自半角公式：画一个对边 $t$、邻边 $1$、斜边 $\sqrt{1+t^2}$ 的直角三角形，读出 $\sin\frac x2=\dfrac{t}{\sqrt{1+t^2}}$、$\cos\frac x2=\dfrac{1}{\sqrt{1+t^2}}$，再用倍角公式就得到 $\sin x=\dfrac{2t}{1+t^2}$、$\cos x=\dfrac{1-t^2}{1+t^2}$；而 $\dd x=\dfrac{2\dd t}{1+t^2}$ 来自 $x=2\arctan t$ 求导。三条合起来，三角函数被整个翻译成 $t$ 的有理式，接下来交给 8.4 的算法。<b>它的全部价值就在这里：把"没有算法"的三角积分，变成"有算法"的有理积分。</b></p>
+
+  <p>代价是计算量。$t$ 的有理式次数通常比原式高得多，拆部分分式时系数会很丑，所以它是<b>保底方案，不是首选方案</b>：先看能不能凑微分，凑不出来再上万能代换。</p>
+
+  <p class="plain">看一个"用了更亏"的例子：$\displaystyle\int\sin^2x\,\dd x$。用万能代换，被积式变成 $\dfrac{8t^2}{(1+t^2)^3}\dd t$——要拆一个三次的重因式，系数难得让人怀疑人生。而用半角公式 $\sin^2x=\dfrac{1-\cos2x}{2}$，两行就得到 $\dfrac x2-\dfrac{\sin2x}{4}+C$。同一个积分，一条路三行，一条路三页。</p>
+
+  <div class="box ex"><div class="tag">算一个</div>
+    <p>$$\int\frac{\dd x}{2+\cos x}=\int\frac{2\,\dd t}{3+t^2}=\frac{2}{\sqrt3}\arctan\frac{t}{\sqrt3}+C,\qquad t=\tan\frac x2.$$</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>万能代换"一定能行"，但常常把式子变复杂。见到 $\sin^2x\cos x$、$\dfrac{\cos x}{1+\sin^2x}$ 这类，先试凑微分；能凑出来就别上万能代换。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 代换在 $x=\pi$ 处会断</div>
+    <p>$t=\tan\dfrac x2$ 在 $x=\pi+2k\pi$ 处没有定义，所以万能代换只能在一个<b>不含这些点</b>的区间上做。若积分区间跨过了 $\pi$（例如 $\int_0^{2\pi}$），必须先在 $\pi$ 处把区间拆成两段，每段各用一次代换，再把结果拼起来。不拆而直接算，等于在无定义的点上做代换，通常会漏掉或重复一整段的贡献。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：三角有理式：先试凑微分，不行再万能代换。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 有些积分根本没有初等原函数</div>
+    <p>十八世纪的数学家大多相信"函数总能积出来"，只是要找对技巧。这个信念在十九世纪上半叶被打破：Liouville 开始系统研究"原函数什么时候还是初等函数"，结论是这件事受很强的限制，多数看起来普通的函数都过不了关。最著名的几个"积不出来"：$e^{-x^2}$、$\dfrac{\sin x}{x}$、$\dfrac{1}{\ln x}$、$\dfrac{e^x}{x}$。它们在各自的积分区间上连续，原函数都存在，但都不是初等函数。</p>
+    <p>二十世纪六十年代 Risch 给出了判定算法：给定一个初等函数，能在有限步内判定它的原函数是否初等，若是则求出来。所以"积不出来"不是本事不够，是<b>数学事实</b>。工程与统计里遇到它们，就另造新函数或查表、做数值积分——$\operatorname{erf}(x)$、$\operatorname{Si}(x)$、$\operatorname{Ei}(x)$ 都是这么来的。</p>
+    <p>这条结论对预习的含义：碰到一道怎么都凑不出来的题，先怀疑自己，再怀疑题目，最后才怀疑"它本来就没有初等原函数"。考试题不会给你这种，但心里要有这个位置。</p>
+  </div>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 三条路：凑微分、换元、分部。先看能不能凑，再考虑换，最后才分部。</p>
+    <p>② 有理函数有固定算法，不靠灵感；三角有理式先试凑微分，不行再万能代换。</p>
+    <p>③ 两个必查：$+C$ 有没有漏、第二类换元有没有回代。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int\frac{\dd x}{x^2+2x+2}=$</p>
+      <div class="q-opts"><button data-o="A">A. $\arctan(x+1)+C$</button><button data-o="B">B. $\ln|x^2+2x+2|+C$</button><button data-o="C">C. $\arctan x+C$</button><button data-o="D">D. $\dfrac{1}{x+1}+C$</button></div>
+      <p class="q-exp" hidden>配方：$x^2+2x+2=(x+1)^2+1$，被积式化为 $\dfrac{\dd(x+1)}{(x+1)^2+1}$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>求 $\displaystyle\int\tan x\,\dd x$。（提示：$\tan x=\frac{\sin x}{\cos x}$）</li>
+      <li>求 $\displaystyle\int\frac{\dd x}{x^2+4x+13}$。（提示：配方）</li>
+      <li>求 $\displaystyle\int\arctan x\,\dd x$。（提示：分部，$u=\arctan x$，$\dd v=\dd x$）</li>
+      <li>求 $\displaystyle\int\sqrt{1-x^2}\,\dd x$。（提示：$x=\sin t$）</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $\int\frac{\sin x}{\cos x}\dd x=-\int\frac{\dd(\cos x)}{\cos x}=-\ln|\cos x|+C$。</p>
+      <p><b>2.</b> 配方 $x^2+4x+13=(x+2)^2+9$，令 $u=x+2$，得 $\frac13\arctan\frac{x+2}{3}+C$。</p>
+      <p><b>3.</b> $=x\arctan x-\int\frac{x}{1+x^2}\dd x=x\arctan x-\frac12\ln(1+x^2)+C$。</p>
+      <p><b>4.</b> 令 $x=\sin t$，得 $\int\cos^2t\,\dd t=\frac t2+\frac{\sin2t}{4}+C=\frac12\arcsin x+\frac12x\sqrt{1-x^2}+C$。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch9" data-no="09" data-title="定积分" style="--ch:9">
+  <div class="chap-head">
+    <div class="chap-no">09</div>
+    <h2>定积分<small class="en">Definite Integrals</small></h2>
+  </div>
+
+  <p class="src">教材对应：第九章 定积分 · §1 定积分概念　§2 牛顿—莱布尼茨公式　§3 可积条件　§4 性质　§5 微积分学基本定理</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>面积本来是个几何词，怎么把它变成一个数？</li><li>为什么“怎么切、每段取哪一点”都不该影响结果？</li><li>求面积和求原函数，为什么会有关系？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>定义：分割、求和、取极限（Riemann 和）</li>
+      <li>可积的条件：有界 + "振幅可控"</li>
+      <li>变上限积分：连续函数的原函数被<b>构造</b>出来了</li>
+      <li>Newton–Leibniz 公式：把定积分变成逆运算</li>
+    </ul>
+  </div>
+
+  <p>这一章在故事里的位置：第八章解决了"怎么找原函数"，但没有回答"为什么要找"。这一章先给面积下一个不依赖图形的定义——分割、求和、取极限——再证明这个极限可以用原函数算出来，也就是 Newton–Leibniz 公式。两件事合起来，"积分"才从几何直觉变成一台可用的机器。第十章拿它去算体积、弧长、做功；第十一章则把它两个前提（区间有限、函数有界）拆掉。</p>
+
+  <p>定积分不是一个"数"，是一个<b>极限过程的产物</b>。理解它的最好方式是：先把定义写一遍，再用定义算一个最简单的积分，你会立刻明白为什么 Newton–Leibniz 公式那么珍贵。</p>
+
+  <div class="box def"><div class="tag">定积分（Riemann 积分）</div>
+    <p>设 $f$ 在 $[a,b]$ 上有界。作分割 $a=x_0&lt;x_1&lt;\cdots&lt;x_n=b$，记 $\Delta x_i=x_i-x_{i-1}$，$\lambda=\max\Delta x_i$，在每个小区间上任取 $\xi_i\in[x_{i-1},x_i]$，作<b>Riemann 和</b></p>
+    <p>$$S=\sum_{i=1}^{n}f(\xi_i)\Delta x_i.$$</p>
+    <p>若当 $\lambda\to0$ 时 $S$ 的极限存在且与分割、取点方式<b>都无关</b>，则称 $f$ 在 $[a,b]$ 上<b>可积</b>，该极限记作 $\displaystyle\int_a^bf(x)\,\dd x$。</p>
+  </div>
+
+  <p class="plain">定积分就是"拿一堆细长条去凑面积"。条子怎么切、每条取哪一点的高度，都不该影响最后结果——只要能保证这个"不该影响"，这个极限就叫积分。</p>
+
+  <p class="plain">把三步拆开看，每一步都在堵一个漏洞。<b>分割任意</b>：不许你专挑等分这种好算的分法，因为"面积"不该依赖刻度怎么画。<b>取点任意</b>：每条小矩形的高度取左端、右端还是中点，答案都不能变；若会变，就说明这块"面积"根本没定义好。<b>$\lambda\to0$ 对任意细分</b>：不是"存在某种很细的分法"，而是"只要够细，随便哪种分法都行"。三条合起来，才排除了"靠挑分法作弊"的可能。</p>
+
+  <div class="lab" data-lab="riemann"></div>
+
+  <div class="vid" data-video="riemann" data-title="Riemann 和：矩形越切越细，和就贴住面积"></div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>三个"无关"是关键：<b>极限既不能依赖分割，也不能依赖取点</b>。这就是为什么用定义证明可积很难——你要对所有分法同时给出估计。Darboux 上下和正是为了解决这一点：它们只依赖分割，且把"取点"的不确定性挤掉了。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 为什么非要"对任意取点"</div>
+    <p>如果只要求"存在一种取点使和收敛"，那任何有界函数都能蒙混过关。取 $[0,1]$ 上的 Dirichlet 函数：有理点取 $1$，无理点取 $0$。每段都取有理点，Riemann 和恒为 $1$；每段都取无理点，和恒为 $0$。同一种分割，取点不同结果就不同，所以它<b>不可积</b>。定义里那句"与取点方式无关"，防的正是这种函数。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">可积的充分条件</div>
+    <p>(1) 若 $f\in C[a,b]$，则 $f$ 在 $[a,b]$ 上可积。</p>
+    <p>(2) 若 $f$ 在 $[a,b]$ 上单调，则 $f$ 可积。</p>
+    <p>(3) 若 $f$ 在 $[a,b]$ 上有界且只有<b>有限个</b>间断点，则 $f$ 可积。</p>
+    <p>必要条件：可积 $\Rightarrow$ 有界。所以 $\frac1x$ 在 $(0,1]$ 上不可积（无界），这类情形要用下一章的反常积分处理。</p>
+    <details class="proof"><summary>证明 (1) 的思路</summary><div class="body">
+      <p>用一致连续（Cantor 定理）：任给 $\eps&gt;0$，存在 $\delta&gt;0$，只要 $\lambda&lt;\delta$ 就有同一小区间内任意两点的函数值之差 $&lt;\frac{\eps}{b-a}$。于是上和在 $[x_{i-1},x_i]$ 上取到最大值 $M_i$，下和取最小值 $m_i$，有 $M_i-m_i&lt;\frac{\eps}{b-a}$，从而</p>
+      <p>$$0\le \overline S-\underline S=\sum(M_i-m_i)\Delta x_i&lt;\eps.$$</p>
+      <p>由 Darboux 可积准则即知可积。<span class="qed">∎</span></p>
+      <p>看到没有：<b>一致连续正是为可积性准备的。</b>章节之间的伏笔在这里收线。</p>
+    </div></details>
+  </div>
+
+  <div class="box note"><div class="tag">读法 · "有界 + 有限个间断点"各自在防什么</div>
+    <p><b>有界</b>是必要条件：若 $f$ 在 $[a,b]$ 上无界，总能在某一段里取到任意大的函数值，Riemann 和要多大有多大，极限无从谈起。所以 $\dfrac1x$ 在 $(0,1]$ 上不可积——它甚至不是"积分发散"，而是压根没资格进这个定义（第十一章会用一个极限把它救回来）。</p>
+    <p><b>有限个间断点</b>是充分条件里的关键：每个间断点只污染一个小区间，把这点单独框出来，它的贡献不超过 $2M\cdot(\text{框的长度})$，让框长趋于零就被挤掉了。间断点若有无穷多个且"撒得到处都是"（如 Dirichlet 函数），这种挤法就失效了。</p>
+    <p>但要小心：<b>有限个只是充分条件，不是必要条件</b>。单调函数可以有可数无穷多个间断点，照样可积。真正卡住可积性的是"间断点能否被总长度任意小的区间盖住"——零测集的语言，下册实变函数里才正式展开。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 从"和"到"积分"</div>
+    <p>把面积写成"分割、求和、取极限"，并且把适用对象从连续函数放宽到一般有界函数，这件事通常归功于 Riemann（一般认为 1854 年），所以今天的定义叫 Riemann 积分。此前 Cauchy 已经用和式的极限定义过连续函数的积分，但"有界、间断点不太多也能积"是 Riemann 的贡献。</p>
+    <p>Darboux 在十九世纪七十年代补上了上、下和：它们只依赖分割、不依赖取点，于是"对所有取点都收敛"被压缩成"上和与下和之差趋于零"，证明一下子轻了很多。今天教材里的可积准则多半是这一版。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">用定义算一次</div>
+    <p>用定义证明 $\displaystyle\int_0^1x\,\dd x=\frac12$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>等分 $[0,1]$ 为 $n$ 份，取 $\xi_i=\frac in$，则</p>
+      <p>$$\sum_{i=1}^{n}\frac in\cdot\frac1n=\frac{1}{n^2}\cdot\frac{n(n+1)}{2}=\frac12\left(1+\frac1n\right)\to\frac12.$$</p>
+      <p>严格说还要说明"任意分法都收敛到同一值"，做法是让 $n\to\infty$ 时 $\lambda\to0$，再用 $f(x)=x$ 的一致连续性把任意分割的 Riemann 和与等分的情形比较。<b>这就是为什么大家更喜欢 Newton–Leibniz。</b></p>
+    </div></details>
+  </div>
+
+  <p>再把 $\displaystyle\int_0^1x^2\dd x$ 算一遍，这次能看清"求和"到底长什么样。等分 $n$ 份、取右端点 $\xi_i=\frac in$：</p>
+
+  <p>$$\sum_{i=1}^n\Big(\frac in\Big)^2\frac1n=\frac{1}{n^3}\sum_{i=1}^ni^2=\frac{1}{n^3}\cdot\frac{n(n+1)(2n+1)}{6}=\frac{(n+1)(2n+1)}{6n^2}\to\frac13.$$</p>
+
+  <p>代入数字看误差：$n=100$ 时和为 $\frac{101\cdot201}{60000}\approx0.3384$，与 $\frac13\approx0.3333$ 差 $0.005$；$n=1000$ 时差 $0.0005$——误差按 $\frac1n$ 缩，这就是"$\lambda\to0$"的肉眼版本。顺便也能看出为什么没人愿意用定义算积分：为了一次数，还得先会 $\sum i^2$；被积函数换成 $\sin x$，这条路就彻底断了。</p>
+
+  <h3>9.1 变上限积分与 Newton–Leibniz 公式</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">微积分基本定理</div>
+    <p>设 $f\in C[a,b]$，令 $\Phi(x)=\displaystyle\int_a^xf(t)\,\dd t$，则 $\Phi$ 在 $[a,b]$ 上可导，且 $\Phi'(x)=f(x)$。</p>
+    <p>也就是说：<b>连续函数一定有原函数</b>，而且可以用积分写出来。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>$$\frac{\Phi(x+\Delta x)-\Phi(x)}{\Delta x}=\frac{1}{\Delta x}\int_x^{x+\Delta x}f(t)\,\dd t.$$</p>
+      <p>由积分中值定理（或用 $f$ 的连续性），这个值介于 $f$ 在 $[x,x+\Delta x]$ 上的最大最小值之间，当 $\Delta x\to0$ 时两端都趋于 $f(x)$，故极限为 $f(x)$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="plain">这条定理的人话版本只有一句：<b>面积函数的变化率，就是右边界处的高度。</b>$\Phi$ 从 $x$ 长到 $x+\Delta x$，多出来的那块面积夹在两个矩形之间：高为 $f$ 在这小段上的最小值、宽为 $\Delta x$ 的矩形，以及高为最大值的矩形。$f$ 连续时，两个高都被挤向 $f(x)$，所以多出的面积 $\approx f(x)\Delta x$，误差是 $o(\Delta x)$；除以 $\Delta x$ 再让 $\Delta x\to0$，就得到 $\Phi'(x)=f(x)$。</p>
+
+  <p>具体算一次：取 $f(t)=t^2$，则 $\Phi(x)=\displaystyle\int_0^xt^2\dd t=\frac{x^3}{3}$，求导得 $x^2$，正是 $f(x)$。这个例子"太巧"，因为它本来就能积出来；定理真正的分量在反过来用——<b>先有 $\Phi$，才证明了 $f$ 有原函数</b>。对 $\dfrac{\sin t}{t}$、$e^{-t^2}$ 这类积不出来的函数，$\Phi$ 依然存在、依然可导，只是写不成初等表达式。</p>
+
+  <div class="box warn"><div class="tag">易错 · 连续这个条件不能丢</div>
+    <p>$\Phi$ 可导靠的是 $f$ 在 $x$ 处连续。若 $f$ 在 $x_0$ 有跳跃，$\Phi$ 在 $x_0$ 就不可导——左右导数分别等于左右的极限。例：$f=0$ 在 $[0,1)$、$f=1$ 在 $[1,2]$，则 $\Phi(x)=\int_0^xf$ 在 $x=1$ 处左导数为 $0$、右导数为 $1$。所以"连续函数一定有原函数"这句话里，<b>连续</b>不是客套。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Newton–Leibniz 公式</div>
+    <p>若 $f\in C[a,b]$，$F$ 是 $f$ 在 $[a,b]$ 上的任一原函数，则</p>
+    <p>$$\int_a^bf(x)\,\dd x=F(b)-F(a).$$</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>$\Phi(x)=\int_a^xf$ 与 $F(x)$ 都是 $f$ 的原函数，故 $F=\Phi+C$。代入 $x=a$ 得 $C=F(a)$，再代入 $x=b$ 即得。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 谁先看出来的</div>
+    <p>面积与切线互逆这件事，Newton 和 Leibniz 在十七世纪六十至八十年代各自独立看出来，路径不同：Newton 从运动学（流数与流量）入手，Leibniz 从求和与差分的对称性入手。Leibniz 的 $\int$ 与 $\dd$ 记号把"互逆"写得很直白：$\dd\int f=f\dd x$，$\int\dd F=F+C$。</p>
+    <p>但两人都没有今天意义上的定义——"无穷小"到底是什么，说不清。真正把这条公式证下来要等 Cauchy：他在十九世纪二十年代用"和式的极限"定义积分，再用变上限积分构造原函数，才补上了逻辑缺口。所以这条公式既叫 Newton–Leibniz 公式，也叫<b>微积分基本定理</b>：它是一座桥，一头是"求和"，一头是"求导"。</p>
+  </div>
+
+  <p>这条公式把"求面积极限"降级成"求原函数再相减"，是整门课最实用的工具。但它有前提：$f$ 必须连续（或至少原函数存在且足够好）。</p>
+
+  <p class="plain">它为什么是整门课的高潮？因为在它之前，"求面积"和"求原函数"是两件毫不相干的事：前者是分割求和的极限（本章开头那条又长又难的定义），后者是求导的逆运算（上一章的技术活）。这条公式说：它们是同一件事的两面。于是<b>算面积不用再求和</b>——找原函数、代两个端点、相减，三步搞定。</p>
+
+  <p>感受一下差距。用定义算 $\displaystyle\int_0^{\pi}\sin x\,\dd x$ 基本走不通（Riemann 和里的 $\sum\sin\xi_i\,\Delta x_i$ 没有闭式）；用 N–L，$[-\cos x]_0^\pi=1+1=2$，一行。$\displaystyle\int_0^1\frac{\dd x}{1+x^2}$ 也一样：定义没法下手，而 $[\arctan x]_0^1=\frac\pi4$。这就是为什么后面所有计算题都只考"找原函数"，没人再考"用定义求极限"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 拿 N–L 硬套发散积分</div>
+    <p>N–L 的前提是 $f$ 在 $[a,b]$ 上可积（连续就够）。若区间里有瑕点还硬套公式，会得到荒谬结果。例如不管前提直接算</p>
+    <p>$$\int_{-1}^{1}\frac{\dd x}{x^2}=\Big[-\frac1x\Big]_{-1}^{1}=-1-1=-2,$$</p>
+    <p>而被积函数恒正，积分不可能是负数——真相是这个积分<b>发散</b>（$x=0$ 是瑕点）。看到结果的符号都不对，就该回头检查前提。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变上限积分给出连续函数的原函数，N–L 公式才有依据。</p>
+
+  <h3>9.2 定积分的性质与计算</h3>
+
+  <table class="tbl">
+    <caption>常用性质</caption>
+    <tr><th style="width:210px">性质</th><th>说明</th></tr>
+    <tr><td>线性</td><td>$\int_a^b(\alpha f+\beta g)=\alpha\int_a^bf+\beta\int_a^bg$</td></tr>
+    <tr><td>区间可加</td><td>$\int_a^bf=\int_a^cf+\int_c^bf$</td></tr>
+    <tr><td>保序</td><td>$f\le g\Rightarrow\int_a^bf\le\int_a^bg$</td></tr>
+    <tr><td>绝对值估计</td><td>$\left|\int_a^bf\right|\le\int_a^b|f|$</td></tr>
+    <tr><td>积分中值定理</td><td>$f\in C[a,b]$ 时存在 $\xi$ 使 $\int_a^bf=f(\xi)(b-a)$</td></tr>
+    <tr><td>换元</td><td>$\int_a^bf(x)\dd x=\int_\alpha^\beta f(\varphi(t))\varphi'(t)\dd t$，上下限随之换</td></tr>
+    <tr><td>分部</td><td>$\int_a^bu\,\dd v=[uv]_a^b-\int_a^bv\,\dd u$</td></tr>
+  </table>
+
+  <p class="plain">这张表里最值钱的是<b>区间可加</b>和<b>换元、分部</b>：前者让你能在瑕点或分段点处把区间切开（第十一章要反复用），后者让你不必回到定义。而"保序"和"绝对值估计"是用来<b>估计</b>积分的——很多题不需要算出值，只需要知道它不超过多少，这两条就是全部工具。</p>
+
+  <div class="box note"><div class="tag">读法 · 积分中值定理在说什么</div>
+    <p>$\displaystyle\int_a^bf=f(\xi)(b-a)$ 的意思是：<b>曲边梯形与某个矩形面积相等</b>，那个矩形的高就是 $f$ 在某点的取值，称为 $f$ 在 $[a,b]$ 上的平均值。所以平均值定义为 $\dfrac{1}{b-a}\int_a^bf$。例：$f(x)=x$ 在 $[0,1]$ 上平均值 $\frac12$，$\xi=\frac12$ 正好取到；$f(x)=x^2$ 在 $[0,1]$ 上平均值 $\frac13$，而 $\xi=\frac{1}{\sqrt3}\approx0.577$ 处 $f=\frac13$。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>定积分换元时，<b>上下限必须同时换</b>，换完不必回代。这与不定积分恰好相反。混用会导致两种典型错误：换元后仍用 $x$ 的限，或者算完又回代一遍。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">对称区间技巧</div>
+    <p>求 $\displaystyle\int_{-1}^{1}\frac{x^2\sin x}{1+x^4}\,\dd x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>被积函数是奇函数（$x^2\sin x$ 奇，$1+x^4$ 偶），在对称区间上积分为 $\mathbf{0}$。</p>
+      <p>记住这条：<b>对称区间上，奇函数积分为零，偶函数积分为半区间两倍。</b>能省下大量计算。</p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：定积分换元三件套：被积式、$\dd x$、上下限，一个都不能漏。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">若 $f$ 在 $[a,b]$ 上可积，则<b>一定能推出</b></p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上连续</button><button data-o="B">B. $f$ 在 $[a,b]$ 上有界</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $[a,b]$ 上有原函数</button></div>
+      <p class="q-exp" hidden>有界是可积的必要条件；连续、单调只是充分条件，原函数存在也不由可积保证。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>求 $\displaystyle\int_0^{\pi/2}\sin^2x\,\dd x$。</li>
+      <li>求 $\displaystyle\int_0^1 x\sqrt{1-x^2}\,\dd x$。</li>
+      <li>设 $F(x)=\displaystyle\int_0^{x^2}\sin t\,\dd t$，求 $F'(x)$。</li>
+      <li>判断：若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。（对/错）</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> 用 $\sin^2x=\frac{1-\cos2x}{2}$，得 $\frac{\pi}{4}$。</p>
+      <p><b>2.</b> 令 $u=1-x^2$，$\dd u=-2x\dd x$，得 $\frac13$。</p>
+      <p><b>3.</b> 复合函数求导：$F'(x)=\sin(x^2)\cdot2x$。</p>
+      <p><b>4.</b> <b>错。</b>可积只要求"间断点不太多"，有界且有限个间断点即可积。如 $f(x)=0$（$x\ne0$），$f(0)=1$，可积但不连续。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch10" data-no="10" data-title="定积分的应用" style="--ch:10">
+  <div class="chap-head">
+    <div class="chap-no">10</div>
+    <h2>定积分的应用<small class="en">Applications</small></h2>
+  </div>
+
+  <p class="src">教材对应：第十章 定积分的应用 · §1 平面图形面积　§2 平行截面求体积　§3 弧长与曲率　§4 旋转曲面面积　§5 物理应用</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>一段曲线的长度，怎么用“直的线段”去逼近？</li><li>旋转体的侧面积，为什么不能写成 $2\pi\int f\,\dd x$？</li><li>微元法里的“近似”，凭什么可以拿去积分？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>微元法：把"整体量"切成"小块量"再积分</li>
+      <li>面积、体积、弧长、旋转体侧面积</li>
+      <li>物理应用：功、压力、质心</li>
+    </ul>
+  </div>
+
+  <p>这一章在故事里的位置：第九章给了两样东西——定积分的定义（分割求和的极限）和 N–L 公式（用原函数算它）。这一章的角色是"建模"：把几何量和物理量写成积分。会不会算出积分是上一章的事，这里的难点是"这个式子凭什么这么列"。列式的方法只有一个，叫微元法；它的合法性全部押在一句误差估计上。再往后，第十一章会把"区间有限、函数有界"这两个前提也拆掉。</p>
+
+  <p>这一章不引入新定理，只训练一件事：<b>把一个几何量写成积分</b>。会不会积分是第九章的事；这里的难点是"怎么写出来、凭什么这么写"。</p>
+
+  <h3>10.1 微元法：从"近似"到"等式"</h3>
+
+  <div class="box key"><div class="tag">微元法三步</div>
+    <p>① 在 $[x,x+\dd x]$ 上把待求量 $Q$ 的小块写成 $\dd Q=f(x)\dd x+o(\dd x)$；<br>
+       ② 积分 $Q=\int_a^b f(x)\dd x$；<br>
+       ③ <b>写清楚为什么误差是 $o(\dd x)$</b>——这一步才是得分点。</p>
+  </div>
+
+  <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 为什么必须"误差是 $o(\dd x)$"</div>
+    <p>要求误差是 $o(\dd x)$，是因为要把所有小块的误差加起来：分成 $n$ 段时每段误差 $o(\tfrac1n)$，总和 $n\cdot o(\tfrac1n)\to0$，误差才被"积掉"。</p>
+    <p>若误差只与 $\dd x$ <b>同阶</b>（比如把弧长写成 $\dd x$），累加后不趋于零，结论就错了——旋转体侧面积正是这样一个反例。</p>
+  </div>
+
+  <p class="plain">再压缩一遍：<b>先看一小块，把这一小块算准到"误差比 $\dd x$ 还小"，再积分。</b>"先近似后相等"之所以合法，是因为误差按段累加时会被"摊薄"：分成 $n$ 段，第 $i$ 段误差不超过 $\eps_i\Delta x_i$，其中 $\eps_i$ 随分段变细<b>一致地</b>趋于零，于是总误差 $\le\sum\eps_i\Delta x_i\le\max\eps_i\cdot(b-a)\to0$。注意最后一步用了"一致"：$\eps_i$ 必须对所有段同时变小，不能靠"某几段特别细"来蒙混。这也解释了为什么微元法的技术核心是"$o(\dd x)$ 中的 $o$ 对 $x$ 一致"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 近似不是"随便近似"</div>
+    <p>$\dd Q=f(x)\dd x+o(\dd x)$ 里的 $f(x)$ 必须取在<b>这一小段自己的位置</b>上。拿球体积试：半径 $R$ 的球，$x$ 处切片是半径 $\sqrt{R^2-x^2}$ 的圆，面积 $\pi(R^2-x^2)$，积分得 $\frac43\pi R^3$，这是对的。若图省事，每片都用最大截面 $\pi R^2$，得 $\pi R^2\cdot2R=2\pi R^3$——大了整整 $50\%$。错在哪？每片误差 $\pi x^2\dd x$ 只与 $\dd x$ 同阶，累加后是 $\frac23\pi R^3$，不会消失。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：微元法的核心是误差 $o(\dd x)$，不是公式本身。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · "先近似后相等"的两百年</div>
+    <p>十七、十八世纪的数学家一直这么干：把量切成"无穷小"的块，算出每块的主部，加起来就是答案。办法好用，但"无穷小"究竟是什么始终说不清——十八世纪三十年代，Berkeley 主教写文章讥讽它是"消失量的鬼魂"。这句批评不是刁难：如果 $\dd x$ 先是"不为零"（可以除），后来又"等于零"（可以丢），逻辑上确实站不住。</p>
+    <p>十九世纪的解决办法是<b>把无穷小换成极限</b>：不再问"$\dd x$ 是什么"，而是问"误差与 $\dd x$ 之比是否趋于零"。这就是 10.1 里那个 $o(\dd x)$ 的来历。所以微元法不是"不严谨的工程做法"：它的严谨版本就是一句误差估计，写不出这句估计，这个方法就还没证完。</p>
+  </div>
+
+  <h3>10.2 面积：上减下，或右减左</h3>
+
+  <div class="box ex"><div class="tag">x 型：$y=x^2$ 与 $y=2x$</div>
+    <p>交点是 $x=0,2$，且在 $(0,2)$ 上 $2x\ge x^2$，故</p>
+    <p>$$S=\int_0^2(2x-x^2)\dd x=\Big[x^2-\frac{x^3}{3}\Big]_0^2=4-\frac83=\frac43.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag">y 型：$x=y^2$ 与 $x=y+2$</div>
+    <p>对 $x$ 积要分正负两支（$y=\pm\sqrt x$），改对 $y$ 积就一步到位：交点 $y^2=y+2$ 得 $y=-1,2$，且右边界是 $y+2$：</p>
+    <p>$$S=\int_{-1}^{2}\big[(y+2)-y^2\big]\dd y=\Big[\frac{y^2}{2}+2y-\frac{y^3}{3}\Big]_{-1}^{2}=\frac{10}{3}+\frac76=\frac92.$$</p>
+    <p><b>选 $x$ 型还是 $y$ 型，看哪种不用分段。</b></p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · "上减下"要求上边真的在上</div>
+    <p>$\displaystyle\int_a^b(\text{上}-\text{下})\dd x$ 只在整段上"上边始终在上"时才对。$y=\sin x$ 与 $x$ 轴在 $[0,2\pi]$ 上围出的面积，若直接写 $\int_0^{2\pi}\sin x\,\dd x=0$ 就错了：$[0,\pi]$ 上 $\sin x\ge0$，$[\pi,2\pi]$ 上 $\sin x\le0$，后半段把前半段抵消了。正确做法是在 $\pi$ 处切开、各段取绝对值：面积 $=\int_0^\pi\sin x\dd x-\int_\pi^{2\pi}\sin x\dd x=2+2=4$。</p>
+    <p>口诀：<b>算面积先找交点，再确认每一段谁在上。</b>被积函数变号的地方，都是该切一刀的地方。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：面积：哪种积分不用分段，就用哪种。</p>
+
+  <h3>10.3 体积：切片与旋转</h3>
+
+  <table class="tbl">
+    <caption>三种常用体积公式</caption>
+    <tr><th style="width:150px">类型</th><th>公式</th></tr>
+    <tr><td>平行截面已知</td><td>$V=\int_a^b A(x)\,\dd x$（$A(x)$ 是截面积）</td></tr>
+    <tr><td>绕 $x$ 轴（圆盘）</td><td>$V=\pi\int_a^b f^2(x)\,\dd x$</td></tr>
+    <tr><td>绕 $y$ 轴（柱壳）</td><td>$V=2\pi\int_a^b x\,|f(x)|\,\dd x$</td></tr>
+  </table>
+
+  <p class="plain">三行公式不必当三张表背，它们是同一个小块的三种切法。绕 $x$ 轴转，切片垂直于轴，切出来是<b>圆盘</b>：半径 $f(x)$、厚 $\dd x$，体积 $\pi f^2\dd x$。绕 $y$ 轴转，若仍沿 $x$ 切片，切出来是一圈<b>筒壁</b>：半径 $x$、高 $f(x)$、厚 $\dd x$，剪开展平成一个长方体，体积 $2\pi x\,f(x)\dd x$。选哪个只取决于"哪种切法让边界变成一条曲线"，这和 10.2 里选 $x$ 型还是 $y$ 型是同一个道理。</p>
+
+  <p>拿同一条曲线对一下：$y=x^2$（$0\le x\le1$）绕 $x$ 轴，圆盘法得 $V=\pi\int_0^1x^4\dd x=\frac\pi5$；绕 $y$ 轴，柱壳法得 $\frac\pi2$（下面例子里算）。同一条曲线、同一个区间，绕不同的轴体积差了一倍多——不是算错，是切法换了。</p>
+
+  <div class="box ex"><div class="tag">柱壳法</div>
+    <p>$y=x^2$（$0\le x\le1$）绕 $y$ 轴：每个柱壳半径 $x$、高 $x^2$、厚 $\dd x$，</p>
+    <p>$$V=2\pi\int_0^1 x\cdot x^2\,\dd x=2\pi\cdot\frac14=\frac{\pi}{2}.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag">平行截面</div>
+    <p>底面是单位圆，垂直于 $x$ 轴的截面都是等边三角形。截面边长 $2\sqrt{1-x^2}$，面积</p>
+    <p>$$A(x)=\frac{\sqrt3}{4}\cdot4(1-x^2)=\sqrt3\,(1-x^2),\qquad V=\sqrt3\int_{-1}^{1}(1-x^2)\dd x=\frac{4\sqrt3}{3}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：体积：绕 $x$ 轴用圆盘，绕 $y$ 轴用柱壳。</p>
+
+  <h3>10.4 弧长：用弦长逼近</h3>
+
+  <p>小段弦长 $\sqrt{\Delta x^2+\Delta y^2}=\sqrt{1+f'^2}\,\Delta x+o(\Delta x)$，故</p>
+
+  <p>$$L=\int_a^b\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
+  <p class="plain">$\sqrt{1+f'^2}$ 是<b>弦长公式</b>化出来的。一小段的两个直角边是 $\Delta x$ 与 $\Delta y$，弦长 $\sqrt{\Delta x^2+\Delta y^2}=\sqrt{1+(\Delta y/\Delta x)^2}\,\Delta x$。再用 Lagrange 中值定理把 $\Delta y$ 换成 $f'(\xi)\Delta x$（$\xi$ 在这小段内），弦长就成了 $\sqrt{1+f'(\xi)^2}\Delta x$。分割越细，$\xi$ 越贴近这段的每一点；$f'$ 连续时 $\sqrt{1+f'(\xi)^2}$ 一致地逼近 $\sqrt{1+f'(x)^2}$，所以它确实是一个 $f(x)\dd x+o(\dd x)$，可以积分。</p>
+
+  <p>值得留意：这里<b>真的用了中值定理</b>。没有它，只能写 $\Delta y\approx f'\Delta x$，误差是多少说不清；有了它，弦长被<b>精确</b>写成某个中间点的导数，剩下的只是一致性估计。这是第十章唯一一处实质用到第七章工具的地方。</p>
+
+  <div class="box ex"><div class="tag">抛物线弧</div>
+    <p>$y=x^{3/2}$（$0\le x\le1$）：$y'=\frac32\sqrt x$，$1+y'^2=1+\frac94x$，</p>
+    <p>$$L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\frac{8}{27}\Big[\big(1+\tfrac94x\big)^{3/2}\Big]_0^1=\frac{13\sqrt{13}-8}{27}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：弧长里永远带着 $\sqrt{1+f'^2}$。</p>
+
+  <h3>10.5 旋转曲面面积：为什么不是 $2\pi\int f\,\dd x$</h3>
+
+  <p>侧面的那一小圈，宽不是 $\dd x$，而是<b>弧长</b> $\sqrt{1+f'^2}\,\dd x$：</p>
+
+  <p>$$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
+  <p class="plain">为什么"宽"必须是弧长？把一小段放大看：绕 $x$ 轴转出来的那一圈其实是个<b>圆台</b>，不是圆柱。圆台的侧面积是 $\pi(r_1+r_2)\cdot(\text{母线长})$，母线是斜的 $\sqrt{\Delta x^2+\Delta y^2}$；而 $2\pi f\,\Delta x$ 相当于把这个圆台"拍扁"成同半径、同高的圆柱，只算了水平宽度，漏掉斜出去的那一截。</p>
+
+  <p>用数看漏多少。取 $y=x$ 上从 $x=1$ 到 $x=1.1$ 的一小段：圆台两底半径 $1$ 与 $1.1$，母线长 $0.1\sqrt2\approx0.1414$，正确侧面积 $\pi(1+1.1)(0.1\sqrt2)\approx0.933$；错写成 $2\pi\cdot1\cdot0.1\approx0.628$，小了三分之一。更关键的是这个差距<b>不会随 $\Delta x\to0$ 消失</b>：$y=x$ 时正确式与错误式之比趋于 $\sqrt2$ 而不是 $1$。误差只与 $\dd x$ 同阶，累加后当然留下一整块。</p>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>用 $2\pi\int f\,\dd x$ 相当于把斜的小段"压平"，误差与 $\dd x$ 同阶，累加后不消失。例：$y=\sqrt x$ 绕 $x$ 轴，正确答案</p>
+    <p>$$S=2\pi\int_0^1\sqrt x\sqrt{1+\frac1{4x}}\,\dd x=2\pi\int_0^1\sqrt{x+\tfrac14}\,\dd x=\frac{\pi(5\sqrt5-1)}{6},$$</p>
+    <p>而错误写法给出 $\pi$。两者并不相等。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 侧面积的另一条路</div>
+    <p>旋转曲面面积有一个不靠微积分的说法，叫 Pappus 定理。Pappus 是公元四世纪的亚历山大里亚数学家，这条结论记在他的《数学汇编》里：一段曲线绕轴旋转，所得曲面面积等于<b>曲线长度乘以曲线重心绕轴走过的路程</b>，即 $S=2\pi\bar y\,L$。</p>
+    <p>把它和 $2\pi\int|f|\sqrt{1+f'^2}\dd x$ 对一下：$\int\sqrt{1+f'^2}\dd x$ 正是弧长 $L$，而 $\bar y=\dfrac{1}{L}\int|f|\sqrt{1+f'^2}\dd x$ 正是曲线的重心纵坐标。两条路给出同一个式子，也从侧面说明：权重必须是<b>弧长</b>，不是 $\dd x$。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：侧面积的“宽”是弧长而不是 $\dd x$，这是最常见的错。</p>
+
+  <h3>10.6 物理应用：变力做功</h3>
+
+  <p>若力沿 $x$ 方向、大小随位置变化，则小段做功 $\dd W=F(x)\dd x$，故 $W=\int_a^bF(x)\dd x$。</p>
+
+  <p class="plain">变力做功的微元好理解：一小段位移 $\dd x$ 里，力几乎不变，做功就是 $F(x)\dd x$；把无数小段加起来就是积分。"力几乎不变"的误差是 $o(\dd x)$——$F$ 连续时，一小段内力最多变化一点点。这也是 10.1 那套误差估计的又一次应用。</p>
+
+  <div class="box ex"><div class="tag">弹簧</div>
+    <p>胡克定律 $F=kx$，把弹簧从自然长度拉伸 $a$ 所做的功</p>
+    <p>$$W=\int_0^a kx\,\dd x=\frac12ka^2.$$</p>
+  </div>
+
+  <p>带数算一次。弹簧 $k=200\ \mathrm{N/m}$，从自然长度拉到 $x=0.3\ \mathrm{m}$：</p>
+
+  <p>$$W=\int_0^{0.3}200x\,\dd x=100x^2\Big|_0^{0.3}=100\cdot0.09=9\ \mathrm{J}.$$</p>
+
+  <p>它不等于"末端的力 × 距离"：末端力是 $200\cdot0.3=60\ \mathrm{N}$，乘 $0.3$ 得 $18\ \mathrm{J}$，正好是正确答案的两倍。全程平均力是 $30\ \mathrm{N}$，乘 $0.3$ 才是 $9\ \mathrm{J}$。对线性力，"平均力等于初末之半"成立；但这不是普遍规律——$F=x^2$ 从 $0$ 到 $3$ 时，$\int_0^3x^2\dd x=9\ \mathrm{J}$，平均力是 $3\ \mathrm{N}$，而不是 $(0+9)/2=4.5\ \mathrm{N}$。</p>
+
+  <p class="take"><b>本节带走</b>：变力做功：先写微元 $\dd W=F\dd x$，再积分。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 所有公式都从"小块近似 + 误差 $o(\dd x)$"推出来，背公式不如背这个动作。</p>
+    <p>② 面积看哪种积分不分段；体积分清圆盘（绕 $x$）与柱壳（绕 $y$）；弧长与侧面积都要带上 $\sqrt{1+f'^2}$。</p>
+    <p>③ 最大的坑：把侧面积的 $\sqrt{1+f'^2}\,\dd x$ 写成 $\dd x$。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$y=x^2$（$0\le x\le1$）绕 $y$ 轴旋转所得体积为</p>
+      <div class="q-opts"><button data-o="A">A. $\dfrac\pi2$</button><button data-o="B">B. $\dfrac\pi4$</button><button data-o="C">C. $\dfrac{2\pi}3$</button><button data-o="D">D. $\pi$</button></div>
+      <p class="q-exp" hidden>柱壳法：$V=2\pi\int_0^1x\cdot x^2\dd x=2\pi\cdot\frac14=\frac\pi2$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
+      <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
+      <li>求 $y=x^{3/2}$ 在 $[0,1]$ 上的弧长。</li>
+    </ol>
+    <details class="ans"><summary>答案</summary><div class="body">
+      <p><b>1.</b> 交点 $x=0,1$，$S=\int_0^1(x-x^2)\dd x=\frac12-\frac13=\frac16$。</p>
+      <p><b>2.</b> $V=\pi\int_0^1x\,\dd x=\frac\pi2$。</p>
+      <p><b>3.</b> $L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\dfrac{13\sqrt{13}-8}{27}$。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch11" data-no="11" data-title="反常积分" style="--ch:11">
+  <div class="chap-head">
+    <div class="chap-no">11</div>
+    <h2>反常积分<small class="en">Improper Integrals</small></h2>
+  </div>
+
+  <p class="src">教材对应：第十一章 反常积分 · §1 概念　§2 无穷积分的性质与敛散判别　§3 瑕积分的性质与敛散判别</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>区间无限长，面积还可能有限吗？</li><li>为什么 $\frac1x$ 的面积无限，$\frac1{x^2}$ 的却有限？</li><li>判断“收敛”为什么常常比“算出值”更重要？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>两类反常：无穷区间、无界函数（瑕积分）</li>
+      <li>收敛判别：比较法、$p$ 判别、绝对收敛</li>
+      <li>$\Gamma$ 函数：把阶乘推广到实数</li>
+    </ul>
+  </div>
+
+  <p>这一章在故事里的位置：第九章、第十章的所有结论都默认了两件事——区间有限、函数有界。这一章把这两个前提拆掉，问一个更基本的问题：<b>面积到底有没有限</b>。这问题看着技术，其实是"极限存在性"在积分里第一次正面登场：很多积分根本算不出值，但我们仍然需要知道它收敛不收敛。判别法（$p$ 判别、比较法、Dirichlet）就是为这件事准备的；再往下一册，同样的想法会变成级数理论。</p>
+
+  <p>定积分要求区间有限、函数有界。反常积分把这两个限制放开，用极限来定义。它看起来只是"多算一步极限"，但收敛性判断常常比计算本身更重要。</p>
+
+  <h3>11.1 两类反常积分</h3>
+
+  <div class="box def"><div class="tag">两类反常积分</div>
+    <p>(1) <b>无穷区间</b>：$\displaystyle\int_a^{+\infty}f(x)\dd x:=\lim_{b\to+\infty}\int_a^bf(x)\dd x$，若极限存在则称<b>收敛</b>。</p>
+    <p>(2) <b>瑕积分</b>：若 $f$ 在 $a$ 附近无界（$a$ 为瑕点），则 $\displaystyle\int_a^bf:=\lim_{\eta\to0^+}\int_{a+\eta}^bf$。</p>
+    <p>两种情况都出现时，必须在中间任取一点拆成两段，<b>两段都收敛</b>才算收敛。</p>
+  </div>
+
+  <p class="plain">反常积分问的不是"等于几"，而是"<b>面积到底有没有限</b>"。$\frac{1}{x^{p}}$ 的尾巴衰减得快不快，全看 $p$：$p&gt;1$ 时尾巴细得能数清（收敛），$p\le1$ 时再细也攒成无穷大。</p>
+
+  <p class="plain">这句话要拆成两半看。<b>先截断，再看截出来的面积</b>：$\displaystyle\int_1^{+\infty}\frac{\dd x}{x}$ 的真实含义是 $\lim_{b\to+\infty}\ln b$，这个极限不存在，所以面积没有限。数字上感受一下它有多慢：$\int_1^{10^6}\frac{\dd x}{x}=\ln10^6\approx13.8$，$\int_1^{10^{12}}\frac{\dd x}{x}\approx27.6$——上限涨了一百万倍，面积只多了 $13.8$。慢，但确实没有上限。</p>
+
+  <p>对比 $\displaystyle\int_1^{+\infty}\frac{\dd x}{x^2}$：截断后是 $1-\frac1b$，$b\to+\infty$ 时趋于 $1$。所以"尾巴越来越窄"本身说明不了任何问题，要看窄得够不够快。$p$ 就是量这把尺子的刻度。</p>
+
+  <div class="box warn"><div class="tag">易错 · 对称截断不是定义</div>
+    <p>$\displaystyle\int_{-\infty}^{+\infty}f$ 的定义是"两边各自收敛"：$\lim_{A\to-\infty}\int_A^0f$ 与 $\lim_{B\to+\infty}\int_0^Bf$ 都存在，而不是 $\lim_{R\to+\infty}\int_{-R}^{R}f$。后者叫 Cauchy 主值，两者可能不同。例：$f(x)=x$ 的对称截断恒为 $0$（主值就是 $0$），但 $\int_0^{+\infty}x\,\dd x$ 发散，所以按定义 $\int_{-\infty}^{+\infty}x\,\dd x$ <b>发散</b>。</p>
+    <p>同理 $\displaystyle\int_{-1}^{1}\frac{\dd x}{x}$ 的主值是 $0$，但作为瑕积分它<b>发散</b>（两侧各是一个发散的对数）。规定"两边各自收敛"，就是为了不让对称性把发散悄悄抵消掉。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 先有公式，后有定义</div>
+    <p>十七、十八世纪的人遇到无穷区间的积分，做法是直接把原函数代进去：$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^2}=\Big[-\frac1x\Big]_1^{+\infty}=1$，答案恰好对。可同一套做法用在 $\displaystyle\int_{-1}^{1}\frac{\dd x}{x^2}$ 上会得出 $\Big[-\frac1x\Big]_{-1}^{1}=-2$——一个恒正函数的积分成了负数。问题不在公式，在于"代入无穷"和"跨过瑕点"这两步根本没有定义。</p>
+    <p>十九世纪 Cauchy 把积分定义成和式的极限之后，"收敛"才有了明确含义：先截断成有限区间上的正常积分，再让截断点取极限，极限存在才叫收敛。今天教材里"拆成两段、两段都收敛"的规定，就是这条思路的直接产物。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：两类反常：无穷限、瑕点；拆开时两段都收敛才算收敛。</p>
+
+  <h3>11.2 $p$ 判别：一把标尺</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">$p$ 判别</div>
+    <p>$$\int_1^{+\infty}\frac{\dd x}{x^p}\ \text{收敛}\iff p&gt;1;\qquad \int_0^{1}\frac{\dd x}{x^p}\ \text{收敛}\iff p&lt;1.$$</p>
+    <p>这两个结论要背下来，后面所有比较法都以它们为标尺。</p>
+  </div>
+
+  <p class="plain">$p$ 判别的重要性在于它给了一把<b>标准尺</b>。判断一个新积分收敛不收敛，最省力的办法是把它和已知敛散的积分比大小；而 $\int\frac{\dd x}{x^p}$ 恰好覆盖了所有"幂型"的尾巴：$p$ 大一点收敛，小一点发散，边界卡在 $p=1$。所以拿到题的第一件事不是算，是<b>看端点上被积函数的主项是几次幂</b>。</p>
+
+  <p>边界为什么偏偏是 $1$？因为 $\displaystyle\int_1^b\frac{\dd x}{x}=\ln b$ 正好处在"发散得极慢"的位置：$p$ 比 $1$ 大一点点，$\frac{1}{p-1}$ 就有限；比 $1$ 小一点点，$\frac{b^{1-p}}{1-p}$ 就爆掉。对数函数是幂函数的分水岭——这条分界线在下册的级数里会以 $\sum\frac1{n^p}$ 的形式再出现一次。</p>
+
+  <div class="lab" data-lab="ptest"></div>
+
+  <p class="take"><b>本节带走</b>：$p$ 判别是标尺：无穷限看 $p&gt;1$，瑕点看 $p&lt;1$。</p>
+
+  <h3>11.3 比较判别法</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">比较判别法</div>
+    <p>设 $0\le f\le g$ 且都在 $[a,+\infty)$ 上连续。</p>
+    <p>(1) 若 $\int_a^{+\infty}g$ 收敛，则 $\int_a^{+\infty}f$ 收敛；<br>
+       (2) 若 $\int_a^{+\infty}f$ 发散，则 $\int_a^{+\infty}g$ 发散。</p>
+    <p>极限形式：若 $\frac{f}{g}\to c$（$0&lt;c&lt;+\infty$），则两者<b>同敛散</b>。</p>
+  </div>
+
+  <p class="plain">两种形式怎么选？<b>能算出比值极限就用极限形式</b>：它只要求 $\frac fg\to c\in(0,+\infty)$，不必亲手造不等式，等价替换（$x$ 大时 $\sqrt{x^2+1}\sim x$、$x$ 大时 $\sin\frac1x\sim\frac1x$）都能直接用，是首选。<b>造不出等价、只能放缩时才用原形式</b>：此时要盯住方向——它只肯往一个方向推。</p>
+
+  <div class="box warn"><div class="tag">易错 · 比较法的方向只有两条</div>
+    <p>常见错误是把它记反。正确的只有两句：<b>大的收敛 $\Rightarrow$ 小的收敛；小的发散 $\Rightarrow$ 大的发散。</b>反过来都不成立。反例就在眼前：在 $[1,+\infty)$ 上 $0\le\frac{1}{x^2}\le\frac1x$，而 $\int\frac{\dd x}{x}$ 发散、$\int\frac{\dd x}{x^2}$ 收敛。所以"$f\le g$ 且 $\int g$ 发散"什么也推不出来——只能推出 $f$ 的收敛性未知。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">判断收敛</div>
+    <p>判断 $\displaystyle\int_1^{+\infty}\frac{\dd x}{x\sqrt{x^2+1}}$ 的收敛性。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>当 $x$ 充分大时 $\sqrt{x^2+1}\sim x$，故被积函数 $\sim\dfrac{1}{x^2}$。由比较法（极限形式）与 $p=2&gt;1$，积分<b>收敛</b>。</p>
+      <p>注意：判断收敛不需要算出值。这是反常积分题与定积分题最大的差别。</p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>$\displaystyle\int_{-1}^{1}\frac{\dd x}{x^2}$ <b>发散</b>，不能因为"奇函数在对称区间积分为零"就写 $0$。奇偶性结论只对<b>可积</b>（或收敛）的函数成立，而 $\frac1{x^2}$ 在 $0$ 处是瑕点且 $\int_0^1\frac{\dd x}{x^2}$ 发散（$p=2&gt;1$）。</p>
+  </div>
+
+  <div class="box def"><div class="tag">$\Gamma$ 函数</div>
+    <p>$$\Gamma(s)=\int_0^{+\infty}x^{s-1}e^{-x}\dd x\quad(s&gt;0).$$</p>
+    <p>它满足 $\Gamma(s+1)=s\Gamma(s)$（分部积分得到），且 $\Gamma(n+1)=n!$。它是"阶乘的连续版本"，在概率论里会再见到。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：比较法：大的收敛则小的收敛，小的发散则大的发散。</p>
+
+  
+  <h3>11.4 绝对收敛与条件收敛</h3>
+
+  <div class="box def"><div class="tag">两类收敛</div>
+    <p>若 $\displaystyle\int_a^{+\infty}|f|$ 收敛，称 $\displaystyle\int_a^{+\infty}f$ <b>绝对收敛</b>；若 $\int f$ 收敛而 $\int|f|$ 发散，称<b>条件收敛</b>。</p>
+    <p>绝对收敛 $\Rightarrow$ 收敛；反之不然。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">条件收敛的典型</div>
+    <p>$\displaystyle\int_1^{+\infty}\frac{\sin x}{x}\dd x$ 收敛，但 $\displaystyle\int_1^{+\infty}\frac{|\sin x|}{x}\dd x=+\infty$。</p>
+    <p>前者靠正负振荡互相抵消，后者不抵消——<b>"收敛"不等于"面积有限"</b>。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 条件收敛的积分不能随便"搬"</div>
+    <p>绝对收敛的积分可以随便拆、随便合并区间，因为 $\int|f|$ 有限，一切按可加性走。条件收敛就不行：它的收敛靠正负抵消，一旦改变求和顺序，抵消的方式就变了。级数里有 Riemann 重排定理：条件收敛的级数适当重排后，可以收敛到<b>任意指定的数</b>，甚至发散。把 $\int_1^{+\infty}\frac{\sin x}{x}\dd x$ 按周期 $[n\pi,(n+1)\pi]$ 切开，每一段就是级数的一项，重排的后果照样会发生。</p>
+    <p>实践中有两条禁令：<b>不能把条件收敛的积分拆成两个发散积分再相减</b>（会得到 $\infty-\infty$）；<b>不能默认"分段积分再相加"与"整体积分"等价</b>，除非先证明绝对收敛。动手之前先问一句：它绝对收敛吗？</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 重排为什么危险</div>
+    <p>这件事最早在级数上被看清。十九世纪中叶，Riemann 指出：条件收敛的级数可以通过重排得到任意和。原因是正项之和与负项之和各自都是 $+\infty$，你手里有无限多"正筹码"和"负筹码"，想凑到哪个数就凑到哪个数。绝对收敛时正负两部分都有限，怎么排都一样——这就是它"安全"的全部理由。</p>
+    <p>所以"绝对收敛"不是一个更细的分类，而是一道<b>分水岭</b>：跨过它，积分才具备人们以为它天然具备的那些性质（可拆、可合、可换序）。反常积分与级数在下册会合并成同一套语言，这里先记住分水岭的位置。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：绝对收敛 $\Rightarrow$ 收敛；条件收敛靠正负振荡抵消。</p>
+
+  <h3>11.5 变号时的判别：Dirichlet 与 Abel</h3>
+
+  <p>被积函数不变号时比较法就够；一旦变号，就需要"一部分有界 + 另一部分单调趋零"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Dirichlet 判别</div>
+    <p>若 $\int_a^A f$ 关于 $A$ 有界，$g$ 单调且 $g(x)\to0\ (x\to+\infty)$，则 $\displaystyle\int_a^{+\infty}fg$ 收敛。</p>
+    <p><b>Abel 判别</b>：把 $g\to0$ 换成"$g$ 单调有界"，并要求 $\int_a^{+\infty}f$ 本身收敛。</p>
+  </div>
+
+  <p>上面 $\int\frac{\sin x}{x}$ 正是 Dirichlet 的样板：$\int_1^A\sin x\,\dd x$ 有界，$\frac1x$ 单调趋零。</p>
+
+  <div class="box ex"><div class="tag">为什么 $\int_0^{+\infty}e^{-x^2}\dd x$ 收敛</div>
+    <p>$x\ge1$ 时 $0&lt;e^{-x^2}\le e^{-x}$，而 $\int_1^{+\infty}e^{-x}\dd x=e^{-1}$ 有限，由比较法收敛；$[0,1]$ 上连续故无瑕点。</p>
+    <p>它的值是 $\frac{\sqrt\pi}{2}$，但那要用二重积分，不属于这一章。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变号时用 Dirichlet：一部分有界，一部分单调趋零。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 先判断"属于哪一类"（无穷限 / 瑕点），两端都出现就拆开。</p>
+    <p>② 比较法的标尺永远是 $\int\frac{\dd x}{x^p}$；变号时用绝对收敛或 Dirichlet。</p>
+    <p>③ 判断敛散通常比求值重要：$p$ 判别、比较、Dirichlet，三招覆盖绝大多数题。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^{1.5}}$</p>
+      <div class="q-opts"><button data-o="A">A. 收敛</button><button data-o="B">B. 发散</button><button data-o="C">C. 条件收敛</button><button data-o="D">D. 无法判断</button></div>
+      <p class="q-exp" hidden>$p=1.5&gt;1$，由 $p$ 判别收敛（值为 $\dfrac{1}{p-1}=2$）。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>判断 $\displaystyle\int_0^{1}\frac{\dd x}{\sqrt x}$ 是否收敛。</li>
+      <li>判断 $\displaystyle\int_1^{+\infty}\frac{\ln x}{x}\dd x$ 是否收敛。</li>
+      <li>计算 $\displaystyle\int_0^{+\infty}e^{-x}\dd x$，并说明 $\Gamma(1)$ 等于多少。</li>
+    </ol>
+    <details class="ans"><summary>答案</summary><div class="body">
+      <p><b>1.</b> 收敛。$p=\frac12&lt;1$，值为 $2$。</p>
+      <p><b>2.</b> 发散。$\int_1^{b}\frac{\ln x}{x}\dd x=\frac12(\ln b)^2\to+\infty$。</p>
+      <p><b>3.</b> 值为 $1$，故 $\Gamma(1)=1$。由 $\Gamma(s+1)=s\Gamma(s)$ 得 $\Gamma(n+1)=n!$。</p>
+    </div></details>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+# 本页为个人学习讲义：允许直接访问链接，但不欢迎被搜索引擎收录。
+User-agent: *
+Disallow: /
+
+# 主要爬虫显式声明
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /

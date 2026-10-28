@@ -1,0 +1,460 @@
+<section class="chap" id="apA" data-no="A" data-title="附录A · 公式速查" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">A</div>
+    <h2>附录 A · 公式速查<small class="en">Quick Reference</small></h2>
+  </div>
+
+  <p>预习阶段可以跳过这一份；想快速对齐、或做题时查公式，翻它最省时间。所有结论都在正文里出现过，这里只压成表格。</p>
+
+<p>三份附录对应三种时刻：A 是做题卡住想查公式，B 是考前想知道自己会多少，C 是开学第一周问这学期怎么过。查表前先读每节的两句话——表前「什么时候翻到这里」，表后「最常错的那条」。</p>
+
+<div class="box hist"><div class="tag">来龙去脉</div>
+  <p>书末附公式表是较早的微积分教本留下的习惯：那时没有搜索，几十条结果每次翻正文太费时间，于是压成表。代价是把「结果」和「为什么」切开了——查得到 $(\arcsin x)'$，却不知道它在 $x=\pm1$ 处不能用。</p>
+</div>
+
+  <h3>A.1 极限</h3>
+
+  <table class="tbl">
+    <caption>存在性与判定</caption>
+    <tr><th style="width:170px">工具</th><th>用法要点</th></tr>
+    <tr><td>$\eps$-$N$ 定义</td><td>$\forall\eps&gt;0\ \exists N\ \forall n&gt;N:|a_n-a|&lt;\eps$；$N$ 可依赖 $\eps$，不可依赖 $n$</td></tr>
+    <tr><td>$\eps$-$\delta$ 定义</td><td>$\forall\eps&gt;0\ \exists\delta&gt;0\ \forall x:0&lt;|x-x_0|&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>夹逼</td><td>$a_n\le c_n\le b_n$ 且两端同极限 ⇒ 中间同极限</td></tr>
+    <tr><td>单调有界</td><td>递增有上界 / 递减有下界 ⇒ 收敛（用确界原理）</td></tr>
+    <tr><td>Cauchy 准则</td><td>$\forall\eps\ \exists N\ \forall m,n&gt;N:|a_m-a_n|&lt;\eps$，不需要预知极限</td></tr>
+    <tr><td>Heine 定理</td><td>函数极限 ⇔ 任意数列逼近都给出同一极限；常用于证"不存在"</td></tr>
+    <tr><td>子列</td><td>收敛 ⇒ 所有子列同极限；两个子列不同极限 ⇒ 发散</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>$x\to0$ 时的等价无穷小（只可用于乘除因子）</caption>
+    <tr><th>$\sin x\sim x$</th><th>$\tan x\sim x$</th><th>$\arcsin x\sim x$</th><th>$\arctan x\sim x$</th></tr>
+    <tr><td>$1-\cos x\sim\frac{x^2}{2}$</td><td>$\ln(1+x)\sim x$</td><td>$e^x-1\sim x$</td><td>$(1+x)^\alpha-1\sim\alpha x$</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>必背极限</caption>
+    <tr><td>$\lim\limits_{x\to0}\dfrac{\sin x}{x}=1$</td><td>$\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e$</td><td>$\lim\limits_{x\to0}(1+x)^{1/x}=e$</td></tr>
+    <tr><td>$\lim\limits_{n\to\infty}\sqrt[n]{n}=1$</td><td>$\lim\limits_{n\to\infty}\sqrt[n]{a}=1\ (a&gt;0)$</td><td>$\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x}=1$</td></tr>
+  </table>
+
+<p>求极限算不下去、不知道该夹逼还是单调有界、要证「极限不存在」时翻这里。前两行是定义，后五行是判定工具。</p>
+
+<p class="plain">第一行和第五行值得对比：$\eps$-$N$ 要先写出极限值 $a$，Cauchy 准则只比较 $a_m$ 与 $a_n$ 自己，所以它是「证存在」而不是「求值」的工具。这也是为什么 $a_{n+1}=\sqrt{6+a_n}$ 这类题必须先说「收敛」，才有资格设 $L=\sqrt{6+L}$。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：等价无穷小用到加减上。</b>看 $\lim\limits_{x\to0}\dfrac{\tan x-\sin x}{x^3}$：分别换成 $x$ 与 $x$，分子为 $0$，答案成了 $0$——错。正确是先提主部：$\tan x-\sin x=\sin x\cdot\dfrac{1-\cos x}{\cos x}\sim\dfrac{x^3}{2}$，极限 $\dfrac12$。相减时被抹掉的高阶项反而是主角。</p>
+</div>
+
+  <h3>A.2 导数</h3>
+
+  <table class="tbl">
+    <caption>基本导数公式</caption>
+    <tr><td>$(x^\alpha)'=\alpha x^{\alpha-1}$</td><td>$(e^x)'=e^x$</td><td>$(a^x)'=a^x\ln a$</td></tr>
+    <tr><td>$(\ln x)'=\dfrac1x$</td><td>$(\log_a x)'=\dfrac{1}{x\ln a}$</td><td>$(\sqrt x)'=\dfrac{1}{2\sqrt x}$</td></tr>
+    <tr><td>$(\sin x)'=\cos x$</td><td>$(\cos x)'=-\sin x$</td><td>$(\tan x)'=\sec^2x$</td></tr>
+    <tr><td>$(\cot x)'=-\csc^2x$</td><td>$(\sec x)'=\sec x\tan x$</td><td>$(\csc x)'=-\csc x\cot x$</td></tr>
+    <tr><td>$(\arcsin x)'=\dfrac{1}{\sqrt{1-x^2}}$</td><td>$(\arccos x)'=-\dfrac{1}{\sqrt{1-x^2}}$</td><td>$(\arctan x)'=\dfrac{1}{1+x^2}$</td></tr>
+    <tr><td>$(\sinh x)'=\cosh x$</td><td>$(\cosh x)'=\sinh x$</td><td>$(\tanh x)'=\dfrac{1}{\cosh^2x}$</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>$n$ 阶导数</caption>
+    <tr><td>$(e^{ax})^{(n)}=a^ne^{ax}$</td><td>$(\sin x)^{(n)}=\sin\left(x+\dfrac{n\pi}{2}\right)$</td><td>$(\ln x)^{(n)}=\dfrac{(-1)^{n-1}(n-1)!}{x^n}$</td></tr>
+    <tr><td colspan="3">Leibniz：$(uv)^{(n)}=\sum\limits_{k=0}^{n}\binom nk u^{(k)}v^{(n-k)}$</td></tr>
+  </table>
+
+<p>求导算错、或要判断「这条公式在这一点能不能用」时翻这里。公式五分钟能抄完，真正要记的是定义域。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：$(x^\alpha)'$ 与 $(\arcsin x)'$ 各自只在半个区间上成立。</b>$\alpha=\frac12$ 时 $x^\alpha$ 只在 $x\ge0$ 有意义，公式则只在 $x&gt;0$ 成立；$(\arcsin x)'=\dfrac{1}{\sqrt{1-x^2}}$ 在 $x=\pm1$ 处右端分母为 $0$——那里 $\arcsin x$ 有定义、也连续，但导数不存在，不是「等于无穷大」。同理 $(\ln x)'=\dfrac1x$ 只在 $x&gt;0$ 成立，$\ln|x|$ 的导数才是 $x\ne0$ 上的 $\dfrac1x$。</p>
+</div>
+
+<div class="box note"><div class="tag">读法</div>
+  <p>导数表由「定义 + 一个基本极限」算出：$(\sin x)'$ 靠 $\lim\dfrac{\sin t}{t}=1$，$(e^x)'$ 靠 $\lim\dfrac{e^t-1}{t}=1$，两条都在 A.1 的必背表里。</p>
+</div>
+
+  <h3>A.3 Taylor 展开（$x_0=0$，带 Lagrange 余项）</h3>
+
+  <table class="tbl">
+    <tr><th style="width:120px">函数</th><th>展开式</th></tr>
+    <tr><td>$e^x$</td><td>$1+x+\dfrac{x^2}{2!}+\cdots+\dfrac{x^n}{n!}+\dfrac{e^{\xi}}{(n+1)!}x^{n+1}$（收敛域 $\R$）</td></tr>
+    <tr><td>$\sin x$</td><td>$x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots+(-1)^{m}\dfrac{x^{2m+1}}{(2m+1)!}+o(x^{2m+2})$</td></tr>
+    <tr><td>$\cos x$</td><td>$1-\dfrac{x^2}{2!}+\dfrac{x^4}{4!}-\cdots+(-1)^{m}\dfrac{x^{2m}}{(2m)!}+o(x^{2m+1})$</td></tr>
+    <tr><td>$\ln(1+x)$</td><td>$x-\dfrac{x^2}{2}+\dfrac{x^3}{3}-\cdots+(-1)^{n-1}\dfrac{x^n}{n}+o(x^n)$（$|x|&lt;1$）</td></tr>
+    <tr><td>$(1+x)^\alpha$</td><td>$1+\alpha x+\dfrac{\alpha(\alpha-1)}{2!}x^2+\cdots$（$|x|&lt;1$）</td></tr>
+    <tr><td>$\arctan x$</td><td>$x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\cdots$（$|x|\le1$）</td></tr>
+    <tr><td>$\dfrac{1}{1-x}$</td><td>$1+x+x^2+\cdots+x^n+o(x^n)$（$|x|&lt;1$）</td></tr>
+  </table>
+
+<p>等价无穷小不够用（要更精确的阶）、要估误差、要判断函数在一点附近的符号时翻这里。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：余项形式用错场合。</b>表头写「带 Lagrange 余项」，但 $\sin x$、$\cos x$、$\ln(1+x)$、$\arctan x$ 四行写的是 $o(\cdot)$，那是 Peano。求极限、判局部符号用 Peano 就够；估误差、证不等式、判单调则必须用 Lagrange，$R_n=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}x^{n+1}$ 才给得出大小。</p>
+</div>
+
+<p class="plain">$\sin x$ 那一行的余项能写成 $o(x^{2m+2})$，是因为 $\sin$ 是奇函数、$x^{2m+2}$ 项系数必为 $0$，真正的下一项是 $x^{2m+3}$，余项其实是 $O(x^{2m+3})$。写成 $o(x^{2m+2})$ 合法，还留了余量。</p>
+
+  <h3>A.4 积分</h3>
+
+  <table class="tbl">
+    <caption>常用积分（$C$ 省略）</caption>
+    <tr><td>$\displaystyle\int x^\alpha\dd x=\frac{x^{\alpha+1}}{\alpha+1}$</td><td>$\displaystyle\int\frac{\dd x}{x}=\ln|x|$</td><td>$\displaystyle\int e^x\dd x=e^x$</td></tr>
+    <tr><td>$\displaystyle\int a^x\dd x=\frac{a^x}{\ln a}$</td><td>$\displaystyle\int\sin x\,\dd x=-\cos x$</td><td>$\displaystyle\int\cos x\,\dd x=\sin x$</td></tr>
+    <tr><td>$\displaystyle\int\sec^2x\,\dd x=\tan x$</td><td>$\displaystyle\int\csc^2x\,\dd x=-\cot x$</td><td>$\displaystyle\int\sec x\,\dd x=\ln|\sec x+\tan x|$</td></tr>
+    <tr><td>$\displaystyle\int\frac{\dd x}{1+x^2}=\arctan x$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{1-x^2}}=\arcsin x$</td><td>$\displaystyle\int\frac{\dd x}{x^2+a^2}=\frac1a\arctan\frac xa$</td></tr>
+    <tr><td>$\displaystyle\int\frac{\dd x}{x^2-a^2}=\frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right|$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{x^2\pm a^2}}=\ln\left|x+\sqrt{x^2\pm a^2}\right|$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{a^2-x^2}}=\arcsin\frac xa$</td></tr>
+  </table>
+
+  <p>换元：$\displaystyle\int f(\varphi(x))\varphi'(x)\dd x=\int f(u)\dd u$；定积分换元要<b>同时换上下限</b>。</p>
+  <p>分部：$\displaystyle\int u\,\dd v=uv-\int v\,\dd u$，选 $u$ 的顺序「反对幂指三」。</p>
+
+<p>积分算不出来、忘换上下限、或要判断该套哪条公式时翻这里。积分表就是导数表倒着读。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：$\displaystyle\int\frac{\dd x}{x}=\ln|x|$ 的绝对值被丢掉。</b>丢了等于默认 $x&gt;0$；$x&lt;0$ 时原函数是 $\ln(-x)$，因为 $(\ln(-x))'=\dfrac1x$。</p>
+</div>
+
+<p class="plain">换元就是链式法则倒着写：「$\dd u=\varphi'(x)\dd x$」不是代数约分，而是说这一项必须配套出现。定积分换元要同时换限：$u$ 与 $x$ 的区间不同。例：$\displaystyle\int_0^1xe^{x^2}\dd x$，取 $u=x^2$，限仍 $0\to1$，得 $\dfrac12\displaystyle\int_0^1e^u\dd u=\dfrac{e-1}{2}$。</p>
+
+  <h3>A.5 反常积分</h3>
+
+  <table class="tbl">
+    <tr><th style="width:230px">类型</th><th>收敛判据</th></tr>
+    <tr><td>$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^p}$</td><td>$p&gt;1$ 收敛；$p\le1$ 发散</td></tr>
+    <tr><td>$\displaystyle\int_0^{1}\frac{\dd x}{x^p}$</td><td>$p&lt;1$ 收敛；$p\ge1$ 发散</td></tr>
+    <tr><td>比较法</td><td>$0\le f\le g$：$g$ 收敛 ⇒ $f$ 收敛；$f$ 发散 ⇒ $g$ 发散</td></tr>
+    <tr><td>极限比较</td><td>$f/g\to c\in(0,\infty)$ ⇒ 同敛散</td></tr>
+    <tr><td>绝对收敛</td><td>$\int|f|$ 收敛 ⇒ $\int f$ 收敛</td></tr>
+    <tr><td>$\Gamma$ 函数</td><td>$\Gamma(s)=\int_0^\infty x^{s-1}e^{-x}\dd x$，$\Gamma(s+1)=s\Gamma(s)$，$\Gamma(n+1)=n!$</td></tr>
+  </table>
+
+<p>积分限里有 $\infty$、或被积函数在某点炸掉时翻这里。反常积分先问收敛，再问值。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：用奇偶性说 $\displaystyle\int_{-1}^{1}\frac{\dd x}{x}=0$。</b>它发散：拆成两半后各自是 $p=1$ 的瑕积分。发散的积分没有「值」，谈不上抵消。它的 Cauchy 主值确实是 $0$，但主值是另一种定义。$\displaystyle\int_0^{+\infty}\sin x\,\dd x$ 也一样——$\cos x$ 在无穷远没有极限。</p>
+</div>
+
+<div class="box note"><div class="tag">读法</div>
+  <p>两条 $p$ 判别方向相反，记法：<b>无穷远处 $p$ 要够大</b>（衰减得比 $\frac1x$ 快才收得住），<b>瑕点附近 $p$ 要够小</b>（爆炸得比 $\frac1x$ 慢才积得起来）。</p>
+</div>
+
+  <h3>A.6 中值定理一览</h3>
+
+  <table class="tbl">
+    <tr><th style="width:110px">定理</th><th style="width:270px">条件</th><th>结论</th></tr>
+    <tr><td>Fermat</td><td>$x_0$ 为极值点，$f'(x_0)$ 存在</td><td>$f'(x_0)=0$</td></tr>
+    <tr><td>Rolle</td><td>$[a,b]$ 连续，$(a,b)$ 可导，$f(a)=f(b)$</td><td>$\exists\xi:f'(\xi)=0$</td></tr>
+    <tr><td>Lagrange</td><td>$[a,b]$ 连续，$(a,b)$ 可导</td><td>$f(b)-f(a)=f'(\xi)(b-a)$</td></tr>
+    <tr><td>Cauchy</td><td>同上且 $g'\ne0$</td><td>$\dfrac{f(b)-f(a)}{g(b)-g(a)}=\dfrac{f'(\xi)}{g'(\xi)}$</td></tr>
+    <tr><td>Taylor</td><td>$n+1$ 阶可导</td><td>$f=\sum\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+R_n$</td></tr>
+  </table>
+
+<p>要证「存在 $\xi$」、要构造辅助函数、或判断某个条件能否去掉时翻这里。重点在条件列，不在结论列。</p>
+
+<p class="plain">Rolle 的三个条件可以逐个拆掉看：$|x|$ 在 $[-1,1]$ 上缺「$(a,b)$ 内可导」；$f(x)=x$ 在 $[0,1]$ 上缺「$f(a)=f(b)$」；把区间换成 $(0,1)$，「闭区间上连续」这一条也没了，而 $2x$ 在 $(0,1)$ 上确实没有驻点。三种拆法都让结论失效。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：以为 Cauchy 定理是 Lagrange 除出来的。</b>分别用 Lagrange 再相除，得到的是 $\dfrac{f'(\xi_1)}{g'(\xi_2)}$，两个 $\xi$ 不一定相同，这一步没有依据。正确做法是造 $F(x)=f(x)\bigl(g(b)-g(a)\bigr)-g(x)\bigl(f(b)-f(a)\bigr)$ 再用 Rolle。条件 $g'\ne0$ 也不是凑数：没有它，分母可能为零。</p>
+</div>
+
+<div class="box tip"><div class="tag">怎么用</div>
+  <p>构造辅助函数的套路都是「把要证的等式整理成某函数导数为零」：要 $f'+kf=0$ 就乘 $e^{kx}$ 看 $(e^{kx}f)'$；要 $\xi f'+f=0$ 就看 $(xf)'$；要 $\dfrac{f'}{f}=k$ 就看 $(\ln f)'$。</p>
+</div>
+
+  <h3>A.7 常用不等式</h3>
+
+  <table class="tbl">
+    <tr><td>三角不等式</td><td>$|a+b|\le|a|+|b|$；$\big||a|-|b|\big|\le|a-b|$</td></tr>
+    <tr><td>Bernoulli</td><td>$(1+x)^n\ge1+nx$（$x&gt;-1$）</td></tr>
+    <tr><td>均值</td><td>$\sqrt{ab}\le\dfrac{a+b}{2}\le\sqrt{\dfrac{a^2+b^2}{2}}$（$a,b\ge0$）</td></tr>
+    <tr><td>对数</td><td>$\dfrac{x}{1+x}&lt;\ln(1+x)&lt;x$（$x&gt;0$）</td></tr>
+    <tr><td>指数</td><td>$e^x\ge1+x$，$e^x&gt;1+x+\dfrac{x^2}{2}$（$x&gt;0$）</td></tr>
+    <tr><td>三角</td><td>$|\sin x|\le|x|$，$|\sin a-\sin b|\le|a-b|$</td></tr>
+  </table>
+
+<p>要放缩、估界、证不等式时翻这里。两个要害：方向、等号取到的条件。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p><b>最常错的一条：条件范围记错——有的比你想的窄，有的宽。</b>窄的：$\sqrt{ab}\le\dfrac{a+b}{2}$ 要 $a,b\ge0$（$a=b=-1$ 时左边 $1$、右边 $-1$）；Bernoulli 的 $x&gt;-1$ 省不得（$x=-4,n=3$ 时左边 $-27$、右边 $-11$）。宽的：同一行的 $\dfrac{a+b}{2}\le\sqrt{\dfrac{a^2+b^2}{2}}$ 对一切实数成立，它只等价于 $(a-b)^2\ge0$，「$a,b\ge0$」只管前一个不等号。</p>
+</div>
+
+<p class="plain">$|\sin x|\le|x|$ 就是「弦长不超过弧长」：单位圆上 $|x|$ 是弧，$|\sin x|$ 是半弦的两倍。它是 $\lim\dfrac{\sin x}{x}=1$ 夹逼那半边的依据（$x&gt;0$ 时 $0\le1-\dfrac{\sin x}{x}\le\dfrac{x^2}{6}$）。推论 $|\sin a-\sin b|\le|a-b|$ 则是 Lagrange 一句话的事，见附录 B 第 18 题。数字感：$e^{0.01}\ge1.01$，实际 $1.01005$，差 $5\times10^{-5}$。</p>
+
+<div class="box note"><div class="tag">公式不是背的：它们从哪来</div>
+  <p>七张表是一条链上的七个截面，按链条读一遍，要记的量会少很多：</p>
+  <ul>
+    <li><b>A.1</b> 的两条 $\eps$ 定义就是正文原文，差别只有一处：$n&gt;N$ 换成 $0&lt;|x-x_0|&lt;\delta$；等价无穷小是 A.3 的一阶截断（$\sin x\sim x$ 即 $\sin x=x+o(x)$）。</li>
+    <li><b>A.2</b> 每行都由「导数定义 + 一个基本极限」算出，那个极限就写在 A.1 的必背表里；<b>A.4</b> 的积分表又是 A.2 倒着读——两表应当能互相默写。</li>
+    <li><b>A.3</b> 是 A.6 里 Lagrange 中值定理反复使用的产物；<b>A.5</b> 的 $p$ 判别只是把 $\displaystyle\int x^{-p}\dd x$ 算出来，没有新内容。</li>
+    <li><b>A.6</b> 是一条链：Fermat → Rolle（最值定理 + Fermat）→ Lagrange → Cauchy → Taylor；最值定理靠第一章的确界原理，所以这张表的根在全书第一页。</li>
+    <li><b>A.7</b> 各有出处：三角不等式来自绝对值的定义；Bernoulli 是二项式丢掉高阶项；对数不等式由 $e^x\ge1+x$ 取对数得到。</li>
+  </ul>
+</div>
+
+</section>
+
+<section class="chap" id="apB" data-no="B" data-title="附录B · 综合自测" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">B</div>
+    <h2>附录 B · 综合自测<small class="en">Self-Test</small></h2>
+  </div>
+
+  <p>20 题，建议限时 90 分钟、闭卷。答案在每题下方折叠，<b>先写完整再展开</b>。</p>
+
+<p class="plain">90 分钟怎么切：判断 15 分钟、计算 25 分钟、证明 45 分钟，留 5 分钟查符号。三组按分值合计 $16+30+42=88$ 分，文末三档是按百分制写的，按比例折算即可（75 分约合百分制 85 分）。</p>
+
+<div class="box hist"><div class="tag">来龙去脉</div>
+  <p>「判断 + 计算 + 证明」三段式是二十世纪以来分析课考试的常见结构：判断考定理的方向，计算考标准动作，证明考能不能自己造论证，三者失败的原因不能互相替代。</p>
+</div>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p>判断题最常见的死法是把定理<b>倒过来</b>用：定理「$A\Rightarrow B$」为真，不代表「$B\Rightarrow A$」为真，而卷子上有些句子就是把箭头反写了送给你。第二个死法是「差一点算对」：结论对、条件不全（拿开区间代替闭区间），也算错——判断题只认字面。</p>
+</div>
+
+<p><b>这组题在考什么</b>：只考定理的方向与条件。八句话里，有的是定理原话，有的把箭头反了过来，有的漏了一个条件。选项只有对错，猜对不算会。</p>
+
+<div class="box tip"><div class="tag">提示</div>
+  <p>读每句时先补全它背后那条定理，再问：这是定理本身，还是它的逆命题？见「闭区间 / 开区间」看端点；见「可导 / 连续 / 可积 / 有界」，记住箭头只有一个方向免费。</p>
+</div>
+
+  <h3>第一组 · 判断（每题 2 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">判 断 对 错 · 点选项立刻判分</div>
+    <div class="q-score"></div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>1.</b> 收敛数列必有界。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>单调有界定理的反面不是它；收敛必有界（定理 2.2），逆命题不成立。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>2.</b> 有界数列必收敛。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$(-1)^n$ 有界但发散。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>3.</b> 若 $\lim\limits_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>还要求 $f(x_0)$ 有定义且等于该极限。反例：$f(x)=1\ (x\ne0)$，$f(0)=0$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>4.</b> 闭区间上的连续函数一定一致连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>Cantor 定理。开区间不成立，如 $1/x$ 在 $(0,1)$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>5.</b> 函数在某点可导，则在该点连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可导必连续（定理 5.1）。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>6.</b> 若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$f(x)=x^3$ 在 0 处，驻点但不是极值点。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>7.</b> 若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可积只要求有界且间断点不多；如 $f(0)=1$、其余为 0 的函数。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>8.</b> 连续函数一定有原函数。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>变上限积分 $\Phi(x)=\int_a^xf$ 就是（定理 9.2）。</p>
+    </div>
+  </div>
+
+<p><b>这组题在考什么</b>：不考「会不会算」，考三十秒内能否认出该用哪个标准动作。六个空对应六种动作：凑 $\left(1+\frac1t\right)^t$ 的定义式、分子有理化、Taylor 展开到同阶、分部积分、定积分分部、反常积分按定义算。</p>
+
+<div class="box tip"><div class="tag">提示</div>
+  <p>动笔前先给每道题贴标签（极限 / 不定积分 / 定积分 / 反常积分），标签错则全错。算极限先数分母的阶、再定展开到哪项；算积分先问「有没有 $\ln$ 或反三角」，有就让它当 $u$。做完立刻验算：积分求导回去，极限代一个具体数量级。</p>
+</div>
+
+  <h3>第二组 · 计算（每题 5 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">算 出 结 果</div>
+    <ol start="9">
+      <li>$\lim\limits_{n\to\infty}\left(1+\dfrac2n\right)^{3n}$。</li>
+      <li>$\lim\limits_{n\to\infty}\sqrt n\left(\sqrt{n+1}-\sqrt n\right)$。</li>
+      <li>$\lim\limits_{x\to0}\dfrac{e^x-1-x}{x^2}$。</li>
+      <li>$\displaystyle\int x\ln x\,\dd x$。</li>
+      <li>$\displaystyle\int_0^1xe^{-x}\dd x$。</li>
+      <li>$\displaystyle\int_0^{+\infty}\frac{\dd x}{1+x^2}$。</li>
+    </ol>
+    <details class="ans"><summary>答案</summary><div class="body">
+      <p><b>9.</b> $\left[\left(1+\frac2n\right)^{n/2}\right]^{6}\to e^{6}$。</p>
+      <p><b>10.</b> 有理化：$\frac{\sqrt n}{\sqrt{n+1}+\sqrt n}\to\frac12$。</p>
+      <p><b>11.</b> Peano：$e^x=1+x+\frac{x^2}{2}+o(x^2)$，答案 $\frac12$。</p>
+      <p><b>12.</b> 分部：$\frac{x^2}{2}\ln x-\frac{x^2}{4}+C$。</p>
+      <p><b>13.</b> 分部两次：$\left[-xe^{-x}-e^{-x}\right]_0^1=1-\frac2e$。</p>
+      <p><b>14.</b> $\arctan x\big|_0^\infty=\frac\pi2$。</p>
+    </div></details>
+  </div>
+
+<p><b>这组题在考什么</b>：能不能自己造一个论证。六道分别压在：$\eps$-$N$ 的格式、先证存在再求值的顺序、存在性与唯一性、把函数值之差翻译成导数、递推的反复使用、反常积分按定义算到底。没有一道需要灵感。</p>
+
+<div class="box tip"><div class="tag">提示</div>
+  <p>分数不在结论，在过程。$\eps$-$N$ 题要出现「任给 $\eps&gt;0」「取 $N=\cdots$」「当 $n&gt;N$ 时」这三段；中值定理题要写清在哪个区间上用、满足哪几条条件；积分题要写出换元的三个替换或分部里的 $u,\dd v$。拿不准就先把结论抄一遍、把定义展开，第一步通常就出来了。</p>
+</div>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p>「答案就在下面，瞄一眼就知道自己会不会」——这是这份自测最容易被浪费的方式。看懂答案与自己写出来之间差的是「构造」，而分数全在那一环。规矩是先完整写、再对照，看「我漏了哪一步」，不看「结论对不对」。</p>
+</div>
+
+  <h3>第三组 · 证明（每题 7 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">写 出 完 整 论 证</div>
+    <ol start="15">
+      <li>用定义证明 $\lim\limits_{n\to\infty}\dfrac{2n+1}{n+3}=2$。</li>
+      <li>设 $a_1=1$，$a_{n+1}=\sqrt{6+a_n}$。证明收敛并求极限。</li>
+      <li>证明方程 $x^3+3x-1=0$ 在 $(0,1)$ 内有且仅有一个实根。</li>
+      <li>用 Lagrange 中值定理证明 $|\sin a-\sin b|\le|a-b|$。</li>
+      <li>证明 $\displaystyle\int_0^1x^m(1-x)^n\dd x=\frac{m!\,n!}{(m+n+1)!}$（$m,n\in\N$）。</li>
+      <li>判断 $\displaystyle\int_0^1\ln x\,\dd x$ 是否收敛；收敛则求值。</li>
+    </ol>
+    <details class="ans"><summary>答案要点</summary><div class="body">
+      <p><b>15.</b> $\left|\frac{2n+1}{n+3}-2\right|=\frac{5}{n+3}&lt;\frac5n$，取 $N=\left[\frac5\eps\right]+1$。</p>
+      <p><b>16.</b> 归纳证 $a_n&lt;3$ 且递增（$a_{n+1}^2-a_n^2=6+a_n-a_n^2=(3-a_n)(2+a_n)&gt;0$）。极限 $L=\sqrt{6+L}$ 得 $L=3$。</p>
+      <p><b>17.</b> $f(x)=x^3+3x-1$ 连续，$f(0)=-1&lt;0&lt;f(1)=3$，零点定理给存在性；$f'(x)=3x^2+3&gt;0$ 严格增给唯一性。</p>
+      <p><b>18.</b> 对 $f(t)=\sin t$ 在 $a,b$ 之间用 Lagrange：$|\sin a-\sin b|=|\cos\xi||a-b|\le|a-b|$。</p>
+      <p><b>19.</b> 记 $I_{m,n}$。分部积分：$I_{m,n}=\frac{n}{m+1}I_{m+1,n-1}$，反复用至 $n=0$，再用 $\int_0^1x^{m+n}\dd x=\frac{1}{m+n+1}$。</p>
+      <p><b>20.</b> 收敛。$\int_\eps^1\ln x\,\dd x=[x\ln x-x]_\eps^1=-1-(\eps\ln\eps-\eps)\to-1$（用 $\eps\ln\eps\to0$）。</p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 自评标准</div>
+    <p>≤ 60 分：回第一章到第四章重读定义，重点练 $\eps$ 语言。<br>
+       60–85：性质定理都懂了，欠的是"构造"——多做用定义证极限的题。<br>
+       ≥ 85：可以开始看下册（级数、多元）的前两章了。</p>
+  </div>
+</section>
+
+<section class="chap" id="apC" data-no="C" data-title="附录C · 学习路线" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">C</div>
+    <h2>附录 C · 一学期怎么走<small class="en">Study Plan</small></h2>
+  </div>
+
+  <h3>C.1 16 周地图</h3>
+
+  <table class="tbl">
+    <caption>按华东师大第六版上册的常规进度，各校略有出入</caption>
+    <tr><th style="width:80px">周次</th><th style="width:210px">内容</th><th>这一周的关键动作</th></tr>
+    <tr><td>1–2</td><td>第一章 实数集与函数</td><td>把「$\sup$ 的两个条件」写到能默写；补不等式</td></tr>
+    <tr><td>3–5</td><td>第二章 数列极限</td><td>每天两道 $\eps$-$N$ 证明，先放大再取 $N$</td></tr>
+    <tr><td>6–7</td><td>第三章 函数极限</td><td>把 $\eps$-$\delta$ 当 $\eps$-$N$ 的仿写；背等价无穷小</td></tr>
+    <tr><td>8</td><td>第四章 连续性</td><td>重点记反例：开区间、非闭区间各一个</td></tr>
+    <tr><td>9–10</td><td>第五章 导数与微分</td><td>链式法则推到不假思索；微分形式不变性</td></tr>
+    <tr><td>11–12</td><td>第六章 中值定理</td><td>构造辅助函数是唯一难点，整理 5 种套路</td></tr>
+    <tr><td>13</td><td>第七章 完备性</td><td>画一张六个定理的循环图，能口述每条箭头</td></tr>
+    <tr><td>14</td><td>第八、九章 积分</td><td>积分表背熟；换元与分部各练 20 题</td></tr>
+    <tr><td>15</td><td>第十、十一章 应用与反常积分</td><td>微元法写清"为什么近似成立"；$p$ 判别背下来</td></tr>
+    <tr><td>16</td><td>总复习</td><td>做附录 B，再按错题回章节</td></tr>
+  </table>
+
+<p>这张表的顺序不按难易，按<b>依赖链</b>：</p>
+
+<ul>
+  <li>第 1–2 周先立住「实数没有洞」：后面每次「取极限得到实数」都靠它，第一章欠的账全书在还。</li>
+  <li>第 3–5 周的 $\eps$-$N$ 是全书唯一能从容练 $\eps$ 语言的地方；第 6–7 周的函数极限只是把 $N$ 换成 $\delta$，趁热接最省力。</li>
+  <li>第 8 周考条件的敏感度，重点在反例：最值定理出了闭区间就崩（$1/x$ 在 $(0,1)$ 上无界），一致连续也一样。</li>
+  <li>第 11–12 周是上半学期的兑现：Rolle 要最值定理，Taylor 要 Lagrange，L'Hospital 要 Cauchy——这章塌，后面全塌。</li>
+  <li>第 13 周的六定理等价要用中值定理与区间套，所以排在用熟它们之后；14–15 周依赖链最短，16 周倒着走一遍。</li>
+</ul>
+
+<div class="box hist"><div class="tag">来龙去脉</div>
+  <p>「一学期 16 周」不是数学结论，是国内高校教学日历的常规（多数院校 16–18 周，每周 5–6 学时）。把上册切成一学期是几十年教学实践磨出的节奏：再快，$\eps$ 语言来不及消化；再慢，下册排不下。稳定的是依赖链：确界原理一定在极限之前，中值定理一定在 Taylor 之前。</p>
+</div>
+
+<div class="box tip"><div class="tag">怎么读这张表</div>
+  <p>这张表不是课表：不同学校能差一到两周，章节顺序也未必一样。它的用途是让你知道「这一章在为哪一章铺路」，不是对照「我落后了没有」。</p>
+  <p>真落后了就按依赖链砍，不按页数砍。必须保住：确界原理的两个条件、$\eps$-$N$ 的格式、中值定理的条件与构造、积分表与换元换限。可以暂跳：六定理等价的完整证明（结论要会）、弧长与侧面积公式的推导。判据是：这章的东西会不会被下一章的证明直接调用？会，就不能跳。</p>
+</div>
+
+  <h3>C.2 每天 40 分钟</h3>
+
+  <div class="cards">
+    <div class="card"><b>课前 10 分钟</b>看下一节的「本章地图」和定义，不懂的地方画问号。</div>
+    <div class="card"><b>课后 20 分钟</b>合上书，把当天定理的<b>条件</b>默写一遍，再找一个反例。</div>
+    <div class="card"><b>睡前 10 分钟</b>挑一道没做完的证明，只写第一步（通常是把定义展开）。</div>
+  </div>
+
+<p>三张卡说的是「什么时候做」，下面说「具体怎么用」。40 分钟按三步切，一步都不能少：</p>
+
+<div class="box note"><div class="tag">读 · 算 · 写</div>
+  <p><b>读 10 分钟</b>：只读定义与定理的<b>条件</b>那一行，不读证明。见量词就圈，再问：这两个量词换个顺序，意思变不变？目的是留下骨架，不是读懂每个字。</p>
+  <p><b>算 20 分钟</b>：合上书手算一道例题，卡住只许看一行提示、不许看解答。这是唯一能把「看懂」变成「会」的环节。</p>
+  <p><b>写 10 分钟</b>：用自己的话把今天的定义写成一句，再补一个反例（去掉某个条件会怎样）。写不出来说明读的那 10 分钟没到位，第二天重来。</p>
+</div>
+
+<p class="plain">举个具体的：今天讲一致连续。读——圈出 $\forall\eps\exists\delta\forall x_1,x_2$，注意 $\delta$ 不依赖 $x$；算——证 $x^2$ 在 $[0,1]$ 上一致连续，试 $\delta=\eps/2$，靠 $|x_1^2-x_2^2|\le2|x_1-x_2|$ 够用；写——写「一致连续 = 一个 $\delta$ 管全区间」，反例补 $1/x$ 在 $(0,1)$。</p>
+
+<div class="box warn"><div class="tag">常见误解</div>
+  <p>40 分钟最常见的浪费，是把时间全花在「看」上：看视频、看例题、看答案，一项手算都没有，看完觉得懂了，第二天什么也写不出。硬标准：<b>40 分钟里至少 20 分钟笔在动</b>；达不到，就是在消费内容，不是学。</p>
+</div>
+
+<div class="box hist"><div class="tag">来龙去脉</div>
+  <p>「每天 40 分钟」而不是「周末集中 4 小时」，理由不在总量而在间隔。十九世纪末 Ebbinghaus 用无意义音节做记忆实验，发现遗忘在最初几小时最快、之后变慢；同样的总时长，分散到多天比集中一次记得牢。这门课难在语言，只能靠反复接触养成。</p>
+</div>
+
+  <h3>C.3 十个高频误区</h3>
+
+  <table class="tbl">
+    <tr><th style="width:44px">#</th><th>误区</th><th>正确说法</th></tr>
+    <tr><td>1</td><td>把 $\forall\eps$ 换成某个具体的 $\eps$</td><td>$\eps$ 任给，你只能回应 $N$ 或 $\delta$</td></tr>
+    <tr><td>2</td><td>先取极限再证存在</td><td>先证极限存在（单调有界/Cauchy），才能两边取极限</td></tr>
+    <tr><td>3</td><td>用 L'Hospital 证 $\frac{\sin x}{x}\to1$</td><td>循环论证：$\sin'=\cos$ 依赖这个极限</td></tr>
+    <tr><td>4</td><td>加减法里用等价无穷小替换</td><td>只在乘除因子中替换；加减要先提取主部</td></tr>
+    <tr><td>5</td><td>开区间照搬闭区间定理</td><td>最值定理、一致连续、有限覆盖都要闭区间</td></tr>
+    <tr><td>6</td><td>认为 $f'=0$ 就是极值</td><td>驻点 $\ne$ 极值点（$x^3$）</td></tr>
+    <tr><td>7</td><td>忘记 $+C$</td><td>不定积分必带；定积分不带</td></tr>
+    <tr><td>8</td><td>换元后不换上下限</td><td>定积分换元三件套：被积式、$\dd x$、上下限</td></tr>
+    <tr><td>9</td><td>把"有界"当"收敛"</td><td>有界只保证有收敛子列（Bolzano–Weierstrass）</td></tr>
+    <tr><td>10</td><td>反常积分用奇偶性直接得 0</td><td>先判收敛；发散的积分没有"值"</td></tr>
+  </table>
+
+<p>十条之所以高频，是因为每条背后都有一个「看起来对」的理由。说清理由才改得掉：</p>
+
+<ol>
+  <li><b>把 $\forall\eps$ 换成具体数</b>：高中「取特殊值」的习惯还在；在分析里它只能找反例，不能证命题。</li>
+  <li><b>先取极限再证存在</b>：求极限做多了，$\lim$ 像是随手能写的符号；写下它时已经假设了存在。</li>
+  <li><b>用 L'Hospital 证 $\frac{\sin x}{x}\to1$</b>：见到 $\frac00$ 就想上；但它的证明要用 $(\sin x)'=\cos x$，而这条又依赖该极限——绕回原点。</li>
+  <li><b>加减法里用等价替换</b>：乘除里从没出过错；差别是相减时主部相消，被忽略的高阶项反成主角。</li>
+  <li><b>开区间照搬闭区间定理</b>：结论顺口，条件被当套话跳过；闭区间的作用是「挡住跑掉」，端点一跑最值就没了。</li>
+  <li><b>以为 $f'=0$ 就是极值</b>：教材求极值几乎都先解 $f'=0$；$x^3$ 说明驻点只是候选，还要看两侧符号。</li>
+  <li><b>忘记 $+C$</b>：定积分里 $C$ 会抵消；但不定积分是一族函数，漏了就漏掉无穷多个。</li>
+  <li><b>换元后不换上下限</b>：不定积分换元不管限，习惯带了过来；变量已换成 $u$ 还写 $x$ 的限，等于用两把尺子量同一段。</li>
+  <li><b>把「有界」当「收敛」</b>：「有界」听着像「不会跑太远」；$(-1)^n$ 有界，却一直在两个值之间跳。</li>
+  <li><b>反常积分用奇偶性直接得 $0$</b>：对称区间上奇函数积分为 $0$ 太好用；但那要求积分存在，先收敛才有「值」。</li>
+</ol>
+
+  <h3>C.4 考前 7 天</h3>
+
+  <ol>
+    <li><b>第 7–5 天</b>：只看定义与定理的条件，把"去掉条件会怎样"的反例过一遍。</li>
+    <li><b>第 4–3 天</b>：重做附录 B 的错题，每题写完整过程，不许跳步。</li>
+    <li><b>第 2 天</b>：把附录 A 的表格抄一遍（手抄，不打印），重点在导数与积分公式。</li>
+    <li><b>第 1 天</b>：只看错题本与反例本，早睡。</li>
+  </ol>
+
+<div class="box tip"><div class="tag">第 1 天只做三件事</div>
+  <p><b>一、默写两套格式</b>（15 分钟）：$\eps$-$N$ 与 $\eps$-$\delta$ 的完整书写，含「任给 $\eps&gt;0」「取 $N=\cdots$」「当 $n&gt;N$ 时」三段；手写，不看资料。<br>
+  <b>二、过一遍条件表</b>（15 分钟）：A.6 第二列逐条问「去掉会怎样」，能立刻说出一个反例才算过。<br>
+  <b>三、手写两道样板题</b>（10 分钟）：附录 B 的第 15 题（$\eps$-$N$ 模板）与第 17 题（存在 + 唯一模板）。两题都短而完整，覆盖了证明题的书写要求。</p>
+</div>
+
+<div class="box warn"><div class="tag">第 1 天不该做</div>
+  <p>不做新题——做不出来只增加焦虑，当天也没有时间把它变成「会」。<br>
+  不补没学过的章节——一晚补一章，通常「什么都记了半句」。<br>
+  不熬夜——考场上的失分，很大一部分不是不会，而是算错符号、看漏条件。<br>
+  不在考场上第一次写完整 $\eps$ 格式——所以上面第一条是「手写」，不是「心里过一遍」。</p>
+</div>
+
+  <div class="endnote">
+    <p>本讲义按华东师范大学数学科学学院编《数学分析》第六版（上册）的章节顺序编排，内容为预习用途，不替代教材与课堂。公式为 MathJax 矢量渲染，交互图为原生 Canvas 绘制，整本单文件、断网可读。</p>
+    <p>建议配合教材使用：<b>先读本讲义的定义与例题 → 再读教材的证明与习题 → 最后回到章末自测</b>。祝你这学期把 $\eps$ 语言拿下。</p>
+  </div>
+</section>

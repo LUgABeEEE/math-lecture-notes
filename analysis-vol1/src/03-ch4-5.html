@@ -1,0 +1,453 @@
+<section class="chap" id="ch4" data-no="04" data-title="函数的连续性" style="--ch:4">
+  <div class="chap-head">
+    <div class="chap-no">04</div>
+    <h2>函数的连续性<small class="en">Continuity</small></h2>
+  </div>
+  <p class="src">教材对应：第四章 函数的连续性 · §1 连续性概念　§2 连续函数的性质　§3 初等函数的连续性</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>“连续”能不能只用极限说清楚，不借助图形？</li><li>为什么闭区间上的连续函数一定有最大值，换成开区间就没有？</li><li>“每一点都连续”和“整个区间一致连续”，差在哪个字上？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>连续 = 极限值等于函数值；间断点怎么分类</li>
+      <li>局部性质：局部有界、局部保号</li>
+      <li>闭区间上的三条大定理：<b>有界、最值、介值</b></li>
+      <li>一致连续：连续是"逐点"的，一致连续是"整体"的</li>
+    </ul>
+  </div>
+
+  <p>上一章把“极限”磨成了工具，这一章第一次把它装回函数身上：<b>连续，就是极限值恰好等于函数值</b>，除此之外不多加一个字。后面所有的性质——有界、最值、介值、一致连续——都是从这个等式里榨出来的，没有一条需要新假设。</p>
+  <p>但这一章的转折不在定义，在反例。高中给你的函数图像都是“一笔画得下来”的，那是粉笔的物理限制，不是数学的限制。十九世纪的数学家花了很久才承认：直觉上“不断”的东西可以处处病态；反过来，只要补上“闭区间”三个字，连续函数就能长出三条极强的大定理。所以本章真正的问题不是“连续是什么”，而是“<b>哪个条件在承重</b>”。</p>
+  <p>给下一章留的口子：导数要算“差商的极限”，而差商本身是函数，所以得先明白连续性怎么运作。下一章的第一个定理“可导必连续”，就是把本章定义代进去算一行。</p>
+
+  <p>连续是"极限"和"函数值"终于握手的地方。本章的高潮是三个定理——它们看起来"显然"，但去掉"闭区间"或"连续"任何一个条件都会立刻失效。这一章的考点几乎全在反例上。</p>
+
+  <h3>4.1 连续与间断点</h3>
+
+  <div class="box def"><div class="tag">在一点连续</div>
+    <p>设 $f$ 在 $x_0$ 的某邻域内有定义。若 $\lim\limits_{x\to x_0}f(x)=f(x_0)$，则称 $f$ 在 $x_0$ <b>连续</b>。</p>
+    <p>写成 $\eps$-$\delta$：$\forall\eps&gt;0,\ \exists\delta&gt;0,\ \forall x\in U(x_0,\delta):\ |f(x)-f(x_0)|&lt;\eps$。注意这里<b>没有</b> $0&lt;|x-x_0|$——因为现在 $x=x_0$ 也要算进来。</p>
+    <p>若 $f$ 在区间 $I$ 上每一点都连续，称 $f$ 在 $I$ 上连续，记 $f\in C(I)$。</p>
+  </div>
+
+  <p class="plain">注意定义里没有出现“图形”两个字。它只说了一件事：你想要多小的误差 $\eps$，我就能找出一个半径 $\delta$，让 $x_0$ 附近这么近的所有点，函数值都落进 $f(x_0)$ 的 $\eps$-邻域。具体点：$f(x)=x^2$ 在 $x_0=1$，若要误差不超过 $\eps=0.01$，取 $\delta=0.004$ 就够——$1.004^2=1.008016$，差 $0.008&lt;0.01$；另一侧 $0.996^2=0.992016$，差也是 $0.008$。整个定义就是一份“你报精度、我报半径”的承诺。</p>
+
+  <p>等价地说，连续就是"<b>增量趋于零</b>"：$\lim_{\Delta x\to0}\Delta y=0$，其中 $\Delta y=f(x_0+\Delta x)-f(x_0)$。</p>
+
+  <p>“一笔画不断”这个高中直觉，毛病在于它把“连续”当成了图形的性质。图是画出来的，画一遍只走有限步，笔尖当然画不出无穷多次振荡；连续却是逐点的极限等式，跟能不能画完没有关系。下面三个例子依次把这条直觉拆掉。</p>
+
+  <p><b>Dirichlet 函数</b>：$D(x)=1$（$x$ 为有理数）、$D(x)=0$（$x$ 为无理数）。它在<b>每一点</b>都不连续——任何邻域里都既有有理数又有无理数，函数值在 $0$ 和 $1$ 之间跳，极限根本不存在。这说明连续必须逐点检验，而检验点可以密到无法回避。</p>
+
+  <p><b>$\sin\frac1x$ 在 $x=0$</b>：每一段曲线都光滑得挑不出毛病，可越靠近 $0$ 振荡越快，$f$ 在 $0$ 的任何邻域里都取遍 $[-1,1]$，所以极限不存在。要注意它的问题<b>不是</b>“画不完”：$f(x)=x\sin\frac1x$（补 $f(0)=0$）的图像同样画不完，却在 $0$ 处连续，因为振幅被 $x$ 压住了。<b>决定连续性的是振幅，不是振荡次数。</b></p>
+
+  <p><b>Weierstrass 函数</b>把病态推向另一个方向：它处处连续，却处处不可导，图像处处是“尖”，没有一小段有切线。这说明“连续”这个条件弱得超乎直觉——所以关于连续函数的定理必须靠条件（闭、有界、连续）来补，不能靠图像。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 连续与反例</div>
+    <p>Bolzano 在 1817 年就给出了连续性的严格定义，并用它证明了介值定理，比 Cauchy 的系统讲授还早。但他的文章长期没人读，同样的定义后来在 Cauchy 手里才成为标准。</p>
+    <p>Weierstrass 在 1872 年公布了一个处处连续、处处不可导的函数（形如 $\sum a^n\cos(b^n\pi x)$，其中 $0&lt;a&lt;1$、$b$ 为奇数且 $ab$ 足够大）。当时不少数学家很难接受，认为这类函数是对“曲线”概念的破坏。它真正的后果不是多了一个怪例，而是逼着大家承认：<b>“连续”只能靠 $\eps$-$\delta$ 讲，不能靠“看图”讲。</b></p>
+  </div>
+
+  <table class="tbl">
+    <caption>间断点的分类（看左右极限）</caption>
+    <tr><th style="width:120px">类型</th><th>判别</th><th>例子</th></tr>
+    <tr><td>可去间断点</td><td>左右极限存在且相等，但不等于 $f(x_0)$（或 $f(x_0)$ 无定义）</td><td>$f(x)=\frac{\sin x}{x}$ 在 $x=0$</td></tr>
+    <tr><td>跳跃间断点</td><td>左右极限都存在但<b>不相等</b></td><td>$\operatorname{sgn}x$ 在 $x=0$</td></tr>
+    <tr><td>第二类（无穷）</td><td>至少一侧极限为无穷</td><td>$\frac1x$ 在 $x=0$</td></tr>
+    <tr><td>第二类（振荡）</td><td>至少一侧极限不存在且不趋于无穷</td><td>$\sin\frac1x$ 在 $x=0$</td></tr>
+  </table>
+
+  <div class="box tip"><div class="tag">怎么记 · 两问定四型</div>
+    <p>不必背那四行表，按顺序问两个问题就行。</p>
+    <p><b>第一问：左右极限“在不在”？</b>只要有一侧不存在，就是<b>第二类</b>，到此为止。无穷与振荡只是“不存在”的两种样子：$\frac1x$ 是值跑掉了，$\sin\frac1x$ 是值不肯停。</p>
+    <p><b>第二问：都在，那“等不等”？</b>两侧不相等 → <b>跳跃</b>；相等但不等于 $f(x_0)$（或 $f(x_0)$ 根本没定义）→ <b>可去</b>。“可去”的意思是补一个值或改一个值就能连续，这一点没有更深的病。</p>
+    <p>口诀：<b>先看在不在，再看等不等；在而不等是跳跃，等而错位是可去。</b></p>
+  </div>
+
+  <div class="lab" data-lab="break"></div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>前两类统称<b>第一类间断点</b>（左右极限都存在），后两类称<b>第二类</b>。这个分类不是考试装饰：第九章会证明"闭区间上只有有限个第一类间断点的有界函数可积"，间断点的类型直接决定能不能积分。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>① “极限存在就是连续”——错。$\frac{\sin x}{x}$ 在 $0$ 处极限存在（等于 $1$），但那一点没有定义，是可去间断。连续要的是“极限值 = 函数值”这个<b>等式</b>，光有极限不算。</p>
+    <p>② “没定义的点才叫间断点”——错。$\operatorname{sgn}x$ 在 $0$ 处有定义（值为 $0$），照样是跳跃间断。间断只看极限与函数值对不对得上，与有没有定义无关。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：连续 = 极限值等于函数值；间断点按左右极限分四类。</p>
+
+  <h3>4.2 局部性质</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">局部有界与局部保号</div>
+    <p>设 $f$ 在 $x_0$ 连续。</p>
+    <p>(1) <b>局部有界</b>：存在 $\delta&gt;0$ 和 $M&gt;0$，使 $x\in U(x_0,\delta)$ 时 $|f(x)|\le M$。</p>
+    <p>(2) <b>局部保号</b>：若 $f(x_0)&gt;0$，则存在 $\delta&gt;0$，使 $x\in U(x_0,\delta)$ 时 $f(x)&gt;\frac{f(x_0)}{2}&gt;0$。</p>
+    <p>这两条都是把"极限的局部性质"里的 $A$ 换成 $f(x_0)$，直接照搬。</p>
+  </div>
+
+  <p class="plain">这两条合成一句承诺：只要 $f$ 在 $x_0$ 这一点连着，那么在 $x_0$ <b>附近一小段</b>里，函数值既不会飞出去（有界），也不会突然翻脸变号（保号）。代价是这一段的半径 $\delta$ 由 $f$ 和 $x_0$ 共同决定，可能小得可怜。数字版：$f(x)=\frac1x$ 在 $x_0=2$，取 $\delta=1$，则对一切 $x\in(1,3)$ 有 $|f(x)|&lt;1$——$M=1$ 就是这一段能给的界。</p>
+
+  <p>为什么只能是局部的？还看 $f(x)=\frac1x$ 在 $x_0=2$：半径取 $1$ 时有界，一放大到 $(0,2)$ 就吃到 $x\to0^+$，界立刻消失。保号性同理：$f(x)=x$ 在 $x_0=1$ 附近恒正（取 $\delta=\frac12$ 有 $f&gt;\frac12$），可在整条 $\R$ 上它当然变号。<b>“局部”两个字不是谦虚，是准确的边界。</b></p>
+
+  <div class="box tip"><div class="tag">后面在哪用</div>
+    <p>极值判定全靠它，只是换了个对象：若 $f$ 在 $x_0$ 取极大值，则 $x$ 在 $x_0$ 左侧时差商 $\ge0$、右侧时差商 $\le0$；由极限的保号性，两侧极限（同一个 $f'(x_0)$）必须同时 $\ge0$ 与 $\le0$，故 $f'(x_0)=0$。这就是第六章 Fermat 引理的证明。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>"局部"两个字不能丢。$f(x)=\frac1x$ 在 $(0,1)$ 上处处连续，但在整个区间上<b>无界</b>——局部有界推不出整体有界。需要"闭区间 + 连续"才行（见下节）。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：“局部有界”“局部保号”都别丢掉“局部”二字。</p>
+
+  <h3>4.3 闭区间上连续函数的三大定理</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">有界性定理</div>
+    <p>若 $f\in C[a,b]$，则 $f$ 在 $[a,b]$ 上有界。</p>
+    <details class="proof"><summary>证明（反证 + 列紧性）</summary><div class="body">
+      <p>若 $f$ 无界，则对每个 $n$ 存在 $x_n\in[a,b]$ 使 $|f(x_n)|&gt;n$。由 Bolzano–Weierstrass 定理（有界数列有收敛子列），存在子列 $x_{n_k}\to x_0\in[a,b]$。由连续性 $f(x_{n_k})\to f(x_0)$，特别地 $\{f(x_{n_k})\}$ 有界，与 $|f(x_{n_k})|&gt;n_k\to\infty$ 矛盾。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p>有界性是整章的地基：没有它，$\sup f$ 可能等于 $+\infty$，“取到最大值”就无从谈起。</p>
+
+  <div class="box warn"><div class="tag">条件审计 · 有界性定理</div>
+    <p>(1) <b>拿掉“闭”</b>：$f(x)=\frac1x$ 在 $(0,1)$ 上连续，却无界。区间开着，$x$ 能任意靠近 $0$，函数值被推向 $+\infty$；而“跑掉的那一头”不在定义域里，连续性管不到它。</p>
+    <p>(2) <b>拿掉“有界区间”</b>：$f(x)=x$ 在 $[0,+\infty)$ 上连续，闭是闭的，却无界。注意 $[0,+\infty)$ 是闭集但不是有界区间——“闭”和“有界”是两件独立的事，定理里“闭区间”三个字同时管住了这两件。</p>
+    <p>(3) <b>拿掉“连续”</b>：在 $[-1,1]$ 上令 $f(x)=\frac1x$（$x\ne0$）、$f(0)=0$。区间闭且有界，可 $f$ 无界——不连续的那一个点，就足以让整条结论作废。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">最值定理</div>
+    <p>若 $f\in C[a,b]$，则 $f$ 在 $[a,b]$ 上取到最大值与最小值：存在 $x_1,x_2\in[a,b]$，使 $f(x_1)=\max\limits_{[a,b]}f$，$f(x_2)=\min\limits_{[a,b]}f$。</p>
+    <details class="proof"><summary>证明思路</summary><div class="body">
+      <p>由上确界原理，$M=\sup_{[a,b]}f$ 有限（因为有界）。由上确界的定义，存在 $x_n$ 使 $f(x_n)&gt;M-\frac1n$。取收敛子列 $x_{n_k}\to x_1\in[a,b]$，由连续性 $f(x_1)=\lim f(x_{n_k})=M$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>把 $[a,b]$ 换成 $(a,b)$ 就全塌了：$f(x)=x$ 在 $(0,1)$ 上连续，既无最大值也无最小值；$f(x)=\frac1x$ 在 $(0,1)$ 上连续但无界。<b>开区间丢掉的正是两个端点</b>，而极限可能"跑向端点"。</p>
+  </div>
+
+  <p class="plain">最值定理说的不是“有上界”，而是“上界被某一点真的取到”。这两件事差得很远：$(0,1)$ 上 $f(x)=x$ 的上确界是 $1$，却没有哪一点的函数值等于 $1$；换成 $[0,1]$ 就取到了（$x=1$）。定理的实质是<b>上确界可达</b>，而可达性来自两处：闭区间把端点收了进来，连续把极限值钉在了函数值上。</p>
+
+  <div class="box warn"><div class="tag">条件审计 · 最值定理</div>
+    <p>(1) <b>开区间</b>：$f(x)=x^2$ 在 $(0,1)$ 上最大值最小值都够不着。</p>
+    <p>(2) <b>无界区间</b>：$f(x)=x$ 在 $[0,+\infty)$ 上最小值 $0$ 取得到，最大值没有——只塌一半。这说明“最大值”和“最小值”确实是两个独立结论，缺条件时它们可以分别失效。</p>
+    <p>(3) <b>不连续</b>：在 $[0,1]$ 上令 $f(x)=x$（$x&lt;1$）、$f(1)=0$。闭且有界，但最大值 $1$ 只被无限逼近，取不到。改动只发生在一点，结论就没了。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">介值定理（零点定理）</div>
+    <p>若 $f\in C[a,b]$，且 $f(a)&lt;0&lt;f(b)$，则存在 $\xi\in(a,b)$ 使 $f(\xi)=0$。</p>
+    <p>更一般地：$f$ 在 $[a,b]$ 上连续，则它取遍 $f(a)$ 与 $f(b)$ 之间的<b>一切</b>值。</p>
+    <details class="proof"><summary>证明（二分法 + 区间套）</summary><div class="body">
+      <p>令 $a_1=a$，$b_1=b$。取中点 $c_1=\frac{a_1+b_1}{2}$：若 $f(c_1)=0$ 完事；若 $f(c_1)&gt;0$ 取 $[a_2,b_2]=[a_1,c_1]$，否则取 $[c_1,b_1]$。</p>
+      <p>如此得区间套 $[a_n,b_n]$，长度 $\frac{b-a}{2^{n-1}}\to0$，且 $f(a_n)\le0\le f(b_n)$。由区间套定理存在唯一 $\xi$ 属于所有区间，$a_n\to\xi$，$b_n\to\xi$。由连续性 $f(\xi)=\lim f(a_n)\le0$ 且 $f(\xi)=\lim f(b_n)\ge0$，故 $f(\xi)=0$。<span class="qed">∎</span></p>
+      <p>这个方法同时给出了<b>数值求根</b>的算法，误差每步减半。</p>
+    </div></details>
+  </div>
+
+  <p>介值定理的条件审计有点特别：它真正吃的是<b>连续</b>，闭区间只是为了让 $f(a)$、$f(b)$ 这两个端点值有意义。事实上连续函数把区间映成区间，在 $(0,1)$ 上连续也一样取遍中间值。所以三条定理里，“闭”对它承重最少——有界与最值没它立刻崩，而它只要有连续就成立。</p>
+
+  <div class="box warn"><div class="tag">条件审计 · 介值定理</div>
+    <p>去掉连续，一句话就崩：$f(x)=\operatorname{sgn}x$ 在 $[-1,1]$ 上，$f(-1)=-1&lt;0&lt;1=f(1)$，可它只取 $-1,0,1$ 三个值，$\frac12$ 永远取不到。区间被“跳跃”撕开，中间值掉进去了。</p>
+    <p>还有一个操作上的坑：把区间换成开区间时，端点值不能直接“代进去”。例如 $f(x)=\ln x$ 在 $(0,2)$ 上连续，$f(0^+)=-\infty&lt;0&lt;\ln2$，零点 $x=1$ 确实存在；但你不能写 $f(0)&lt;0$，因为 $0$ 不在定义域里。正确写法是取 $\delta&gt;0$ 使 $f(\delta)&lt;0$，再在 $[\delta,2]$ 上用零点定理。<b>端点值要先用极限落成一个内点的函数值。</b></p>
+  </div>
+
+  <div class="box ex"><div class="tag">用介值定理证明存在性</div>
+    <p>证明方程 $x=\cos x$ 在 $(0,\frac\pi2)$ 内有且仅有一个实根。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>令 $f(x)=x-\cos x$，在 $[0,\frac\pi2]$ 上连续。$f(0)=-1&lt;0$，$f(\frac\pi2)=\frac\pi2&gt;0$，由零点定理存在根。</p>
+      <p>唯一性：$f'(x)=1+\sin x&gt;0$，$f$ 严格递增（第五章内容，也可直接用单调性），故根唯一。</p>
+      <p><b>存在性用介值定理，唯一性用单调性</b>——这是这类题的标准两段式。</p>
+    </div></details>
+  </div>
+
+  <p>二分法的数字长相。用介值定理解 $x=\cos x$：$f(x)=x-\cos x$ 在 $[0,\frac\pi2]$ 上连续，$f(0)=-1$，$f(\frac\pi2)\approx+0.5708$，两端异号，所以根落在 $(0,\frac\pi2)$ 内。</p>
+
+  <table class="tbl">
+    <caption>二分法前三步（$\frac\pi2\approx1.5708$）</caption>
+    <tr><th>步骤</th><th>中点 $c$</th><th>$f(c)=c-\cos c$</th><th>根所在区间</th></tr>
+    <tr><td>初始</td><td>—</td><td>$f(0)=-1$，$f(1.5708)\approx+0.5708$</td><td>$[0,\,1.5708]$</td></tr>
+    <tr><td>1</td><td>$0.7854$</td><td>$\approx+0.0783$</td><td>$[0,\,0.7854]$</td></tr>
+    <tr><td>2</td><td>$0.3927$</td><td>$\approx-0.5312$</td><td>$[0.3927,\,0.7854]$</td></tr>
+    <tr><td>3</td><td>$0.5890$</td><td>$\approx-0.2424$</td><td>$[0.5890,\,0.7854]$</td></tr>
+  </table>
+
+  <p>三步之后区间长度是 $0.1964=\frac{\pi/2}{8}$，每走一步误差减半。真根约 $0.7391$，此时稳稳落在区间内。这就是“存在性证明顺手给出算法”的样子：定理没说根在哪，可证明过程本身就是一张找根的流程图。</p>
+
+  <p>三条定理在后面哪里被用，值得现在就记一笔。<b>第六章</b>：Rolle 定理直接调用最值定理（闭区间上连续 ⇒ 取到最值，再在内部极值点用 Fermat 引理），整条“桥梁”都架在这上面。<b>第九章</b>：证明“闭区间上连续函数可积”走的是“连续 ⇒ 一致连续（Cantor）⇒ 振幅可控”这条线，而“可积必有界”回顾的正是有界性定理。<b>第七章</b>：Cantor 定理的证明要用有限覆盖。换句话说，本章这几条结论是后面所有“存在性”证明的提款机。</p>
+
+  <p class="take"><b>本节带走</b>：三条定理都从“连续”榨出来；但“闭区间”在有界、最值两条上是硬条件，对介值只是让端点值有意义。</p>
+
+  <h3>4.4 一致连续：整个区间用同一个 $\delta$</h3>
+
+  <div class="box def"><div class="tag">一致连续</div>
+    <p>设 $f$ 在区间 $I$ 上有定义。若</p>
+    <p>$$\forall\eps&gt;0,\ \exists\delta&gt;0,\ \forall x_1,x_2\in I:\ |x_1-x_2|&lt;\delta\ \Rightarrow\ |f(x_1)-f(x_2)|&lt;\eps,$$</p>
+    <p>则称 $f$ 在 $I$ 上<b>一致连续</b>。</p>
+  </div>
+
+  <div class="box note"><div class="tag">读法 · 只差量词顺序</div>
+    <p>连续：$\forall x_0\ \forall\eps\ \exists\delta$ —— $\delta$ 可以<b>依赖 $x_0$</b>。<br>
+       一致连续：$\forall\eps\ \exists\delta\ \forall x_1,x_2$ —— $\delta$ <b>只依赖 $\eps$</b>，全区间通用。</p>
+    <p>换句话说：一致连续要求"<b>整个区间上斜率被统一控制住</b>"，不允许在某个点附近越来越陡。</p>
+  </div>
+
+  <p class="plain">连续是"每一点有它自己的 δ"；一致连续是"<b>整个区间共用一个 δ</b>"。前者允许你在陡的地方把 δ 调小，后者不许——所以在 $(0,1)$ 上 $1/x$ 连续，却做不到"一个 δ 通吃"。</p>
+
+  <p>把这件事讲成一所学校。<b>连续</b>是“每个老师各自定自己的及格线”：你去问张老师，他给你一个 $\delta_张$；去问李老师，他给你一个 $\delta_李$。每个点都能报出一个 $\delta$，但这些 $\delta$ 可能一个比一个小得离谱，没人拿得出一个全校通用的数。<b>一致连续</b>是“教务处下一个统一文件”：一个 $\delta$，区间里所有点都认。</p>
+
+  <p>差别不在“有没有”，而在“能不能统一”。$1/x$ 在 $(0,1)$ 上每个点都有自己的 $\delta$，可教务处开不出统一文件，因为越靠近 $0$，需要的 $\delta$ 越小，小到没有正的下界。类比到此为止：学校标准是人定的、可以妥协；$\delta$ 是存在性声明，不许含糊——要么有一个正数能通吃，要么一个都没有。</p>
+
+  <p class="plain">把“越靠近 $0$ 越要更小”算成数字。在 $x_0$ 附近，$\left|\frac1x-\frac1{x_0}\right|\approx\frac{|x-x_0|}{x_0^2}$，要让误差 $&lt;\eps$，取 $\delta\approx\eps x_0^2$ 就行。$\eps=0.01$ 时：$x_0=1$ 只要 $\delta=0.01$；$x_0=0.1$ 要 $\delta=0.0001$；$x_0=0.01$ 要 $\delta=0.000001$。$\delta$ 随 $x_0\to0$ 一路缩向 $0$，所以“统一的 $\delta$”不可能存在。</p>
+
+  <div class="lab" data-lab="uniform"></div>
+
+  <div class="box ex"><div class="tag">连续但不一致连续</div>
+    <p>$f(x)=\dfrac1x$ 在 $(0,1)$ 上连续，但不一致连续。</p>
+    <details class="ans"><summary>证明</summary><div class="body">
+      <p>取 $x_n=\frac1n$，$y_n=\frac{1}{n+1}$，则 $|x_n-y_n|=\frac{1}{n(n+1)}\to0$，但</p>
+      <p>$$|f(x_n)-f(y_n)|=|n-(n+1)|=1\not\to0.$$</p>
+      <p>所以无论 $\delta$ 取多小，总能找到相距小于 $\delta$ 的两点，函数值相差 $1$。取 $\eps=\frac12$ 即违反一致连续的定义。</p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Cantor 定理</div>
+    <p>若 $f\in C[a,b]$，则 $f$ 在 $[a,b]$ 上<b>一致连续</b>。</p>
+    <details class="proof"><summary>证明（有限覆盖，第七章会细讲）</summary><div class="body">
+      <p>任给 $\eps&gt;0$。对每点 $x\in[a,b]$，由连续性存在 $\delta_x&gt;0$，使 $t\in U(x,2\delta_x)$ 时 $|f(t)-f(x)|&lt;\frac\eps2$。</p>
+      <p>开区间族 $\{U(x,\delta_x)\}_{x\in[a,b]}$ 覆盖 $[a,b]$，由有限覆盖定理可取有限个 $x_1,\dots,x_m$ 仍覆盖。令 $\delta=\min\{\delta_{x_1},\dots,\delta_{x_m}\}&gt;0$。</p>
+      <p>任取 $|x-y|&lt;\delta$。设 $x\in U(x_k,\delta_{x_k})$，则 $|y-x_k|\le|y-x|+|x-x_k|&lt;\delta+\delta_{x_k}\le2\delta_{x_k}$，于是 $|f(y)-f(x_k)|&lt;\frac\eps2$，从而 $|f(x)-f(y)|&lt;\eps$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p>Cantor 定理的证明里有两处吃“闭区间”，值得单独点出来。第一，开区间族 $\{U(x,\delta_x)\}$ 要能<b>取出有限个</b>仍覆盖整个区间——有限覆盖定理只对闭区间成立，$(0,1)$ 上的开覆盖可以一个劲儿往端点里挤，抽不出有限个。第二，取出有限个之后才有 $\delta=\min\{\delta_{x_1},\dots,\delta_{x_m}\}$：<b>有限个正数的最小值仍是正数</b>，而无限个正数的下确界可以是 $0$。一致连续偏偏要求 $\delta&gt;0$，所以这两步一步都松不得。</p>
+
+  <p class="plain">换句话说，一致连续等于说“这个区间上的连续性能被打包成一个正数 $\delta$”。闭区间让打包成为可能（有限覆盖），开区间则常常让 $\delta$ 在端点附近被磨成 $0$。所以 Cantor 定理不是“闭区间上运气好”，而是“闭区间的紧性买来了统一的 $\delta$”。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · Heine 与 Cantor</div>
+    <p>“逐点连续”与“一致连续”被分开，是十九世纪七十年代的事：Heine 与 Cantor 在整理闭区间上连续函数的性质时，证明了一致连续可由逐点连续推出，这就是今天的 Heine–Cantor 定理。在此之前，“每点连续”常被默认足够强；直到人们发现它推不出“整个区间共用一个 $\delta$”，两个概念才被正式分开。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>"闭区间"不能换成开区间：$\frac1x$ 在 $(0,1)$ 上连续但非一致连续。"连续"也不能去掉：$\operatorname{sgn}x$ 在 $[-1,1]$ 上不一致连续。<b>两个条件都在承重。</b></p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>很多人以为“连续 + 有界”就能推出一致连续——错。$f(x)=\sin\frac1x$ 在 $(0,1)$ 上连续且有界（$|f|\le1$），却不一致连续：取 $x_n=\frac{1}{2n\pi}$、$y_n=\frac{1}{2n\pi+\pi/2}$，两点距离趋于 $0$，函数值却在 $0$ 与 $1$ 之间反复跳。<b>有界压不住振荡。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：一致连续是全区间共用一个 $\delta$；换成开区间就会失效。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">若 $f\in C[a,b]$，则下列<b>一定成立</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上有界</button><button data-o="B">B. $f$ 在 $(a,b)$ 内可导</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $(a,b)$ 内严格单调</button></div>
+      <p class="q-exp" hidden>有界性定理。B、C、D 的反例：$|x|$、$x^2$、$\sin x$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>$f(x)=\dfrac{x^2-1}{x-1}$ 在 $x=1$ 处是什么类型的间断点？怎样"补定义"使它连续？</li>
+      <li>是否存在 $[0,1]$ 上的连续函数，取到最大值但不取到最小值？说明理由。</li>
+      <li>证明 $f(x)=\sqrt x$ 在 $[0,+\infty)$ 上一致连续。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> 可去间断点。$\lim_{x\to1}\frac{x^2-1}{x-1}=\lim(x+1)=2$，补充定义 $f(1)=2$ 即连续。</p>
+      <p><b>2.</b> <b>不存在。</b>最值定理保证最大、最小<b>都</b>取到，两者是绑定的。这题是想让你确认定理的"双向性"。</p>
+      <p><b>3.</b> 用 $|\sqrt x-\sqrt y|=\dfrac{|x-y|}{\sqrt x+\sqrt y}\le\sqrt{|x-y|}$，取 $\delta=\eps^2$ 即可（$x=y$ 时也成立）。这个不等式是全区间通用的，所以一致连续。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch5" data-no="05" data-title="导数与微分" style="--ch:5">
+  <div class="chap-head">
+    <div class="chap-no">05</div>
+    <h2>导数与微分<small class="en">Derivatives · Differentials</small></h2>
+  </div>
+
+  <p class="src">教材对应：第五章 导数和微分 · §1 导数的概念　§2 求导法则　§3 参变量函数的导数·高阶导数　§4 微分</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>切线到底是什么？“割线的极限”这句话怎么落地？</li><li>可导一定连续，那连续一定可导吗？反例长什么样？</li><li>微分里的 $\dd x$，到底是无穷小还是普通变量？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>导数 = 差商的极限；可导必连续，反之不然</li>
+      <li>求导法则与链式法则（证明只做一遍，之后放心用）</li>
+      <li>高阶导数、Leibniz 公式</li>
+      <li>微分：$dy=f'(x)\Delta x$，可微 $\iff$ 可导，形式不变性</li>
+    </ul>
+  </div>
+
+  <p>上一章的连续只肯说“函数值彼此接近”，是个定性的、没有刻度的说法。这一章给它装上刻度：<b>接近得有多快？</b>把“函数值的变化 ÷ 自变量的变化”取极限，得到的数就是导数。从此能算速度、斜率、边际量，也能反过来用导数控制函数——那是第六章的事。</p>
+  <p>暗中还有一条线：<b>记号的胜利</b>。同样是变化率，Newton 写 $\dot y$，Leibniz 写 $\frac{\dd y}{\dd x}$；今天链式法则、换元积分、微分形式全长在 Leibniz 的记号上。底线只有一条：<b>导数是一个极限</b>，先有存在，才谈公式。</p>
+
+  <h3>5.1 导数：瞬时变化率</h3>
+
+  <div class="box def"><div class="tag">导数</div>
+    <p>设 $y=f(x)$ 在 $x_0$ 的某邻域内有定义。若极限</p>
+    <p>$$f'(x_0)=\lim_{\Delta x\to0}\frac{f(x_0+\Delta x)-f(x_0)}{\Delta x}=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}$$</p>
+    <p>存在，则称 $f$ 在 $x_0$ <b>可导</b>，该极限称为 $f$ 在 $x_0$ 的<b>导数</b>，记 $f'(x_0)$ 或 $\left.\dfrac{\dd y}{\dd x}\right|_{x_0}$。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 切线、速度与两套记号</div>
+    <p><b>切线问题</b>最早不是为了求斜率，而是为了求极值。Fermat 在十七世纪三十年代用一个古怪办法：设 $f(x+e)\approx f(x)$，消去公共项、除以 $e$，最后令 $e=0$，解出的 $x$ 就是极值点。这本质上就是解 $f'(x)=0$，可他说不清为什么能先除以 $e$ 再令 $e=0$——漏洞悬了近两百年，才由极限定义补上。</p>
+    <p><b>速度问题</b>是另一条线。Newton 为处理变速运动，把变化率叫“流数”，记 $\dot y$，主变量默认是时间，这套记号今天还活在物理书里。Leibniz 从几何出发，写成两个微分的商 $\frac{\dd y}{\dd x}$：链式法则看着像分数约分，高阶导数是 $\frac{\dd^2y}{\dd x^2}$，换元时把 $\dd x$ 当符号搬来搬去几乎不出错。两人还为“谁先发明”争了半辈子，一般认为英国数学界因此长期固守 Newton 的写法。</p>
+  </div>
+
+  <p>左侧是"割线斜率"，取极限后成为"切线斜率"。物理上就是瞬时速度。把这个图像记住，后面所有定理都能翻译成几何语言。</p>
+
+  <p class="plain">导数就是"把割线斜率取极限"。h 越小，割线越像切线；如果这个斜率随着 h→0 有极限，就把它定义为切线斜率。记住：<b>它只是一个极限</b>，不保证图形好看，也不保证导函数连续。</p>
+
+  <p>为什么“极限存在”是硬要求？因为切线斜率必须<b>唯一</b>。$f(x)=|x|$ 在 $0$ 处，割线斜率右侧恒为 $+1$、左侧恒为 $-1$，两个方向给出两条不同的“切线”，于是我们既不承认切线，也不承认导数——<b>不是算不出来，是答案不唯一</b>。$f(x)=x\sin\frac1x$（补 $f(0)=0$）更极端：它连续，可差商 $\sin\frac1x$ 在 $0$ 附近跑遍 $[-1,1]$，极限不存在。<b>可导排除的不只是尖角，还有无限振荡。</b></p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 从“无穷小”到“极限”</div>
+    <p>Newton 与 Leibniz 的导数都建立在“无穷小”上：一个比任何正数都小、又不等于零的量。Berkeley 当年嘲讽它是“消失量的鬼魂”——先是非零好让你去除，转眼又等于零好让那项消失。缺口由 Cauchy 补上：导数成了差商的<b>极限</b>，无穷小不再是某个数，而是趋于零的变量；Weierstrass 再把它写成 $\eps$-$\delta$。</p>
+  </div>
+
+  <div class="lab" data-lab="secant"></div>
+
+  <div class="vid" data-video="secant" data-title="割线转切线：h→0 时斜率趋于 f′(1)"></div>
+
+  <div class="box thm" data-k="定理"><div class="tag">可导必连续</div>
+    <p>若 $f$ 在 $x_0$ 可导，则 $f$ 在 $x_0$ 连续。反之不成立。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>$$\lim_{x\to x_0}\big(f(x)-f(x_0)\big)=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}\cdot(x-x_0)=f'(x_0)\cdot0=0.$$</p>
+      <p>故 $\lim_{x\to x_0}f(x)=f(x_0)$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">连续但不可导</div>
+    <p>(1) $f(x)=|x|$ 在 $x=0$ 连续但不可导。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>差商 $\dfrac{|x|-0}{x}=\operatorname{sgn}x$（$x\ne0$）。左极限 $-1$，右极限 $1$，故差商极限不存在，不可导。</p>
+      <p>几何上：原点处是"尖角"，没有唯一的切线。</p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">可导但导数不连续</div>
+    <p>$$f(x)=\begin{cases}x^2\sin\dfrac1x,&x\ne0,\\ 0,&x=0.\end{cases}$$</p>
+    <p>$f$ 在 $x=0$ 可导（$f'(0)=0$），但 $f'$ 在 $x=0$ 处不连续。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>$x\ne0$ 时 $f'(x)=2x\sin\frac1x-\cos\frac1x$，当 $x\to0$ 时 $\cos\frac1x$ 无极限，故 $f'$ 不连续。</p>
+      <p>而 $f'(0)=\lim_{x\to0}\frac{x^2\sin(1/x)}{x}=\lim x\sin\frac1x=0$ 存在。</p>
+      <p>意义：<b>"可导"只保证 $f'$ 存在，不保证 $f'$ 连续。</b>这也是为什么中值定理要单独证明，而不能"用导数连续 + 拉格朗日"糊弄过去。</p>
+    </div></details>
+  </div>
+
+  <p>用定义把导数算一遍，看它怎么落地。求 $f(x)=\frac1x$ 在 $x_0=3$ 的导数：</p>
+  <p>$$\frac{f(3+h)-f(3)}{h}=\frac{1}{h}\left(\frac{1}{3+h}-\frac13\right)=-\frac{1}{3(3+h)}\ \longrightarrow\ -\frac19\approx-0.111111.$$</p>
+  <p>代数字看收敛：$h=0.1$ 得 $-0.107527$，$h=0.01$ 得 $-0.110742$，$h=0.001$ 得 $-0.111074$。约分后 $h$ 从分母上消失，这才是“极限存在”的实质。若要误差小于 $0.001$，由 $\left|-\frac{1}{3(3+h)}+\frac19\right|=\frac{|h|}{3|9+3h|}$，取 $|h|\le0.02$ 时右端不超过 $\frac{0.02}{26.82}\approx0.00075$，故 $\delta=0.02$ 就够。</p>
+
+  <p class="take"><b>本节带走</b>：导数是割线斜率的极限：可导必连续，反之不然。</p>
+
+  <h3>5.2 求导法则</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">四则与复合</div>
+    <p>设 $u,v$ 在 $x$ 可导，则</p>
+    <p>$$(u\pm v)'=u'\pm v',\quad (uv)'=u'v+uv',\quad \left(\frac uv\right)'=\frac{u'v-uv'}{v^2}\ (v\ne0).$$</p>
+    <p>若 $y=f(u)$ 在 $u$ 可导，$u=g(x)$ 在 $x$ 可导，则<b>链式法则</b></p>
+    <p>$$\frac{\dd y}{\dd x}=f'(g(x))\,g'(x).$$</p>
+    <details class="proof"><summary>链式法则的证明要点</summary><div class="body">
+      <p>写 $\Delta u=g(x+\Delta x)-g(x)$，$\Delta y=f(u+\Delta u)-f(u)$。由可导性，$\Delta y=f'(u)\Delta u+o(\Delta u)$，$\Delta u=g'(x)\Delta x+o(\Delta x)$，代入即得 $\Delta y=f'(u)g'(x)\Delta x+o(\Delta x)$，两边除以 $\Delta x$ 取极限。</p>
+      <p>这个"<b>可导 ⇒ 增量可以写成线性主部 + 高阶无穷小</b>"的视角，正是下一节微分的来源。</p>
+    </div></details>
+  </div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>链式法则的"物理"解释：$y$ 随 $u$ 的变化率 × $u$ 随 $x$ 的变化率 = $y$ 随 $x$ 的变化率。写成 $\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}$ 时，$du$ 好像可以约掉——这是<b>巧合</b>，不是证明。真正让它成立的是上面那个 $o$ 估计。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">最常见的一类错 · 漏乘内层导数</div>
+    <p>公式很短，错误几乎永远出在同一处：忘了乘 $g'(x)$。典型错解 $(\sin2x)'=\cos2x$（漏 $2$）、$(e^{x^2})'=e^{x^2}$（漏 $2x$）。数字验证：$x=0$ 时 $\sin2x$ 对 $x$ 的敏感度应是“$x$ 每增 $0.001$，函数值增约 $0.002$”，因为 $2x$ 先被放大了两倍，而 $\cos0=1$ 只有真值的一半。<b>内层是放大器，外层只对被放大过的变化作反应。</b>自查口诀：$y'_x=y'_u\cdot u'_x$，三个撇各挂一个变量。</p>
+  </div>
+
+  <div class="box note"><div class="tag">读法 · 反函数求导的几何</div>
+    <p>$y=f(x)$ 与 $x=f^{-1}(y)$ 是同一条曲线，只交换了坐标轴的名字，所以两条图像关于 $y=x$ 对称。对称把横竖坐标互换，也把斜率 $k$ 换成 $\frac1k$，于是 $(f^{-1})'(y_0)=\frac{1}{f'(x_0)}$（$y_0=f(x_0)$）。数字版：$y=x^2$ 在 $x_0=2$ 处斜率 $4$，反函数 $\sqrt y$ 在 $y_0=4$ 处斜率就是 $\frac14$——一个越陡另一个越平，乘积恰为 $1$。前提是 $f'(x_0)\ne0$ 且 $f$ 在附近严格单调；例：$y=x^3$ 在 $0$ 处 $f'(0)=0$，反函数 $\sqrt[3]y$ 在该点确实不可导（竖直切线）。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：链式法则的本质是“增量 = 线性主部 + 高阶小量”。</p>
+
+  <h3>5.3 高阶导数与 Leibniz 公式</h3>
+
+  <p>把 $f'$ 再求导得 $f''$，一般地记 $f^{(n)}$。乘积的高阶导数有公式：</p>
+
+  <p>$$(uv)^{(n)}=\sum_{k=0}^{n}\binom nk u^{(k)}v^{(n-k)}.$$</p>
+
+  <p>形式与二项式展开完全一样。记不住的话，用归纳法推一遍就懂了。</p>
+
+  <p class="plain">它和二项式 $(u+v)^n=\sum\binom nk u^kv^{n-k}$ 长得一样，不是巧合。求 $n$ 次导数可以想成“做 $n$ 次选择”：每一撇要么打在 $u$ 上、要么打在 $v$ 上。若有 $k$ 撇落在 $u$ 上就得到 $u^{(k)}v^{(n-k)}$，而选择的<b>顺序</b>有 $\binom nk$ 种，乘法可交换使它们合并成一项，系数正是 $\binom nk$——二项式里 $\binom nk$ 数的也是“$n$ 个括号挑 $k$ 个取 $u$”的方案数。$n=2$ 时 $(uv)''=u''v+2u'v'+uv''$，中间那个 $2$ 就是“先 $u$ 后 $v$”与“先 $v$ 后 $u$”两条路。</p>
+
+  <div class="box ex"><div class="tag">算高阶导数</div>
+    <p>求 $y=x^2e^x$ 的 $y^{(n)}$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>取 $u=e^x$（各阶导数都是 $e^x$），$v=x^2$（三阶以上为零）。由 Leibniz 公式只有前三项：</p>
+      <p>$$y^{(n)}=e^x\left[x^2+n\cdot2x+\frac{n(n-1)}{2}\cdot2\right]=e^x\big(x^2+2nx+n(n-1)\big).$$</p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：高阶导数用 Leibniz 公式，形式与二项式展开一样。</p>
+
+  <h3>5.4 微分：线性主部</h3>
+
+  <div class="box def"><div class="tag">微分</div>
+    <p>若存在与 $\Delta x$ 无关的常数 $A$，使</p>
+    <p>$$\Delta y=f(x_0+\Delta x)-f(x_0)=A\Delta x+o(\Delta x)\quad(\Delta x\to0),$$</p>
+    <p>则称 $f$ 在 $x_0$ <b>可微</b>，$A\Delta x$ 称为 $f$ 在 $x_0$ 的<b>微分</b>，记 $\dd y=A\,\dd x$。</p>
+  </div>
+
+  <p class="plain">“线性主部”的大白话是：<b>把曲线放到放大镜底下，它看起来像一条直线。</b>放大倍数越大，弯得越少；增量里最主要的那块是 $f'(x_0)\Delta x$（$\Delta x$ 的一次式，所以叫线性的），剩下的虽然还在，但比 $\Delta x$ 小得多，占比随 $\Delta x\to0$ 趋于零。$\dd y=f'(x_0)\dd x$ 就是这一块，把复杂的 $\Delta y$ 换成“斜率乘步长”。一元里可微与可导恰好等价（见下面的定理），两种说法只是切入口不同：一个讲差商，一个讲增量分解。</p>
+
+  <p>数字版：$\sqrt{1.02}$ 取 $f(x)=\sqrt x$、$x_0=1$、$\Delta x=0.02$，则 $\sqrt{1.02}\approx1+\frac12\times0.02=1.01$。真值 $1.009950\ldots$，误差约 $5\times10^{-5}$，只有 $\Delta x$ 的千分之二点五。步子放大十倍：$\sqrt{1.2}\approx1.1$，真值 $1.095445$，误差 $0.0046$，是刚才的九十来倍——<b>误差按 $\Delta x^2$ 增长，“步子小”才是近似可用的前提。</b></p>
+
+  <div class="box thm" data-k="定理"><div class="tag">可微与可导等价</div>
+    <p>一元函数 $f$ 在 $x_0$ 可微 $\iff$ $f$ 在 $x_0$ 可导，且此时 $\dd y=f'(x_0)\dd x$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>若可微，则 $\frac{\Delta y}{\Delta x}\to A$，故可导且 $f'(x_0)=A$。反之若可导，令 $\alpha(\Delta x)=\frac{\Delta y}{\Delta x}-f'(x_0)$，则 $\alpha\to0$，即 $\Delta y=f'(x_0)\Delta x+\alpha\Delta x$，后一项是 $o(\Delta x)$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box key"><div class="tag">要点 · 形式不变性</div>
+    <p>无论 $x$ 是自变量还是中间变量，$\dd y=f'(x)\,\dd x$ 都成立。这就是<b>一阶微分形式不变性</b>。它是积分换元法的理论依据——第九章会反复用到。</p>
+  </div>
+
+  <div class="box note"><div class="tag">读法 · $\dd x$ 到底是什么</div>
+    <p>$\dd x$ 就是自变量的增量 $\Delta x$，可以取任意值，不必是“无穷小”。这样 $\dd y=f'(x)\dd x$ 成了关于 $\dd x$ 的线性函数：你给一个步长，我还一个主增量，微分的现代说法因此是“在一点处把函数线性化”。形式不变性随之而来：$x$ 是自变量时 $\dd x$ 自由，$x=g(t)$ 时 $\dd x=g'(t)\dd t$ 也成立，等式换成 $t$ 的写法仍然对——<b>等式不变，变的是 $\dd x$ 的身份。</b></p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错（拓展）</div>
+    <p>一元情形"可微 = 可导"太顺了，容易让人以为多元也这样。<b>多元函数里可微是比"偏导数存在"更强的条件</b>。现在只需记住：一元是特例，别把直觉带错。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>① “$\dd y$ 就是 $\Delta y$”——差着一个 $o(\Delta x)$。$\sqrt{1.02}$ 时 $\Delta y=0.009950$、$\dd y=0.01$，看着几乎一样，$\Delta x$ 一大就露馅（$\sqrt{1.2}$ 时差 $0.0046$）。微分是近似，不是等号。</p>
+    <p>② “微分是无穷小，可以随手丢掉”——正好相反：$\dd y$ 是不能丢的一阶项，被丢的是 $o(\Delta x)$。主次搞反，后面所有近似计算都会错。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：微分是线性主部；一元函数里可微 $\iff$ 可导。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">下列函数在 $x=0$ 处<b>可导</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $|x|$</button><button data-o="B">B. $x^{2/3}$</button><button data-o="C">C. $x^2\sin\dfrac1x$（补 $f(0)=0$）</button><button data-o="D">D. $\operatorname{sgn}x$</button></div>
+      <p class="q-exp" hidden>差商 $=x\sin\frac1x\to0$，故 $f'(0)=0$。$|x|$ 与 $x^{2/3}$ 在 0 处有尖点，$\operatorname{sgn}x$ 不连续。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>用定义求 $f(x)=x^2$ 在 $x=1$ 处的导数。</li>
+      <li>$f(x)=|x|^3$ 在 $x=0$ 处可导吗？可导的话导数是多少？</li>
+      <li>求 $y=\ln\sin x$ 的导数与微分。</li>
+      <li>举例说明"$f$ 在 $x_0$ 可导"不能推出"$f$ 在 $x_0$ 附近单调"。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $\lim_{\Delta x\to0}\frac{(1+\Delta x)^2-1}{\Delta x}=\lim(2+\Delta x)=2$。</p>
+      <p><b>2.</b> 可导。$\lim_{x\to0}\frac{|x|^3}{x}=\lim|x|^2\operatorname{sgn}x=0$，故 $f'(0)=0$。事实上 $|x|^3$ 处处可导，尽管它在 $0$ 处"三阶导数"不存在。</p>
+      <p><b>3.</b> $y'=\frac{\cos x}{\sin x}=\cot x$，$\dd y=\cot x\,\dd x$。</p>
+      <p><b>4.</b> 取 $f(x)=x^2\sin\dfrac1x$（$x\ne0$），$f(0)=0$。它在 $x=0$ 可导（$f'(0)=0$），但在 $0$ 的任何邻域内 $f'$ 变号无穷多次，$f$ 不单调。<b>结论：可导是"局部线性化"的性质，与单调性没有直接关系。</b></p>
+    </div></details>
+  </div>
+</section>

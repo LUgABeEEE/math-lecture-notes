@@ -1,0 +1,35 @@
+/* ============================================================
+   MathLab · 实验外观  v1.0
+   与 engine/mathlab.js 配套；构建时内联进单文件 HTML。
+   只在本工作区使用。
+   ============================================================ */
+
+.lab{margin:28px 0;border:1px solid var(--line-2);border-radius:12px;overflow:hidden;
+  background:var(--paper-2);box-shadow:var(--shadow)}
+.lab-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 16px;background:var(--paper-3);font-family:var(--sans);font-size:11.5px;letter-spacing:.06em}
+.lab-tag{color:var(--red);font-weight:700}
+.lab-tip{color:var(--ink-3);font-size:11px}
+.lab canvas{display:block;width:100%;height:282px;background:var(--paper);touch-action:pan-y}
+.lab-ctrl{display:flex;flex-wrap:wrap;gap:10px 24px;padding:12px 16px;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:12.5px;color:var(--ink-2)}
+.lab-ctrl label{display:flex;align-items:center;gap:9px}
+.lab-ctrl input[type=range]{width:132px;accent-color:var(--red);cursor:pointer}
+.lab-ctrl output{font-family:var(--mono);font-size:12px;color:var(--red);min-width:46px;
+  font-feature-settings:"tnum"}
+.lab-foot{padding:10px 16px 14px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);
+  border-top:1px dashed var(--line);line-height:1.8}
+.lab-foot b{color:var(--red);font-feature-settings:"tnum"}
+.lab-foot .ok{color:var(--green);font-weight:700}
+.lab-foot .no{color:var(--red);font-weight:700}
+
+.lab-tools{display:flex;gap:6px;align-items:center}
+.lab-btn{font-family:var(--sans);font-size:11px;color:var(--ink-2);background:var(--paper);
+  border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;cursor:pointer;transition:.15s}
+.lab-btn:hover{border-color:var(--red);color:var(--red)}
+.lab:fullscreen{display:flex;flex-direction:column;background:var(--paper);border-radius:0}
+.lab:fullscreen canvas{flex:1;height:auto;min-height:0}
+.lab:fullscreen .lab-ctrl,.lab:fullscreen .lab-foot{flex:0 0 auto}
+
+/* 打印：隐藏控件，保留画面 */
+@media print{.lab-ctrl,.lab-bar,.lab-tools{display:none}.lab canvas{height:220px}}

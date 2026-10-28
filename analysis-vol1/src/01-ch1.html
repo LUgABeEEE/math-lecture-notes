@@ -1,0 +1,339 @@
+<section class="chap" id="ch1" data-no="01" data-title="实数与函数" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">01</div>
+    <h2>实数与函数<small class="en">Real Numbers · Functions</small></h2>
+  </div>
+  <p class="src">教材对应：第一章 实数集与函数 · §1 实数　§2 数集·确界原理　§3 函数概念　§4 具有某些特性的函数</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>有理数在数轴上已经密密麻麻，那还可能漏掉什么？</li><li>一个集合没有最大值、却有一道“天花板”，这道天花板该怎么严格说清楚？</li><li>同样解析式 $y=x^2$，为什么在 $\R$ 上没有反函数，在 $[0,+\infty)$ 上却有？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>为什么有理数不够：缺的不是"数"，是<b>完备性</b></li>
+      <li>上确界 $\sup$：最小上界；确界原理（实数系的地基）</li>
+      <li>三件趁手的工具：三角不等式、Bernoulli、均值不等式</li>
+      <li>函数、单调、反函数，以及"反函数存在"依赖定义域</li>
+    </ul>
+  </div>
+
+  <p><b>这一章在故事里的位置。</b>这本书后面每一次"存在"的断言，最后都要在一个实实在在的点上落脚：第 2 章的单调有界定理说那个极限存在，第 4 章的最值定理说最大值在某点取到，第 7 章把六条完备性命题串成一条等价链。它们之所以不是空话，全靠实数轴上没有洞。所以第一章不是礼节性的开场，它是在浇地基，而且这块地基后面会被反复踩。</p>
+
+  <p>麻烦在于，"没有洞"不属于四则运算。你把有理数加减乘除到任意精确，也查不出脚下有没有洞——这件事要到十九世纪才被说清楚。顺序是先改写"极限"的说法，再回头追问：这套说法要求数集具备什么性质？</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>十七、十八世纪的分析拿几何直觉当靠山：画一条曲线，看见它穿过横轴，就说根存在。十九世纪初，Cauchy 开始把极限、连续、导数落到不等式上；到 Weierstrass 手上，$\eps$-$\delta$ 这套写法定型，直观被请出了定义。代价是：定义里出现的每个字母都得先有身份，"实数究竟是什么"于是从一个哲学问题变成了必须回答的技术问题。Dedekind 与 Cantor 在十九世纪七十年代前后各自给出了构造。这本讲义不重走那段构造，只吸收结论：确界原理就当作实数系的公理性质。</p>
+  </div>
+
+  <p>整个数学分析建立在实数系上。实数和有理数的差别，表面上是"多了无理数"，实质上是<b>数轴上没有洞</b>。这句话不是修辞，它有精确定义，就是本章的确界原理。后面所有极限定理（单调有界必收敛、闭区间上连续函数有最大值、中值定理）最终都靠它撑着。</p>
+
+  <h3>1.1 有理数的裂缝</h3>
+
+  <p>先确认一个熟悉的事实：$\sqrt2$ 不是有理数。这个证明值得完整看一遍，因为它是"反证法 + 数论最小知识"的样板。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">$\sqrt2$ 是无理数</div>
+    <p>不存在 $p,q\in\Z$，$q\ne 0$，使 $\left(\dfrac{p}{q}\right)^2=2$。</p>
+    <details class="proof"><summary>证明（反证）</summary><div class="body">
+      <p>设存在，取 $p,q$ <b>互素</b>（否则约分）。由 $p^2=2q^2$ 知 $p^2$ 是偶数，故 $p$ 是偶数，写 $p=2k$。</p>
+      <p>代入得 $4k^2=2q^2$，即 $q^2=2k^2$，同理 $q$ 是偶数。于是 $p,q$ 有公因子 $2$，与互素矛盾。<span class="qed">∎</span></p>
+      <p>这里唯一的"数论"依据是：若 $p$ 是奇数，则 $p^2$ 是奇数（因为奇数乘奇数仍是奇数）。</p>
+    </div></details>
+  </div>
+
+  <p>但这个证明只说明缺了<b>一个数</b>。真正让人不安的是缺的方式：拿刀在数轴上切一下，把 $\Q$ 分成左右两半，刀口处竟然空着。取
+  $$A=\{x\in\Q:x&lt;0\ \text{或}\ x^2&lt;2\},\qquad B=\{x\in\Q:x&gt;0\ \text{且}\ x^2&gt;2\}.$$
+  $A\cup B=\Q$，且 $A$ 里每个数都小于 $B$ 里每个数。可是 $A$ 没有最大元：任给 $a\in A$，$a$ 与 $\sqrt2$ 之间还有有理数，它仍在 $A$ 里。$B$ 也没有最小元，同样的理由。左边找不到"最后一个"，右边找不到"第一个"，中间那道缝谁也不认领。</p>
+
+  <p class="plain">把 $\Q$ 想成教室里按身高站好的一队同学：高于某条线的站右边，矮于的站左边。站完会发现左右分得很干净，可"正好站在线上"的人一个也没有——因为那条线本身不是班里的同学。$\Q$ 的处境正是这样：每道切口都分得清左右，切口处的位置却不属于 $\Q$。类比到此为止：教室里的线是墙上本来就有的，而数轴上的"切口位置"要先被证明它是个数、能参与运算，这正是完备性要干的事。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Dedekind 的办法是把"刀"本身当成数：一个实数就是一个分割（下集 $A$、上集 $B$），哪一刀都算数，切出来的就是实数。有理数对应切得正正好的那些分割（$A$ 有最大元或 $B$ 有最小元），无理数对应切在缝里的那些。Cantor 走另一条路，用有理数基本列的等价类来造。两条路都走得通，说明缺的东西能被造出来，不必再借几何直观。这里只借它的思想：<b>完备性说的是"刀刀有着落"</b>。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>"有理数稠密，所以数轴上没有洞"——这是最典型的误读。稠密说的是<b>任意两数之间还有点</b>，完备说的是<b>有上界的集合必有着落</b>；前者讲拥挤，后者讲兜底。$\Q$ 稠密到随便两个有理数中间都塞得下无穷多个有理数，却依然在 $\sqrt2$ 那儿漏风。拥挤和完整是两件事。</p>
+  </div>
+
+  <p>但仅仅"补上无理数"并不够。看这个数列：</p>
+
+  <p>$$x_1=1.4,\quad x_2=1.41,\quad x_3=1.414,\quad x_4=1.4142,\ \dots$$</p>
+
+  <p>它是 $\sqrt2$ 的十进制截断。在<b>有理数</b>的世界里，它单调递增，且有上界（比如 $1.5$），可是它没有有理数极限——它"想收敛到"的那个点，在 $\Q$ 里是一个洞。</p>
+
+  <div class="box key"><div class="tag">要点</div>
+    <p>数学分析里的很多定理，证到最后都要说"取极限，得到一个实数 $x$"。<b>如果数轴上有洞，这一步就断了。</b>所以第一章先花力气把"洞被补上"这件事说清楚，后面才敢放心地取极限。</p>
+  </div>
+
+  <p>"补上无理数"为什么还不等于"补上洞"？因为缺的从来不是某一个数。把 $\sqrt2$ 硬塞进 $\Q$，$\sqrt3$ 那道缝还在，$\pi$、$e$ 也各有各的缝，而缝多到不可数。指望"缺哪个补哪个"，等于逐个数点名，永远点不完。确界原理换了个打法：不说缺了谁，只保证<b>非空有上界的集合必有上确界</b>。这一条一立，所有"该有着落"的集合自动有着落，一个都不必点名。</p>
+
+  <p class="plain">具体走一遍。令 $S=\{x\in\Q:x^2&lt;2\}$。$2$ 是上界，所以 $S$ 有上界。在 $\Q$ 里它没有上确界：任取有理上界 $M$，由稠密性都能找到有理数 $M'$ 使 $\sqrt2&lt;M'&lt;M$，$M'$ 仍是上界、还更小。换到 $\R$ 里，$\sup S=\sqrt2$ 就在位了。用 $\eps$ 语言核对：取 $\eps=0.001$，要在 $S$ 里抓一个 $x&gt;\sqrt2-0.001\approx1.41321$；取 $x=1.414$ 就合格——$1.414^2=1.999396&lt;2$，且 $1.414&gt;1.41321$。$\eps$ 再小就换 $1.4142$、$1.41421$，一位一位往下加，总能抓到。</p>
+
+  <p class="take"><b>本节带走</b>：有理数有洞、实数没有——这是后面敢“取极限”的底气。</p>
+
+  <h3>1.2 上确界：用一个数概括一整片</h3>
+
+  <p>想想"$\{1-\frac1n\}$ 越来越接近 $1$，但永远达不到 $1$"这类情形。我们需要一个概念，能精确描述"最紧的上方边界"。</p>
+
+  <div class="box def"><div class="tag">上界与上确界</div>
+    <p>设 $S\subseteq\R$ 非空。</p>
+    <p>(1) 若存在 $M\in\R$，使 $\forall x\in S$ 有 $x\le M$，则称 $M$ 是 $S$ 的一个<b>上界</b>，并称 $S$ <b>有上界</b>。</p>
+    <p>(2) 若 $\beta$ 是 $S$ 的上界，且对 $S$ 的<b>任意</b>上界 $M$ 都有 $\beta\le M$，则称 $\beta$ 是 $S$ 的<b>上确界</b>，记作 $\beta=\sup S$。</p>
+    <p>把"最小上界"换成"最大下界"，就得到<b>下确界</b> $\inf S$。</p>
+  </div>
+
+  <p>先说难用在哪儿。"对 $S$ 的任意上界 $M$"要求你遍历一个你从没见过的集合——上界的全体通常不可数，也没有参数化，没法逐个检查。而你手里只有 $S$ 的成员，上界只能靠猜。这个定义把主动权交给了看不见的那一方。</p>
+
+  <p>$\eps$ 版本把谈判方向掉了个头：$\beta$ 既然自称最紧，那就往下挪 $\eps$ 试一试。还够得着 $S$ 里的点，说明没挪到底；一个也够不着，说明确实到底了。$\forall M$ 于是变成 $\forall\eps&gt;0$，而 $\eps$ 是你亲手挑的数、$x$ 是你要抓出来的点，每一步都能落成具体计算。</p>
+
+  <p>定义里的"对任意上界 $M$ 都有 $\beta\le M$"用起来很别扭。做题时请改用下面这个等价刻画，它是<b>你真正会用的那一句</b>：</p>
+
+  <p class="plain">上确界就是「压不下去的那条天花板」。它本身不一定是集合里的点（比如 1 就不在 $\{1-\frac1n\}$ 里），但它是所有上界里最低的那个。找它只要两步：先证明头顶上有天花板（有上界），再证明没法再往下压。</p>
+
+  <div class="box prop" data-k="命题"><div class="tag">上确界的两个条件</div>
+    <p>$\beta=\sup S$ 当且仅当：</p>
+    <p>(i) $\beta$ 是上界：$\forall x\in S,\ x\le\beta$；</p>
+    <p>(ii) $\beta$ 是<b>最紧</b>的：$\forall\eps&gt;0,\ \exists x\in S,\ x&gt;\beta-\eps$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>若 (i)(ii) 成立，取任一上界 $M$。若 $M&lt;\beta$，令 $\eps=\beta-M&gt;0$，由 (ii) 存在 $x\in S$ 使 $x&gt;\beta-\eps=M$，与 $M$ 是上界矛盾，故 $M\ge\beta$，即 $\beta=\sup S$。</p>
+      <p>反之设 $\beta=\sup S$。若 (ii) 不成立，则 $\exists\eps_0&gt;0$ 使所有 $x\in S$ 满足 $x\le\beta-\eps_0$，于是 $\beta-\eps_0$ 也是上界，且 $\beta-\eps_0&lt;\beta$，与 $\beta$ 最小矛盾。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>(ii) 说的是：<b>你往 $\beta$ 下面挪一点点，就一定踩到集合里的点。</b>换句话说 $\beta$ 不能被再压低——这不就是"最紧"吗。以后凡是要证"$\sup S=\beta$"，就分两步写：先证上界，再对任意 $\eps$ 抓一个 $x$ 出来。</p>
+  </div>
+
+  <table class="tbl">
+    <caption>$\sup$ 与 $\max$ 的四种情形（$S$ 非空）</caption>
+    <tr><th style="width:160px">情形</th><th style="width:200px">例子</th><th style="width:200px">结果</th><th>关键一步</th></tr>
+    <tr><td>有 $\sup$，无 $\max$</td><td>$S_1=\{1-\frac1n:n\in\N^*\}$</td><td>$\sup S_1=1\notin S_1$；$\inf S_1=0=\min S_1$</td><td>上界：$1-\frac1n&lt;1$。最紧：给 $\eps&gt;0$，取 $n&gt;\frac1\eps$，则 $1-\frac1n&gt;1-\eps$。</td></tr>
+    <tr><td>有 $\sup$，且 $\sup$ 就是 $\max$</td><td>$S_2=\{\frac{(-1)^n}{n}:n\in\N^*\}$</td><td>$\sup S_2=\max S_2=\frac12$；$\inf S_2=\min S_2=-1$</td><td>偶数项 $\frac1n\le\frac12$，奇数项 $&lt;0$；两端都被集合里的点占住。</td></tr>
+    <tr><td>$\sup$、$\inf$ 都不属于集合</td><td>$S_3=\{x\in\R:x^2&lt;2\}$</td><td>$\sup S_3=\sqrt2\notin S_3$；$\inf S_3=-\sqrt2\notin S_3$</td><td>界：$x^2&lt;2\imp x&lt;\sqrt2$。最紧：靠稠密性在 $\sqrt2$ 下方抓点。端点 $-\sqrt2,\sqrt2$ 自己不在集合里。</td></tr>
+    <tr><td>无上界，$\sup$ 不存在</td><td>$S_4=\N^*$</td><td>没有上确界</td><td>任意 $M$ 都有 $n&gt;M$（阿基米德性），所以 $M$ 当不成上界。</td></tr>
+  </table>
+
+  <p class="plain">判定顺序固定为四步：<b>猜数 → 证是上界 → 证最紧 → 单独回答"取到没有"</b>。最后一问和前三步互不影响，不要混着写。$S_2$ 说明 $\sup$ 完全可以是最大值；$S_1$ 说明它也可能永远取不到；$S_3$ 说明它甚至可以不是有理数。三种情况的共同点是：$\sup$ 描述<b>天花板的位置</b>，$\max$ 描述<b>谁站在天花板上</b>——位置未必有人站，站没站人要另查。第四种情形里 $+\infty$ 只是记号，不是实数，不能拿来运算。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>把 $\sup$ 记成"取不到的那个上界"，于是断言 $\sup S\notin S$。反例到处都是：$[0,1]$ 的 $\sup$ 是 $1$，$1\in[0,1]$；上表中 $S_2$ 的 $\sup$ 是 $\frac12$，也属于集合。$\sup S\in S$ 时它就等于 $\max S$，这两件事不矛盾，只是不一定发生。</p>
+  </div>
+
+  <div class="lab" data-lab="sup"></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 660 168" role="img" aria-label="上确界示意图">
+      <defs>
+        <marker id="arr" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" fill="currentColor"/>
+        </marker>
+        <pattern id="hatch" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="1" opacity=".22"/>
+        </pattern>
+      </defs>
+      <rect x="432" y="52" width="176" height="30" fill="url(#hatch)" opacity=".9"/>
+      <text x="432" y="45" class="mute">全部上界（从这里往右）</text>
+      <line x1="432" y1="82" x2="432" y2="112" class="hot" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <line x1="60" y1="112" x2="612" y2="112" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr)"/>
+      <text x="620" y="116" class="mute">x</text>
+      <circle cx="150" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="196" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="238" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="272" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="298" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="318" cy="112" r="3.2" fill="currentColor"/>
+      <circle cx="382" cy="112" r="3.2" fill="currentColor"/>
+      <path d="M138 124 Q 260 150 392 124" fill="none" class="soft" stroke="currentColor" stroke-width="1.1"/>
+      <text x="265" y="158" class="soft" text-anchor="middle">S（这些点没有最大的）</text>
+      <circle cx="432" cy="112" r="4.2" class="hot" fill="currentColor"/>
+      <text x="432" y="134" class="hot" text-anchor="middle">β = sup S</text>
+    </svg>
+    <figcaption>$S$ 里的点可以无限逼近 $\beta$，但 $\beta$ 本身未必属于 $S$。$\sup S$ 描述的是<b>边界</b>，不是<b>成员</b>。</figcaption>
+  </figure>
+
+  <div class="box thm" data-k="定理"><div class="tag">确界原理（实数系完备性）</div>
+    <p>非空<b>有上界</b>的实数集必有上确界；非空<b>有下界</b>的实数集必有下确界。</p>
+  </div>
+
+  <p>这条原理不能由四则运算推出来，它是实数系的一条<b>公理性质</b>：它区分了 $\R$ 和 $\Q$。$\{x\in\Q:x^2&lt;2\}$ 在 $\Q$ 中有上界（如 $2$），但在 $\Q$ 中没有上确界。整本书后面反复出现的"存在性"论证，源头都是它。</p>
+
+  <p>两个前提都不能省。$S=\emptyset$ 时，空集里没有元素，"$\forall x\in S$"对任何 $M$ 都真空成立，于是所有实数都是上界，上界全体没有最小元，$\sup$ 无从谈起；$S=\N^*$ 时没有上界，硬要给个上确界就只能记作 $+\infty$。反过来，非空、有上界这两个条件一齐，结论就无条件成立——这条"无条件"正是它成为全书地基的原因。</p>
+
+  <p>接口长什么样，可以先看一眼。第 2 章的单调有界定理：把递增有界数列的项收集成集合 $S$，确界原理给出 $\beta=\sup S$，再证 $a_n\to\beta$。第 4 章的最值定理：连续函数在闭区间上的值域有上界，取其上确界，再证这个值被某点取到。第 7 章的六条等价命题，头一条就是它。套路一模一样：<b>先让确界原理造出一个候选点，再证明这个候选点正是要找的东西。</b></p>
+
+  <div class="box ex"><div class="tag">算几个确界</div>
+    <p>求下列集合的 $\sup$ 与 $\inf$，并说明是否属于集合：</p>
+    <p>(1) $A=\left\{1-\dfrac1n:n\in\N^*\right\}$；(2) $B=(0,1)$；(3) $C=\left\{\dfrac{1}{n}+\dfrac{1}{m}:m,n\in\N^*\right\}$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> $A=\{0,\frac12,\frac23,\dots\}$ 单调递增，$\sup A=1$，但 $1\notin A$；$\inf A=\min A=0$。这个例子最典型：<b>$\sup$ 存在不等于最大值存在</b>。</p>
+      <p><b>(2)</b> $\sup B=1$，$\inf B=0$，两者都不属于 $B$。</p>
+      <p><b>(3)</b> 显然 $\frac1n+\frac1m\le 1+1=2$，故 $2$ 是上界；取 $m=n=1$ 得 $2\in C$，所以 $\sup C=\max C=2$。下界 $0$ 取不到（$\frac1n+\frac1m&gt;0$），故 $\inf C=0\notin C$。</p>
+      <p>做这类题的口诀：<b>先猜，再证两个条件，最后检查取不取到。</b></p>
+    </div></details>
+  </div>
+
+  <h4>由确界原理长出来的两条常备结论</h4>
+
+  <div class="box prop" data-k="命题"><div class="tag">阿基米德性</div>
+    <p>对任意 $a&gt;0$，$b&gt;0$，存在 $n\in\N^*$ 使 $na&gt;b$。</p>
+    <details class="proof"><summary>证明（反证 + 确界）</summary><div class="body">
+      <p>若不然，则 $\forall n\in\N^*$ 有 $na\le b$，即集合 $S=\{na:n\in\N^*\}$ 以 $b$ 为上界。由确界原理，$\beta=\sup S$ 存在。</p>
+      <p>因为 $a&gt;0$，$\beta-a&lt;\beta$ 不是上界，故存在 $n$ 使 $na&gt;\beta-a$，即 $(n+1)a&gt;\beta$。但 $(n+1)a\in S$，这与 $\beta$ 是上界矛盾。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p>它最常用的形式是：<b>对任意 $\eps&gt;0$，存在 $n$ 使 $\frac1n&lt;\eps$。</b>几乎每个 $\eps$-论证的开头都在用它"取一个足够小的 $\frac1n$"。</p>
+
+  <div class="box prop" data-k="命题"><div class="tag">有理数的稠密性</div>
+    <p>对任意实数 $a&lt;b$，存在 $r\in\Q$ 使 $a&lt;r&lt;b$。</p>
+    <details class="proof"><summary>证明提示</summary><div class="body">
+      <p>取 $n$ 使 $\frac1n&lt;b-a$（阿基米德性）。令 $m=\lfloor na\rfloor+1$，则 $m&gt;na$ 且 $m\le na+1&lt;nb$（因为 $1&lt;n(b-a)$），于是 $a&lt;\frac mn&lt;b$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：证 $\sup S=\beta$ 分两步：先说是上界，再对任意 $\eps$ 抓一个点。</p>
+
+  <h3>1.3 不等式工具箱</h3>
+
+  <p>分析里"证不等式"和"做估计"是同一件事。下面几条要熟到不用想，正文明天就要用。</p>
+
+  <table class="tbl">
+    <caption>不等式速查（$a,b\in\R$，正数条件已注明）</caption>
+    <tr><th style="width:230px">名称</th><th>形式</th></tr>
+    <tr><td>绝对值定义</td><td>$|x|=\max\{x,-x\}$；$|x|&lt;a\iff -a&lt;x&lt;a$（$a&gt;0$）</td></tr>
+    <tr><td>三角不等式</td><td>$|a+b|\le|a|+|b|$</td></tr>
+    <tr><td>反向三角不等式</td><td>$\big||a|-|b|\big|\le|a-b|$</td></tr>
+    <tr><td>Bernoulli（$x&gt;-1$，$n\in\N^*$）</td><td>$(1+x)^n\ge 1+nx$</td></tr>
+    <tr><td>二元均值</td><td>$\sqrt{ab}\le\dfrac{a+b}{2}$（$a,b\ge0$）</td></tr>
+    <tr><td>常用小结论</td><td>$2ab\le a^2+b^2$；$\dfrac{1}{1+x}&lt;1$（$x&gt;0$）</td></tr>
+  </table>
+
+  <p><b>三角不等式管"拆"和"合"。</b>几何版就是"两点之间直线最短"：从原点出发先走 $a$ 再走 $b$，净位移 $|a+b|$ 超不过两段路程之和 $|a|+|b|$。等号成立当且仅当 $a,b$ 同号（或其中一个为零）。取 $a=3$、$b=-5$：左边 $|3-5|=2$，右边 $3+5=8$，中间空得很；正因为松，它几乎不会失效，可以放心拿来兜底。什么时候想到它？只要你想把 $|A+B|$ 拆成两块分别估计，或者需要在式子里"加一项再减一项"插进中间点——$|a_n-a|\le|a_n-c|+|c-a|$，第一反应就该是它。</p>
+
+  <p>反向版本 $\big||a|-|b|\big|\le|a-b|$ 用在另一头：从"两个数离得近"推出"它们的绝对值也离得近"。别的工具多半只肯给上界，它却常被用来给<b>下界</b>：$|a_n|\ge|a|-|a_n-a|$，只要后面那项足够小，就能把 $|a_n|$ 顶在 $|a|/2$ 之上。证明"分母不趋于零"时，靠的就是这一手。</p>
+
+  <p><b>Bernoulli 管"幂"。</b>$(1+x)^n\ge1+nx$ 的来历可以分两半看：$x\ge0$ 时把二项式展开，除 $1$ 与 $nx$ 外剩下的项全都非负，只会把右边抬得更高；$-1&lt;x&lt;0$ 时高次项符号交替，得改用归纳——每步乘上正数 $1+x$，不等号方向不变。取 $n=10$、$x=0.01$：右边 $=1.1$，左边 $(1.01)^{10}=1.104622\ldots$，只差 $0.0046$，不到半个百分点——$x$ 很小时不等式几乎是等式。换成 $n=10$、$x=0.5$：右边 $=6$，左边 $1.5^{10}=57.665\ldots$，差了一个数量级，可见它松起来也很松。什么时候想到它？看到 $(1+\frac1n)^n$、$\sqrt[n]{a}$、$(1+x)^n$ 这类幂，又只需要一个单边估计，就用它把高次幂换成一次式。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>这条不等式得名于雅各布·伯努利，他在研究复利与概率时反复用到这类估计：本金按利率 $x$ 滚 $n$ 期，复利是 $(1+x)^n$，单利是 $1+nx$，"复利不低于单利"就是这条不等式。这也顺手解释了条件 $x&gt;-1$ 从哪来：利率低于 $-100\%$ 的复利没有现实意义，数学上也确实会翻车。</p>
+  </div>
+
+  <p><b>均值不等式管"积与和的互换"。</b>它有一个不用写字的证明：画一个直径为 $a+b$ 的半圆，把直径分成 $a$ 和 $b$ 两段，分点处作垂线交圆于一点。由射影定理，垂线长是 $\sqrt{ab}$；而半径是 $\frac{a+b}{2}$。垂线不会比半径长，不等式成立；等号当且仅当垂足正好落在圆心，即 $a=b$。取 $a=2$、$b=8$：$\sqrt{16}=4$，$\frac{2+8}{2}=5$，$4\le5$。什么时候想到它？看到"和"想求"积"的最大（周长固定、面积最大），或看到"积"想给"和"一个下界（$x+\frac1x\ge2$，$x&gt;0$），就该想到它。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>用 Bernoulli 时忘记 $x&gt;-1$。取 $x=-4$、$n=3$：左边 $(1-4)^3=-27$，右边 $1+3\cdot(-4)=-11$，$-27\ge-11$ 是假的，方向反了。原因是一旦 $1+x&lt;0$，连乘的符号开始交替，高次项不再"不添乱"。所以看到 $x$ 可能为负，先查条件再动手。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 放大法</div>
+    <p>要证 $|a_n-a|&lt;\eps$，直接算往往很乱。标准动作是"<b>放大</b>"：找一个更好算的 $b_n$，使 $|a_n-a|\le b_n$，再证 $b_n&lt;\eps$。放大时切记方向——你只能把式子变<b>大</b>，不能变小，否则证出来的东西比要的更强，逻辑就断了。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>$\sqrt{ab}\le\frac{a+b}{2}$ 要求 $a,b\ge0$。$a=b=-1$ 时左边 $\sqrt{1}=1$，右边 $-1$，方向反了。写不等式前先看清每个量是不是非负。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 三件工具怎么分工</div>
+    <p>绝对值进进出出（拆、合、插中间点）→ 三角不等式。看到幂、连乘，且只需要单边估计 → Bernoulli。要把和与积互相折算、或者求最值 → 均值不等式。三条里只有三角不等式不带条件，另两条都要先查前提：$x&gt;-1$ 与 $a,b\ge0$。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：放大法只能把式子变大；方向反了，逻辑就断了。</p>
+
+  <h3>1.4 函数：就是带名字的映射</h3>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Euler 时代的"函数"基本等于"一个解析式"：给出公式，代进 $x$ 算出 $y$，这才叫函数。十八世纪中叶那场关于弦振动的争论逼出了另一种东西——一根弦的初始形状可以是折线，是"随手画"出来的曲线，这种形状对应的振动照样要解出来。十九世纪初，Fourier 研究热传导、把函数展开成三角级数时，也必须允许同样"任意"的曲线。Dirichlet 在十九世纪三十年代把话说开：只要每个 $x$ 对应唯一的 $y$，管你有没有公式，都叫函数。他顺手给的例子至今还在用——$x$ 为有理数时取 $1$，为无理数时取 $0$。</p>
+  </div>
+
+  <div class="box def"><div class="tag">函数</div>
+    <p>设 $D\subseteq\R$。若对每个 $x\in D$，按某个法则 $f$ 都有<b>唯一确定</b>的 $y\in\R$ 与之对应，则称 $f$ 是定义在 $D$ 上的<b>函数</b>，记 $y=f(x)$，$D$ 称为定义域，$f(D)=\{f(x):x\in D\}$ 称为值域。</p>
+    <p>若对 $x_1\ne x_2$ 有 $f(x_1)\ne f(x_2)$，称 $f$ 是<b>单射</b>（一一的）。</p>
+  </div>
+
+  <p class="plain">定义里真正干活的只有"<b>唯一确定</b>"四个字：$x=4$ 时"$y=\pm\sqrt{x}$"不知道该给 $2$ 还是 $-2$，所以它不是函数；"$y$ 是 $x$ 的平方根"这句话也是同一个毛病。还有一点常被忽略——定义域是定义的一部分，不是解析式的"天然范围"。$f(x)=x^2\ (x\in\R)$ 与 $g(x)=x^2\ (x\in[0,1])$ 是两个不同的函数：值域不同、单调性不同、有没有反函数也不同。</p>
+
+  <p>放宽不是趣味问题，是必须。函数一旦限定为解析式，很多该问的问题就没法问：分段函数（电费、税率、邮资）算不算函数？三角级数收敛到的那个"和"又是什么？更要紧的是，后面的连续、可导、可积都要靠反例来划边界，而反例往往正是那些没有解析式的怪函数。Dirichlet 函数就是第一个：它在任何一点都不连续、在任何区间上都不可积，却完全符合上面这个定义。先把这个口子放开，才轮得到第 4 章去追问"连续到底要求多严"。</p>
+
+  <p>四个基本性质，请把定义写成量词式，别背中文：</p>
+
+  <table class="tbl">
+    <tr><th style="width:110px">性质</th><th>量词表述</th></tr>
+    <tr><td>有界</td><td>$\exists M&gt;0,\ \forall x\in D:\ |f(x)|\le M$</td></tr>
+    <tr><td>单调递增</td><td>$\forall x_1,x_2\in D,\ x_1&lt;x_2\imp f(x_1)\le f(x_2)$</td></tr>
+    <tr><td>奇 / 偶</td><td>$f(-x)=-f(x)$ / $f(-x)=f(x)$（要求 $D$ 关于原点对称）</td></tr>
+    <tr><td>周期 $T$</td><td>$\forall x\in D,\ f(x+T)=f(x)$</td></tr>
+  </table>
+
+  <p>"有界"是分析里最常出现的性质。注意它是一个<b>存在性</b>命题：只要找得到一个 $M$ 就行，$M$ 不必是最小的。这一点在证明中很关键——你不需要知道界到底是多少。</p>
+
+  <p class="plain">三个词可以挂在人身上看。<b>单射</b>：一个学号只发给一个学生，一个学生也只拿到一个学号，两边都不重复，才能互相查；若两个学生同名，"姓名 → 学生"就不是单射，拿着"张伟"这个名字查不出是谁。<b>满射</b>：车库里每个车位都停了车，"车位 → 车"才覆盖了全部车；空着一半车位就不是满射。<b>双射</b>：既不重复也不遗漏，这时整个箭头才能倒过来读，倒过来读就是反函数。类比到此为止：单射其实已经够定义反函数了，定理之所以改口要求<b>严格单调</b>，是因为单调这张通行证更省事——它顺手把"反函数也单调"一并送来（若再要求 $f$ 连续，还能把"反函数连续"一并送来；这条不在本册主线，先当结论用），而单射本身对"反函数长什么样"一言不发。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">反函数存在</div>
+    <p>若 $f$ 在 $D$ 上<b>严格单调</b>，则 $f$ 在 $D$ 上单射，从而存在反函数 $f^{-1}:f(D)\to D$，且 $f^{-1}$ 与 $f$ <b>同向</b>严格单调。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>不妨设 $f$ 严格递增。若 $x_1\ne x_2$，不妨 $x_1&lt;x_2$，则 $f(x_1)&lt;f(x_2)$，故 $f(x_1)\ne f(x_2)$，$f$ 单射。于是每个 $y\in f(D)$ 有唯一的原像，定义 $f^{-1}(y)$ 为该原像，它是映射。</p>
+      <p>再证单调：设 $y_1&lt;y_2$，$x_i=f^{-1}(y_i)$。若 $x_1&gt;x_2$，由 $f$ 递增得 $y_1&gt;y_2$，矛盾；若 $x_1=x_2$ 则 $y_1=y_2$，亦矛盾。故 $x_1&lt;x_2$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>"函数有反函数"不是函数本身的性质，而是<b>函数 + 定义域</b>的性质。$y=x^2$ 在 $\R$ 上没有反函数，在 $[0,+\infty)$ 上反函数是 $\sqrt x$，在 $(-\infty,0]$ 上反函数是 $-\sqrt x$。<b>同一个解析式，换定义域就是另一个函数。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有界是“存在”，不必知道界具体是多少。</p>
+
+  <h3>1.5 初等函数：先会用，后面再严格化</h3>
+
+  <table class="tbl">
+    <caption>高中已见的函数，这一年的重点是它们的"分析性质"</caption>
+    <tr><th style="width:120px">函数</th><th style="width:170px">定义域</th><th>要点</th></tr>
+    <tr><td>$x^\alpha$</td><td>视 $\alpha$ 而定</td><td>$\alpha$ 为无理数时，$x^\alpha:=e^{\alpha\ln x}$（$x&gt;0$）</td></tr>
+    <tr><td>$e^x$</td><td>$\R$</td><td>严格增，值域 $(0,+\infty)$，$\lim_{x\to-\infty}e^x=0$</td></tr>
+    <tr><td>$\ln x$</td><td>$(0,+\infty)$</td><td>$e^x$ 的反函数，严格增，$\ln 1=0$</td></tr>
+    <tr><td>$\sin x,\cos x$</td><td>$\R$</td><td>有界，周期 $2\pi$；$\lim_{x\to0}\frac{\sin x}{x}=1$（第三章主角）</td></tr>
+    <tr><td>$\tan x$</td><td>$x\ne\frac\pi2+k\pi$</td><td>在 $(-\frac\pi2,\frac\pi2)$ 上严格增，无界</td></tr>
+    <tr><td>$\arcsin x,\ \arctan x$</td><td>$[-1,1]$；$\R$</td><td>值域 $[-\frac\pi2,\frac\pi2]$；$(-\frac\pi2,\frac\pi2)$</td></tr>
+  </table>
+
+  <p>先讲清"重新定义"为什么躲不掉。高中定义 $\sin$ 用的是直角三角形：对边比斜边。这个定义有三处说不出口：只对锐角有效；"角"的大小要先与实数对上号（弧度制）；而 $\sin$ 的可导性、$\lim_{x\to0}\frac{\sin x}{x}=1$ 这些结论，一条都推不出来，全靠看图。分析却把宝全押在这些性质上——第 3 章的第一个重要极限、第 5 章的 $(\sin x)'=\cos x$，都要用它们。所以必须先有一条不依赖图形的定义。</p>
+
+  <p>两条成熟的路子。一是幂级数：把 $\sin x$ 直接定义成 $\sum_{k\ge0}\frac{(-1)^kx^{2k+1}}{(2k+1)!}$，可导、有界、周期全由级数性质推出来——这条要等级数章。二是先定义 $\arcsin x=\int_0^x\frac{\dd t}{\sqrt{1-t^2}}$，再把 $\sin$ 当作它的反函数——这条要等学完定积分。两条路都绕开了"角"，代价是要等。这本上册的做法是：先借用，用到哪一步都交代清楚，等工具齐了再还。</p>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>高中用"直角三角形边长比"定义 $\sin$，这在分析里不够用——它只对锐角有效，而且依赖"角"与"实数"的对应。严格的做法是用<b>幂级数</b>或<b>单位圆上匀速运动的坐标</b>重新定义 $\sin,\cos$，那一套要等到级数章。现在你只需要知道：<b>暂时借用高中的结论是可以的，但要知道哪一步是借的。</b></p>
+  </div>
+
+  <table class="tbl">
+    <caption>"先借用、后严格化"在本书里还会出现的地方（一份账本）</caption>
+    <tr><th style="width:180px">借来的东西</th><th style="width:190px">借它干什么</th><th>这笔账什么时候还</th></tr>
+    <tr><td>"数轴上的点"就是实数</td><td>画图、说"越来越近"</td><td>本章就还：换成确界原理，此后不再靠图说话</td></tr>
+    <tr><td>$\sin,\cos$ 的三角形定义</td><td>算 $\frac{\sin x}{x}$、写 $(\sin x)'=\cos x$</td><td>本册还不了：要等级数章用幂级数重定义（第 3 章会明说这里借了几何）</td></tr>
+    <tr><td>$e^x,\ln x$ 的高中性质</td><td>指数增长、各种放缩</td><td>同样等下册：用 $\ln x=\int_1^x\frac{\dd t}{t}$ 或幂级数重新定义</td></tr>
+    <tr><td>"面积"直觉</td><td>知道积分在算什么</td><td>第 9 章还：分割—求和—取极限，重新定义定积分</td></tr>
+    <tr><td>"连续函数必有原函数"</td><td>用 Newton–Leibniz 公式算积分</td><td>第 9 章还：变上限积分把原函数构造出来</td></tr>
+    <tr><td>等价无穷小替换</td><td>快速算极限</td><td>第 3 章划清边界：只对乘除因子合法</td></tr>
+  </table>
+
+  <p>这张表可以当账本用：每借一笔，心里记下还没还；只要记得哪一步是借的，用起来就不心虚。欠账不可怕，不知道自己欠了才可怕。</p>
+
+  <p class="take"><b>本节带走</b>：高中借来的结论可以用，但要记得哪一步是借的。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">设 $S=\{x\in\R:x^2&lt;2\}$，则 $\sup S$ 是</p>
+      <div class="q-opts"><button data-o="A">A. $\sqrt2$，且 $\sqrt2\in S$</button><button data-o="B">B. $\sqrt2$，但 $\sqrt2\notin S$</button><button data-o="C">C. $2$</button><button data-o="D">D. 不存在</button></div>
+      <p class="q-exp" hidden>上确界可以不属于集合。$x^2&lt;2$ 把 $\sqrt2$ 排除在外，所以 $\max S$ 不存在，$\sup S=\sqrt2$。</p>
+    </div>
+    <div class="q-score"></div>
+    <ol>
+      <li>设 $S=\{x\in\R: x^2&lt;2\}$。求 $\sup S$，并说明为什么它不是 $\max S$。</li>
+      <li>证明：若 $a&lt;b$，则存在 $n\in\N^*$ 使 $a+\frac1n&lt;b$。（用阿基米德性）</li>
+      <li>$f(x)=\sin x$ 在 $[-\frac\pi2,\frac\pi2]$ 上有反函数吗？在 $[0,\pi]$ 上呢？</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $\sup S=\sqrt2$：显然 $\sqrt2$ 是上界；对任意 $\eps&gt;0$，由稠密性可取有理数 $r$ 使 $\max(\sqrt2-\eps,0)&lt;r&lt;\sqrt2$，则 $r^2&lt;2$ 即 $r\in S$ 且 $r&gt;\sqrt2-\eps$。但 $\sqrt2\notin S$（$(\sqrt2)^2=2$ 不满足 $&lt;2$），故无最大值。</p>
+      <p><b>2.</b> 由阿基米德性（取 $a'=b-a&gt;0$，$b'=1$）存在 $n$ 使 $n(b-a)&gt;1$，即 $\frac1n&lt;b-a$，故 $a+\frac1n&lt;b$。</p>
+      <p><b>3.</b> $[-\frac\pi2,\frac\pi2]$ 上严格增，有反函数 $\arcsin$。$[0,\pi]$ 上不单射（$\sin0=\sin\pi=0$），<b>没有</b>反函数。顺带记住：$\arccos$ 是把 $\cos$ 限制在 $[0,\pi]$ 上得到的，不是 $\sin$。</p>
+    </div></details>
+  </div>
+</section>
