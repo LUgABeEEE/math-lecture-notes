@@ -1,91 +1,150 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>三本讲义 · 数学分析 / 高等代数</title>
+<title>数学讲义 · 数学分析 / 高等代数</title>
 <style>
-:root{--ink:#241f19;--ink2:#5d5348;--ink3:#8d8173;--line:#e6ded1;--paper:#faf7f1;--card:#fff;--red:#a33a2a;--green:#3f6b4a}
+:root{--ink:#241f19;--ink2:#5d5348;--ink3:#8d8173;--line:#e6ded1;--paper:#faf7f1;--card:#fff;
+--red:#a33a2a;--green:#3f6b4a;--blue:#2f6f9f}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif CJK SC",Georgia,"Songti SC",serif;line-height:1.8}
-.wrap{max-width:880px;margin:0 auto;padding:64px 26px 90px}
-h1{font-size:30px;margin:0 0 8px;letter-spacing:.02em}
+.wrap{max-width:940px;margin:0 auto;padding:60px 26px 90px}
+
+/* 顶部 */
+h1{font-size:31px;margin:0 0 8px;letter-spacing:.02em}
 .sub{color:var(--ink3);font-size:13.5px;font-family:system-ui,"PingFang SC",sans-serif}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:34px 0 0}
-.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 24px 20px;
-text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.lede{margin:20px 0 0;font-size:15px;color:var(--ink2);max-width:660px}
+
+/* 区块标题 */
+.sec{margin:52px 0 0}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.sec-h h2{margin:0;font-size:18px;letter-spacing:.04em}
+.sec-h .k{font-family:system-ui,sans-serif;font-size:11px;letter-spacing:.16em;color:var(--red)}
+.sec-h .d{font-family:system-ui,sans-serif;font-size:12.5px;color:var(--ink3);margin-left:auto}
+
+/* 精读版大卡 */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin:22px 0 0}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+padding:22px 22px 18px;text-decoration:none;color:inherit;transition:.18s;box-shadow:0 1px 2px rgba(0,0,0,.03)}
 .card:hover{transform:translateY(-2px);box-shadow:0 12px 30px -18px rgba(0,0,0,.35);border-color:#d3c7b5}
-.tag{font-family:system-ui,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--red)}
-.card h2{margin:6px 0 4px;font-size:23px}
-.card p{margin:0;color:var(--ink2);font-size:14.4px}
-.stats{font-family:system-ui,sans-serif;font-size:12.5px;color:var(--ink3);margin-top:12px;
-padding-top:11px;border-top:1px dashed var(--line)}
-.alt{font-family:system-ui,sans-serif;font-size:12px;color:var(--ink3);margin-top:8px}
-.alt a{color:var(--green);text-decoration:none;border-bottom:1px dotted currentColor}
-.note{margin-top:34px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--green);
-border-radius:2px 10px 10px 2px;padding:14px 18px;font-size:14.4px;color:var(--ink2)}
+.tag{font-family:system-ui,sans-serif;font-size:10.5px;letter-spacing:.16em;color:var(--red)}
+.card h3{margin:7px 0 6px;font-size:21px;font-weight:600}
+.card p{margin:0;color:var(--ink2);font-size:14px;line-height:1.75}
+.stats{font-family:system-ui,sans-serif;font-size:12px;color:var(--ink3);margin-top:12px;
+padding-top:10px;border-top:1px dashed var(--line)}
+.stats b{color:var(--ink2);font-weight:600}
+
+/* 旧讲义：紧凑列表 */
+.list{margin:18px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.row{display:flex;align-items:baseline;gap:14px;padding:14px 20px;text-decoration:none;color:inherit;
+border-bottom:1px solid var(--line);transition:.14s}
+.row:last-child{border-bottom:none}
+.row:hover{background:#fbf8f3}
+.row .t{font-size:16px;font-weight:600;min-width:190px}
+.row .d{flex:1;color:var(--ink2);font-size:13.5px;font-family:system-ui,sans-serif}
+.row .m{font-family:system-ui,sans-serif;font-size:11.5px;color:var(--ink3);white-space:nowrap}
+.row .badge{font-family:system-ui,sans-serif;font-size:10px;letter-spacing:.1em;color:var(--ink3);
+border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:6px}
+
+/* 说明区 */
+.note{margin-top:44px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--green);
+border-radius:2px 10px 10px 2px;padding:16px 20px;font-size:14px;color:var(--ink2)}
 .note b{color:var(--ink)}
-footer{margin-top:40px;font-family:system-ui,sans-serif;font-size:12px;color:var(--ink3)}
+.note+.note{margin-top:12px;border-left-color:var(--blue)}
+.note ul{margin:8px 0 0;padding-left:20px}
+.note li{margin:4px 0}
+footer{margin-top:38px;font-family:system-ui,sans-serif;font-size:12px;color:var(--ink3);line-height:1.7}
 code{background:#f0e9dc;padding:1px 5px;border-radius:4px;font-size:12.5px}
+@media(max-width:560px){.row{flex-wrap:wrap;gap:4px}.row .t{min-width:0}}
 </style></head><body><div class="wrap">
-<h1>三本讲义</h1>
-<div class="sub">华东师大六版《数学分析》上·下册 · 北大五版《高等代数》 · 单文件离线可读</div>
 
-<div class="grid">
-  <a class="card" href="analysis-vol1/index.html">
-    <div class="tag">MATHEMATICAL ANALYSIS · VOL 1</div>
-    <h2>数学分析 · 上册</h2>
-    <p>预习讲义，按华东师大六版上册章节走：实数与函数、数列与函数极限、连续、导数与中值定理、完备性、不定积分与定积分、应用、反常积分。每章「课前 3 问」→ 本章地图 → 定义与说人话 → 交互实验 → 例题 → 自测。</p>
-    <div class="stats">11 章 + 附录 · 69 节 · 86 处说人话 · 11 个交互实验 · 6 段讲解动画 · 2.37 MB</div>
-    <div class="alt">离线单文件版 → <a href="analysis-vol1/index-offline.html">index-offline.html</a>（2.88 MB，视频内嵌）</div>
-  </a>
-  <a class="card" href="数学分析下册-讲义.html">
-    <div class="tag">MATHEMATICAL ANALYSIS · VOL 2</div>
-    <h2>数学分析 · 下册</h2>
-    <p>第 12–23 章。数项级数、函数列与函数项级数、幂级数、傅里叶级数、多元微分、隐函数、含参量积分、曲线与曲面积分、重积分、向量函数微分学。</p>
-    <div class="stats">12 章 · 40 节 · 208 条定义/定理 · 76 例题 · 80 自测 · 2.50 MB</div>
-  </a>
+<h1>数学讲义</h1>
+<div class="sub">华东师大《数学分析》第六版 · 北京大学《高等代数》第五版 · 单文件离线，双击即读</div>
+<p class="lede">全部内容按教材章节重写，不是复印，也不是提纲：每一节先说清「这一节要解决什么问题」，再给定义、定理和完整例题。四本精读版覆盖两门课的全部三十三章。</p>
+
+<!-- ========== 精读版 ========== -->
+<div class="sec">
+  <div class="sec-h"><span class="k">CLOSE READING</span><h2>精读版 · 四本</h2>
+    <span class="d">33 章 · 181 节 · 21.7 万字 · 356 道例题</span></div>
+  <div class="grid">
+    <a class="card" href="数学分析上册-精读.html">
+      <div class="tag">数学分析 · 上册</div>
+      <h3>数学分析 上册</h3>
+      <p>实数与函数、数列与函数极限、连续、导数、中值定理、完备性、不定积分与定积分、应用、反常积分。</p>
+      <div class="stats"><b>11</b> 章 · <b>62</b> 节 · <b>7.4</b> 万字 · <b>129</b> 道例题 · 11 段动画</div>
+    </a>
+    <a class="card" href="数学分析下册-精读.html">
+      <div class="tag">数学分析 · 下册</div>
+      <h3>数学分析 下册</h3>
+      <p>级数四章、多元微分三章、含参量积分与曲线曲面积分五章。主线是拆掉「有限、一维、性质良好」三个限制。</p>
+      <div class="stats"><b>12</b> 章 · <b>43</b> 节 · <b>6.4</b> 万字 · <b>95</b> 道例题 · 2 段动画</div>
+    </a>
+    <a class="card" href="高等代数上册-精读.html">
+      <div class="tag">高等代数 · 上册</div>
+      <h3>高等代数 上册</h3>
+      <p>多项式、行列式、线性方程组、矩阵、二次型。这半本是「算」：把每类计算拆到能自己写一遍。</p>
+      <div class="stats"><b>5</b> 章 · <b>38</b> 节 · <b>3.6</b> 万字 · <b>68</b> 道例题 · 2 段动画</div>
+    </a>
     <a class="card" href="高等代数下册-精读.html">
-    <div class="tag">CLOSE READING · LA VOL.2 · ALL 5 CHAPTERS</div>
-    <h2>高等代数下册 · 精读版</h2>
-    <p>线性空间、线性变换、λ-矩阵、欧几里得空间、双线性函数：从"算"转到"看结构"，含 2 段动画。</p>
-    <div class="stats">5 章 · 38 节 · 4.3 万字 · 64 例题 · 2.5 MB</div>
-  </a>
-  <a class="card" href="数学分析下册-精读.html">
-    <div class="tag">CLOSE READING · MA VOL.2 · ALL 12 CHAPTERS</div>
-    <h2>数学分析下册 · 精读版</h2>
-    <p>级数、多元微分、含参量积分、曲线曲面积分：拆掉"有限、一维、性质良好"三个限制，含 2 段动画。</p>
-    <div class="stats">12 章 · 43 节 · 6.4 万字 · 95 例题 · 2.6 MB</div>
-  </a>
-<a class="card" href="数学分析上册-精读.html">
-    <div class="tag">CLOSE READING · MA VOL.1 · ALL 11 CHAPTERS</div>
-    <h2>数学分析上册 · 精读版</h2>
-    <p>全十一章从头重写：每节先讲「要解决什么问题」、再给定义与例题，配 129 道带演变过程的例题、11 段动画与交互实验。</p>
-    <div class="stats">11 章 · 62 节 · 7.4 万字 · 129 例题 · 11 段动画 · 3.4 MB</div>
-  </a>
-  <a class="card" href="数学分析上册-自学手册.html">
-    <div class="tag">SELF-STUDY · VOL.1 UNITS 1–2</div>
-    <h2>数学分析上册 · 自学手册</h2>
-    <p>第一、二单元（实数集与函数、数列极限）从头重建版：工具章 + 正文 + 24 道分级练习（全详解）+ 60 分钟自测卷 + 易错清单。</p>
-    <div class="stats">7 章 · 24 道练习详解 · 20 条易错 · 3 张证明模板 · 2.26 MB</div>
-  </a>
+      <div class="tag">高等代数 · 下册</div>
+      <h3>高等代数 下册</h3>
+      <p>线性空间、线性变换、λ-矩阵、欧几里得空间、双线性函数。这半本换成「看结构」：算得对不够，要说得清。</p>
+      <div class="stats"><b>5</b> 章 · <b>38</b> 节 · <b>4.3</b> 万字 · <b>64</b> 道例题 · 2 段动画</div>
+    </a>
+  </div>
+</div>
 
-  <a class="card" href="高等代数上册-精读.html">
-    <div class="tag">CLOSE READING · LA VOL.1 · ALL 5 CHAPTERS</div>
-    <h2>高等代数上册 · 精读版</h2>
-    <p>五章从头重写：多项式、行列式、线性方程组、矩阵、二次型。每节先给问题再给定义，68 道例题全部手算可跟，含 2 段动画。</p>
-    <div class="stats">5 章 · 38 节 · 3.6 万字 · 68 例题 · 43 个「为什么」 · 2.4 MB</div>
-  </a>
-  <a class="card" href="高等代数-讲义.html">
-    <div class="tag">ADVANCED ALGEBRA</div>
-    <h2>高等代数</h2>
-    <p>上册 1–5 章 + 下册 6–10 章合一。数域与多项式、行列式、线性方程组、矩阵、二次型、线性空间、线性变换、λ-矩阵、欧几里得空间、双线性函数与辛空间。</p>
-    <div class="stats">10 章 · 72 节 · 338 条定义/定理 · 118 例题 · 149 自测 · 2.69 MB</div>
-  </a>
+<!-- ========== 早期讲义 ========== -->
+<div class="sec">
+  <div class="sec-h"><span class="k">EARLIER EDITIONS</span><h2>早期讲义</h2>
+    <span class="d">按「预习」写的版本，材料密度高、适合查阅</span></div>
+  <div class="list">
+    <a class="row" href="analysis-vol1/index.html">
+      <span class="t">数学分析 上册<span class="badge">讲义</span></span>
+      <span class="d">每章「课前 3 问」→ 本章地图 → 定义与说人话 → 交互实验 → 自测</span>
+      <span class="m">11 章 69 节 · 11 实验 · 6 动画</span>
+    </a>
+    <a class="row" href="数学分析下册-讲义.html">
+      <span class="t">数学分析 下册<span class="badge">讲义</span></span>
+      <span class="d">12–23 章，208 条定义/定理、76 道例题、80 道自测</span>
+      <span class="m">12 章 40 节 · 2.50 MB</span>
+    </a>
+    <a class="row" href="高等代数-讲义.html">
+      <span class="t">高等代数<span class="badge">上下册合一</span></span>
+      <span class="d">10 章合一，338 条定义/定理、118 道例题、149 道自测</span>
+      <span class="m">10 章 72 节 · 2.69 MB</span>
+    </a>
+  </div>
+</div>
+
+<!-- ========== 专项 ========== -->
+<div class="sec">
+  <div class="sec-h"><span class="k">SELF-STUDY</span><h2>专项训练</h2>
+    <span class="d">针对具体考试范围做的重建版</span></div>
+  <div class="list">
+    <a class="row" href="数学分析上册-自学手册.html">
+      <span class="t">上册 第一·二单元<span class="badge">自学手册</span></span>
+      <span class="d">工具章 + 正文 + 24 道分级练习（全详解）+ 60 分钟自测卷 + 易错清单与证明模板</span>
+      <span class="m">7 章 · 2.26 MB</span>
+    </a>
+  </div>
+</div>
+
+<!-- ========== 说明 ========== -->
+<div class="note">
+<b>怎么读：</b>直接打开，不需要联网、不需要装任何东西。每节先读开头那段「这一节要解决什么问题」，再看定义与定理——证明默认折叠，先自己推一遍再展开。
+<ul>
+<li><code>Ctrl / ⌘ + K</code> 全文搜索；侧栏可跳章；右上角切换深浅色。</li>
+<li>四本精读版里，<b>「为什么」旁注</b>解释定义和技巧的动机，<b>「停下来想」</b>是需要自己动脑的小问题（都附提示，先别看）。</li>
+<li>标有 <b>▶ 看动画</b> 的地方是十几秒的讲解短片，内嵌在页面里，离线也能放。</li>
+</ul>
 </div>
 
 <div class="note">
-<b>怎么用：</b>直接双击打开，不需要联网、不需要装任何东西。每节先读「说人话」或「章导语」，再看定义与定理（证明默认折叠，先自己推）；<code>Ctrl/⌘ + K</code> 搜全书，侧栏可跳章，右上角切换深浅色。<br>
-<b>注意：</b>定理编号是程序按章自动生成的，<b>不是教材原编号</b>；目录按第五/六版结构整理，个别节标题可能与手上印次略有出入。
+<b>关于编号与版本：</b>定理、定义、例题的编号是程序按章自动生成的，<b>不是教材原编号</b>，对照纸质书时请看内容而不是编号。章节结构按第五/六版整理，个别标题可能与手上印次略有出入。
 </div>
 
-<footer>编校：三本讲义的新增背景与人话均经独立数学复核；交互与排版由 DSH 生成 · 2026-10-28</footer>
+<footer>
+四本精读版共 33 章、356 道例题，全部经过独立数学复核——每一章都至少被审过一轮，有问题的打回重修后复审通过。<br>
+交互与排版由 DSH 生成 · 最后更新 2026-11-04
+</footer>
 </div></body></html>
