@@ -1313,7 +1313,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <div class="box def"><div class="tag"><span class="num">定义 7.6</span>　定义 · 特征值与特征向量</div>
     <p>设 $\mathcal{A}$ 是线性空间 $V$ 的线性变换。若存在 $\lambda_0\in P$ 与<b>非零</b>向量 $\alpha\in V$ 使 $\mathcal{A}(\alpha)=\lambda_0\alpha$，则称 $\lambda_0$ 是 $\mathcal{A}$ 的一个<b>特征值</b>，$\alpha$ 是属于 $\lambda_0$ 的<b>特征向量</b>。</p>
-    <p>注意：特征向量按定义<b>非零</b>——零向量永远满足 $\mathcal{A}(0)=\lambda\cdot0$，把它算进来就人人都有份了。直观：$\alpha$ 被作用后方向不跑偏，只被拉伸 $\lambda_0$ 倍。旋转 $90°$ 的变换在 $\mathbb{R}^2$ 上没有实特征向量（所有非零向量都转走了方向）；而 $(x,y)\mapsto(3x,3y)$ 的每个非零向量都是特征向量（$\lambda=3$）。</p>
+    <p>注意：特征向量按定义<b>非零</b>——零向量永远满足 $\mathcal{A}(0)=\lambda\cdot0$，把它算进来就人人都有份了。直观：$\alpha$ 被作用后方向不跑偏，只被拉伸 $\lambda_0$ 倍。旋转 $90^\circ$ 的变换在 $\mathbb{R}^2$ 上没有实特征向量（所有非零向量都转走了方向）；而 $(x,y)\mapsto(3x,3y)$ 的每个非零向量都是特征向量（$\lambda=3$）。</p>
   </div>
 
   <div class="box def"><div class="tag"><span class="num">定义 7.7</span>　定义 · 特征多项式与特征子空间</div>
@@ -1539,7 +1539,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>若 $W$ 不变，则 $\mathcal{A}$ 可以关起门来只在 $W$ 里活动：$\mathcal{A}|_W:W\to W$ 仍是线性变换，称为 $\mathcal{A}$ 在 $W$ 上的<b>限制</b>。例：$x$ 轴在 $(x,y)\mapsto(2x,3y)$ 下不变，限制就是 $x\mapsto2x$ 的一维伸缩。</p>
   </div>
 
-  <p>先看感觉。$\mathbb{R}^2$ 上伸缩变换下任何过原点的直线都不变（线上向量被拉长仍在线上）；而旋转 $90°$ 下没有一条直线不变——直线上的向量全被转了出去。<b>「子空间」只管自己封闭，「不变」还要求变换不把里面的东西送出去</b>，是多出来的一层约束。</p>
+  <p>先看感觉。$\mathbb{R}^2$ 上伸缩变换下任何过原点的直线都不变（线上向量被拉长仍在线上）；而旋转 $90^\circ$ 下没有一条直线不变——直线上的向量全被转了出去。<b>「子空间」只管自己封闭，「不变」还要求变换不把里面的东西送出去</b>，是多出来的一层约束。</p>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 7.21</span>　定理 · 常见不变子空间</div>
     <p>设 $\mathcal{A}\in L(V)$，则 $\ker\mathcal{A}$、$\operatorname{Im}\mathcal{A}$ 以及每个特征子空间 $V_{\lambda_0}$ 都是 $\mathcal{A}$ 的不变子空间。</p>
@@ -1553,7 +1553,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   </div>
 
   <div class="why"><b>为什么不变子空间是「把矩阵切块」的唯一入口</b>
-    <p>两个前提缺一不可：<b>每个 $W_i$ 不变</b>，$\mathcal{A}$ 才在块内活动、矩阵不越块；<b>直和</b>，各块的基才拼得成全空间的基。少第一条，像会跑到别的块里去，矩阵里出现非零的块外元素；少第二条，基拼不齐。这个切块术是全章最值钱的方法论：可对角化（7.5）就是「切成 $n$ 个一维不变子空间」，若尔当标准形（7.8）就是「切成若干个不可再切的块」。反例也说明块结构强于向量结构：旋转 $90°$ 在 $\mathbb{R}^2$ 上没有不变直线，任何切成一维块的企图都失败——它在实数域上是一整块，进复数域才裂成两条特征方向。</p>
+    <p>两个前提缺一不可：<b>每个 $W_i$ 不变</b>，$\mathcal{A}$ 才在块内活动、矩阵不越块；<b>直和</b>，各块的基才拼得成全空间的基。少第一条，像会跑到别的块里去，矩阵里出现非零的块外元素；少第二条，基拼不齐。这个切块术是全章最值钱的方法论：可对角化（7.5）就是「切成 $n$ 个一维不变子空间」，若尔当标准形（7.8）就是「切成若干个不可再切的块」。反例也说明块结构强于向量结构：旋转 $90^\circ$ 在 $\mathbb{R}^2$ 上没有不变直线，任何切成一维块的企图都失败——它在实数域上是一整块，进复数域才裂成两条特征方向。</p>
   </div>
 
   <div class="box prop"><div class="tag" data-k="命题"><span class="num">命题 7.23</span>　命题 · 特征子空间的和是直和</div>
@@ -2434,7 +2434,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <div class="box def"><div class="tag"><span class="num">定义 9.5</span>　定义 · 正交矩阵</div>
     <p>实数域上 $n$ 阶矩阵 $A$ 若满足 $A^{T}A=AA^{T}=E$（即 $A^{-1}=A^{T}$），称为<b>正交矩阵</b>。等价地，$A$ 的行（列）向量组是 $\mathbb{R}^n$ 的标准正交基。</p>
-    <p>正交矩阵行列式为 $\pm 1$：由 $\det(A^{T}A)=(\det A)^2=1$ 即得。$\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ 转 $90°$，两列 $(0,1),(-1,0)$ 既垂直又单位，行列式 $1$。</p>
+    <p>正交矩阵行列式为 $\pm 1$：由 $\det(A^{T}A)=(\det A)^2=1$ 即得。$\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ 转 $90^\circ$，两列 $(0,1),(-1,0)$ 既垂直又单位，行列式 $1$。</p>
   </div>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 9.5</span>　定理 9.3 · 过渡矩阵与标准正交基</div>

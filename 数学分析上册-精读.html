@@ -2571,7 +2571,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <p>两个定义并排，差别只在量词顺序：连续是 $\forall x_0\ \forall\varepsilon\ \exists\delta$（$\delta$ 依赖 $x_0$），一致连续是 $\forall\varepsilon\ \exists\delta\ \forall x_1,x_2$（$\delta$ 全区间通用）。</p>
 
   <div class="why"><b>「$\delta$ 与 $x$ 无关」到底是什么意思</b>
-    <p>打个比方。<b>连续</b>像"每个老师各自定及格线"：问张老师他给 $\delta_张$，问李老师他给 $\delta_李$，每点都报得出数，可这些数一个比一个小，没人拿得出全校通用的一个。<b>一致连续</b>像"教务处下一个统一文件"：一个 $\delta$，区间里所有点都认。</p>
+    <p>打个比方。<b>连续</b>像"每个老师各自定及格线"：问张老师他给 $\delta_{\text{张}}$，问李老师他给 $\delta_{\text{李}}$，每点都报得出数，可这些数一个比一个小，没人拿得出全校通用的一个。<b>一致连续</b>像"教务处下一个统一文件"：一个 $\delta$，区间里所有点都认。</p>
     <p>数字版最清楚。$f(x)=\dfrac1x$ 在 $x_0$ 附近满足 $\left|\dfrac1x-\dfrac1{x_0}\right|\approx\dfrac{|x-x_0|}{x_0^2}$，要误差 $&lt;\varepsilon$，$\delta$ 的量级是 $\varepsilon x_0^2$（严格说取 $\delta=\dfrac{\varepsilon x_0^2}{2}$ 即可，只要 $\varepsilon x_0\le1$）。$\varepsilon=0.01$ 时的量级：$x_0=1$ 是 $0.01$；$x_0=0.1$ 是 $0.0001$；$x_0=0.01$ 是 $0.000001$。$\delta$ 随 $x_0\to0$ 缩向 $0$，<b>统一的正数不存在</b>——教务处开不出这份文件。类比到此为止：及格线是人定的、可以妥协，$\delta$ 是存在性声明，要么有个正数通吃，要么一个都没有。</p>
   </div>
 
@@ -3053,7 +3053,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <div class="why"><b>为什么这条链只能按这个顺序建</b>
     <p>因为每一环都站在前一环的肩膀上，跳过任何一环都要同时补两件事。Fermat 只管「极值点导数为零」，但它<b>不保证极值点存在</b>——Rolle 用闭区间最值定理把「最值真的被取到」这个前提补上，Fermat 才有用武之地。Lagrange 面对的弦是斜的，Fermat 够不着；把 $f(x)$ 减去割线（构造辅助函数），弦就躺平了，问题原样退回 Rolle。Cauchy 不是「更强的 Lagrange」，而是换了个坐标视角，它存在的意义在下一节兑现——它是 L'Hospital 法则的发动机。</p>
-    <p>证明的依赖关系也是这个顺序：Lagrange 的证明里调用 Rolle，Rolle 的证明里调用 Fermat。<b>想「直接证 Lagrange」而不经过 Rolle，并非逻辑上不可能，只是得把 Rolle 的论证在辅助函数上原样重做一遍</b>：先取到最值、再用 Fermat 说明导数在极值点为零。绕不开的是这一步，绕得开的是「Rolle」这个名字。</p>
+    <p>证明的依赖关系也是这个顺序：Lagrange 的证明里调用 Rolle，Rolle 的证明里调用 Fermat。<b>跳过 Rolle 直接证 Lagrange，就得把 Rolle 的论证（最值定理 + Fermat）在 $F$ 上原样重做一遍</b>（$F$ 就是上面减去割线得到的辅助函数）——Rolle 只是把这一步打包成可复用的定理。</p>
   </div>
 
   <h4>二、Fermat 引理：极值点的导数是零</h4>
@@ -3066,7 +3066,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <p>$$\frac{f(x)-f(x_0)}{x-x_0}\ \begin{cases}\ge 0,&amp;x&lt;x_0\ \text{（分子非正、分母为负）},\\[2pt]\le 0,&amp;x&gt;x_0\ \text{（分子非正、分母为正）}.\end{cases}$$</p>
   <p>左边取 $x\to x_0^-$ 的极限，保号性给 $f'(x_0)\ge 0$；右边取 $x\to x_0^+$ 的极限，给 $f'(x_0)\le 0$。两边夹住，只好 $f'(x_0)=0$。<b>两个方向的不等号方向相反，是整个证明的关键</b>——只看一边只能得到「$\ge 0$」或「$\le 0$」。</p>
 
-  <p>注意条件里写的是「$f'(x_0)$ <b>存在</b>」：$f(x)=|x|$ 在 $0$ 取极小值，但导数不存在，Fermat 引理管不着它。引理的正确读法是：<b>「可导的极值点一定是驻点」</b>，它把找极值的范围从「所有点」缩小到「驻点 + 不可导点 + 端点」。</p>
+  <p>注意条件里写的是「$f'(x_0)$ <b>存在</b>」：$f(x)=|x|$ 在 $0$ 取极小值，但导数不存在，Fermat 引理管不着它。引理的正确读法是：<b>「可导的极值点一定是驻点」</b>，它把找（内点的）极值的范围从「所有点」缩小到「驻点或不可导点」；若在 $[a,b]$ 上找<b>最值</b>，候选名单再加上端点 $a,b$。</p>
 
   <h4>三、Rolle 定理：三个条件，各管一件事</h4>
 
@@ -3412,7 +3412,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <p>「等价」不是说六条<b>内容相同</b>（它们长得完全不一样），而是说<b>在同一批公理下，任意两条之间可以互相推导</b>：从 A 出发能证 B，从 B 出发也能证 A（常常要绕过别的命题）。只要在一张有向图上六条被连成一个「强连通」的整体，用哪一条当地基都可以——教材通常把确界原理当地基，其余五条当作它的五张面孔。</p>
 
   <div class="why"><b>为什么「等价」要靠绕圈来证，而不是两两直接互推</b>
-    <p>两两互推要证 $6\times 5=30$ 条箭头；绕圈只要一条环路：$①\Rightarrow②\Rightarrow③\Rightarrow④\Rightarrow⑤\Rightarrow①$，五个箭头一合（⑥ 有限覆盖也能插进环里），任意两条之间沿环路找方向走一遍就得到了。「绕一圈能回来」是等价性的<b>最短证明格式</b>，7.2 节就把这条环路的每一步走通。这也是为什么考试说「用 A 证 B」时，正确动作是在图上找路，而不是硬啃一条没见过的证明。</p>
+    <p>两两互推要证 $6\times 5=30$ 条箭头；绕圈只要一条环路：$\text{①}\Rightarrow\text{②}\Rightarrow\text{③}\Rightarrow\text{④}\Rightarrow\text{⑤}\Rightarrow\text{①}$，五个箭头一合（⑥ 有限覆盖也能插进环里），任意两条之间沿环路找方向走一遍就得到了。「绕一圈能回来」是等价性的<b>最短证明格式</b>，7.2 节就把这条环路的每一步走通。这也是为什么考试说「用 A 证 B」时，正确动作是在图上找路，而不是硬啃一条没见过的证明。</p>
   </div>
 
   <h4>为什么这六条是「实数」的性质，而不是废话</h4>

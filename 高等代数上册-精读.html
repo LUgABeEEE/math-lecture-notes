@@ -2150,7 +2150,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>设 $A\in P^{m\times s}$，$B\in P^{s\times n}$，则 $r(AB)\le\min\{r(A),r(B)\}$。</p>
   </div>
 
-  <p>证明思路：$AB$ 的每一列都是 $A$ 的列的线性组合（因为 $AB$ 的第 $j$ 列 $=\sum_k b_{kj}(\text{$A$ 的第 }k\text{ 列})$），所以 $AB$ 的列秩不超过 $A$ 的列秩；再对 $(AB)^{\mathrm{T}}=B^{\mathrm{T}}A^{\mathrm{T}}$ 用同一句话，得行秩不超过 $B$ 的秩。而矩阵的行秩等于列秩，两句话合起来就是 $\min$。</p>
+  <p>证明思路：$AB$ 的每一列都是 $A$ 的列的线性组合（因为 $AB$ 的第 $j$ 列 $=\sum_k b_{kj}(\text{A 的第 }k\text{ 列})$），所以 $AB$ 的列秩不超过 $A$ 的列秩；再对 $(AB)^{\mathrm{T}}=B^{\mathrm{T}}A^{\mathrm{T}}$ 用同一句话，得行秩不超过 $B$ 的秩。而矩阵的行秩等于列秩，两句话合起来就是 $\min$。</p>
 
   <div class="why"><b>为什么是 $\min$ 而不是等号</b>
     <p>因为乘积可以把信息「压掉」。取 $A=\mathrm{diag}(1,0)$、$B=\mathrm{diag}(0,1)$：两个因子的秩都是 $1$，可 $AB=0$，秩是 $0$。$\min\{1,1\}=1$，实际却更小。</p>
