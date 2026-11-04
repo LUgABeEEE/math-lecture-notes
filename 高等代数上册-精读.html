@@ -2775,7 +2775,7 @@ window.MathJax = {
   svg:{fontCache:'global',scale:1.03},
   options:{skipHtmlTags:['script','noscript','style','textarea','pre','code'],
            renderActions:{addMenu:[]}},
-  startup:{typeset:true}
+  startup:{typeset:false}
 };
 </script>
 <script>
@@ -3644,5 +3644,46 @@ var V=function(n){return getComputedStyle(document.documentElement).getPropertyV
 })();
 </script>
 
+
+<script>
+/* ---- 分批渲染：首屏先出，其余随滚动补上（大书 7000+ 公式，一次性渲染会卡很久） ---- */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  ready(function(){
+    if(!window.MathJax || !MathJax.startup) return;
+    var queue = [].slice.call(document.querySelectorAll('main .chap, main .wrap > section'));
+    if(!queue.length) queue = [document.querySelector('main')].filter(Boolean);
+    var done = 0, busy = false;
+
+    function renderNext(){
+      if(busy) return;
+      var el = queue.shift();
+      if(!el){
+        var tip=document.getElementById('mjx-tip'); if(tip) tip.remove();
+        return;
+      }
+      busy = true;
+      MathJax.typesetPromise([el]).catch(function(){}).then(function(){
+        busy = false; done++;
+        var tip=document.getElementById('mjx-tip');
+        if(tip) tip.textContent = '公式渲染中… ' + done + '/' + (done + queue.length);
+        renderNext();
+      });
+    }
+
+    MathJax.startup.promise.then(function(){
+      var tip = document.createElement('div');
+      tip.id = 'mjx-tip';
+      tip.textContent = '公式渲染中…';
+      tip.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:60;'
+        + 'font:12px/1.4 system-ui,sans-serif;color:#8d8173;background:#fffefb;'
+        + 'border:1px solid #e6ded1;border-radius:8px;padding:6px 11px;'
+        + 'box-shadow:0 2px 10px -6px rgba(0,0,0,.3);opacity:.92;pointer-events:none';
+      document.body.appendChild(tip);
+      renderNext();
+    });
+  });
+})();
+</script>
 </body>
 </html>
